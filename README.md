@@ -8,7 +8,8 @@ This browser based web application to ...
 List team members and/or short bio's here... 
 * Simon Lotzkar. Hi! I'm Simon and I love web dev!!
 * Yongseong Choi
-* ...
+* Jacob Ardelean
+
 	
 ## 3. Technologies and Resources Used
 List technologies (with version numbers), API's, icons, fonts, images, media or data sources, and other resources that were used.
