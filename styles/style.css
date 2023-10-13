@@ -1,1 +1,75 @@
+* {
+    background: none;
+    margin: 0px;
+    padding: 0px;
+    border: none;
+}
 
+button {
+    border: black 1.5px solid;
+}
+
+header {
+    background: grey;
+    height: 60px;
+    text-align: right;
+    line-height: 60px;
+    font-size: 30px;
+}
+
+header > img {
+    width: 50px;
+    float: right;
+    margin-left: 10px;
+    padding: 10px;
+}
+
+h1 {
+    text-align: center;
+    font-size: 60px;
+}
+
+h2 {
+    text-align: center;
+    font-size: 30px;
+}
+
+.closest-location {
+    position: relative;
+}
+
+.closest-location > img {
+    width: 90%;
+    margin-left: 5%;
+}
+
+.address {
+    position: absolute;
+    bottom: 5%;
+    right: 25%;
+    color: white;
+    font-size: 30px;
+    background: black;
+    padding: 5px;
+}
+
+.button-group {
+    margin-left: 30%;
+}
+
+.button-group > button {
+    width: 30%;
+}
+
+.browse-portal > button {
+    width: 33%;
+    margin-left: 33%;
+}
+
+hr {
+    border-top: solid black 1.5px;
+    width: 90%;
+    opacity: 0.2;
+    margin-left: 5%;
+    margin-top: 10%;
+}

@@ -2,11 +2,11 @@
 
 ## 1. Project Description
 State your app in a nutshell, or one-sentence pitch. Give some elaboration on what the core features are.  
-This browser based web application to ... 
+* Our team is developing McWorking? to inform everyone of which McDonalds have broken ice cream machines before visiting by checking our site.
 
 ## 2. Names of Contributors
 List team members and/or short bio's here... 
-* Simon Lotzkar. Hi! I'm Simon and I love web dev!!
+* Simon Lotzkar. I love web dev!!
 * Yongseong Choi
 * Jacob Ardelean
 

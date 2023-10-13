@@ -2,8 +2,8 @@
 <html lang="en">
 
 <head>
-    <title>My BCIT Project</title>
-    <meta name="comp1800 template" content="My 1800 App">
+    <title>McWorking?</title>
+    <meta name="McWorking?" content="Ice Cream Machine Status">
 
     <!-- Required meta tags -->
     <meta charset="utf-8">
@@ -15,7 +15,7 @@
     <!-- Other libraries go here -->
 
     <!-- Link to styles of your own -->
-    <!-- <link rel="stylesheet" href="./styles/style.css"> -->
+    <link rel="stylesheet" href="./styles/style.css">
 
 </head>
 
@@ -25,7 +25,40 @@
     <!-- Your HTML Layout go here -->
     <!------------------------------>
     <!-- Stuff for body goes here -->
+    <header>
+        Login/Sign Up
+        <img src="./images/profile-icon.png" alt="login"/>
+    </header>
+    <div class="title">
+        <h1>
+            McWorking?
+        </h1>
+    </div>
+    <div class="closest-location">
+        <h2>
+            Closest McDonalds to your location:
+        </h2>
+        <img src="./images/mcdonalds-location0.png" alt="location-photo"/>
+        <span class="address">4567 Marine Drive</span>
+    </div>
+    <div class="ticket-prompt">
+        <h2>
+            Was the ice cream machine working?
+        </h2>
+        <div class="button-group">
+            <button type="button" id="machine-working">Yes</button>
+            <button type="button" id="machine-not-working">No</button>
+        </div>
+    </div>
+    <div class="browse-portal">
+        <h2>Went to a different location? Browse our catalog:</h2>
+        <button type="button" id="browse-catalog">Browse</button>
+    </div>
 
+    <footer>
+        <hr/>
+        Simon Lotzkar, Yongseong Choi, Jacob Ardelean
+    </footer>
 
     <!---------------------------------------------->
     <!-- Your own JavaScript functions go here    -->
