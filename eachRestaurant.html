@@ -48,31 +48,26 @@
 
     <!-- CONTENT -->
     <div class="container text-center">
+
         <!-- Title -->
         <div class="container">
-            <h1>
-                3456 Ipsum Dr.
-            </h1>
+            <h1 id="restaurant-address"></h1>
             <h6>
-                Distance: 2km
+                <span id="restaurant-postal_code"></span>
+                <span id="restaurant-city"></span>
             </h6>
-            <img src="./images/mcdonalds.png" class="img-thumbnail" alt="mcdonalds">
+            <img class="restaurant-img" alt="mcdonalds" src=""/>
             <h6>
                 <img src="./images/icecream-red.png" alt="icecream" height="36"/>
-                Unknown!
+                Working: ---
             </h6>
             <h6>
-                Last Updated: Never
+                Last Updated: ---
             </h6>
         </div>
 
         <!-- Ticket -->
-        <div class="container">
-            <h2>
-                Log in to let others know if the machine was working!
-            </h2>
-            <a href="login.html" class="btn btn-primary" role="button">Log in / Sign up</a>
-        </div>
+        <div id="ticketPlaceholder"></div>
 
         <!-- Catalog Portal -->
         <div class="container">
@@ -90,6 +85,7 @@
     <script src="./scripts/firebaseAPI_TEAM17.js"></script>
     <script src="./scripts/skeleton.js"></script>
     <script src="./scripts/script.js"></script>
+    <script src="./scripts/eachRestaurant.js"></script>    
 
 </body>
 

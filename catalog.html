@@ -70,12 +70,29 @@
 
         <!-- Restaurants -->
         <div class="container">
-            <h6>
-                If you see a restaurant you've recently been to, please submit whether their machine was working on not!
-            </h6>
-            <div id="previewPlaceholder"></div>
+            <h6>If you see a restaurant you've recently been to, please submit whether their machine was working on not!</h6>
+            <div class="container">
+                <div id="restaurants-go-here" class="row row-cols-auto"></div>
+            </div>
         </div>
     </div>
+
+    <!-- Templates for general use, not displayed -->
+    <template id="restaurantCardTemplate">
+        <div class="card py-2 mx-2" style="width: 18rem">
+            <img class="card-image card-img-top" src=" ..." alt="..." />
+            <div class="card-body">
+                <div class="card-img-overlay text-white">
+                    <h5 class="card-address bg-black"></h5>
+                    <span class="card-postal_code bg-black"></span>
+                    <span class="card-city bg-black"></span>
+                </div>
+                <p class="card-ticket-last_updated"></p>
+                <p class="card-ticket-working"></p>
+            </div>
+        </div>
+        <a class="btn btn-primary">View Details</a>
+    </template>
 
     <!-- FOOTER -->
     <nav id="footerPlaceholder"></nav>
@@ -86,10 +103,7 @@
     <script src="./scripts/firebaseAPI_TEAM17.js"></script>
     <script src="./scripts/skeleton.js"></script>
     <script src="./scripts/script.js"></script>
-    <script src="./scripts/preview.js"></script>
-    <script>
-        loadPreview();
-    </script>
+    <script src="./scripts/catalog.js"></script>
 
 </body>
 
