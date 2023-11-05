@@ -1,36 +1,39 @@
-function generateRestaurantCards(collection) {
+function generateRestaurantCards() {
     let cardTemplate = document.getElementById("restaurantCardTemplate");
   
-    db.collection(collection).get()
+    db.collection("restaurants").get()
         .then(allRestaurants=> {
             allRestaurants.forEach(doc => { 
                 var address = doc.data().address;
                 var city = doc.data().city;
-                var img_name = doc.data().img_name;
-                var postal_code = doc.data().postal_code;
+                var postalCode = doc.data().postalCode;
+                var workingString = "Unknown";
+                var lastUpdatedString = "Never";
+
+                if (doc.data().working != undefined) {
+                    workingString = generateWorkingString(doc.data().working);
+                }
+
+                if (doc.data().lastUpdated != undefined) {
+                    lastUpdatedString = generateTimeSinceString(doc.data().lastUpdated);
+                }
+
                 var docID = doc.id;
-  
+
                 let newcard = cardTemplate.content.cloneNode(true);
-  
-                // var working = getWorking(doc + "/tickets");
-                // var last_updated = getLastUpdated(doc + "/tickets");
-  
-                //update title and text and image
-                newcard.querySelector('.card-address').innerHTML = address;
-                newcard.querySelector('.card-city').innerHTML = city;
-                newcard.querySelector('.card-postal_code').innerHTML = postal_code;
-                newcard.querySelector('.card-image').src = `./images/${img_name}.png`;
                 
-                // newcard.querySelector('.card-ticket-last_updated').innerHTML = last_updated;
-                // newcard.querySelector('.card-ticket-working').innerHTML = working;
-  
+                newcard.querySelector('.card-restaurant-address').innerHTML = address;
+                newcard.querySelector('.card-restaurant-city').innerHTML = city;
+                newcard.querySelector('.card-restaurant-postalCode').innerHTML = postalCode;
+                newcard.querySelector('.card-restaurant-lastUpdated').innerHTML = lastUpdatedString;
+                newcard.querySelector('.card-restaurant-working').innerHTML = workingString;
+
                 newcard.querySelector('a').href = "eachRestaurant.html?docID=" + docID;
-  
-                document.getElementById(collection + "-go-here").appendChild(newcard);
+            
+                // APPEND CARD
+                document.getElementById("restaurants-go-here").appendChild(newcard);
             })
         })
   }
   
-  generateRestaurantCards("restaurants");
-  
-  
+  generateRestaurantCards();

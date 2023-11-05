@@ -53,28 +53,62 @@
         <div class="container">
             <h1 id="restaurant-address"></h1>
             <h6>
-                <span id="restaurant-postal_code"></span>
+                <span id="restaurant-postalCode"></span>
                 <span id="restaurant-city"></span>
             </h6>
-            <img class="restaurant-img" alt="mcdonalds" src=""/>
+            <img class="restaurant-img" src="./images/mcdonalds.png" alt="mcdonalds" style="width: 100%; height: auto;"/>
             <h6>
-                <img src="./images/icecream-red.png" alt="icecream" height="36"/>
-                Working: ---
+                Last Updated: 
+                <span id="restaurant-lastUpdated"></span>
             </h6>
             <h6>
-                Last Updated: ---
+                Status: 
+                <span id="restaurant-working"></span>
             </h6>
         </div>
 
-        <!-- Ticket -->
-        <div id="ticketPlaceholder"></div>
+        <!-- Update -->
+        <div id="updatePlaceholder"></div>
 
         <!-- Catalog Portal -->
         <div class="container">
             <h2>Want to view a different location? Browse our catalog:</h2>
             <a href="catalog.html" class="btn btn-secondary" role="button">Browse</a>
         </div>
+
+        <!-- Update Log -->
+        <div class="container">
+            <h2>Update Log:</h2>
+            <div id="updates-go-here"></div>
+            <h3>End of log...</h3>
+        </div>
     </div>
+
+    <!-- Templates for general use, not displayed -->
+    <template id="updateCardTemplate">
+        <div class="card py-2 mx-2">
+            <div class="card-body">
+                <div class="text-black">
+                    <p>
+                        <strong>Status: </strong>
+                        <span class="card-update-working"></span>
+                    </p>
+                    <p>
+                        <strong>Submitted by: </strong>
+                        <span class="card-update-displayName"></span>
+                    </p>
+                    <p>
+                        <strong>Submitted on: </strong>
+                        <span class="card-update-date"></span>
+                    </p>
+                    <p>
+                        <strong>Update ID: </strong>
+                        <span class="card-update-ID"></span>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </template>
 
     <!-- FOOTER -->
     <nav id="footerPlaceholder"></nav>

@@ -80,15 +80,21 @@
     <!-- Templates for general use, not displayed -->
     <template id="restaurantCardTemplate">
         <div class="card py-2 mx-2" style="width: 18rem">
-            <img class="card-image card-img-top" src=" ..." alt="..." />
+            <img class="card-restaurant-image card-img-top" src="./images/mcdonalds.png" alt="mcdonalds" />
             <div class="card-body">
                 <div class="card-img-overlay text-white">
-                    <h5 class="card-address bg-black"></h5>
-                    <span class="card-postal_code bg-black"></span>
-                    <span class="card-city bg-black"></span>
+                    <h5 class="card-restaurant-address bg-black"></h5>
+                    <span class="card-restaurant-postalCode bg-black"></span>
+                    <span class="card-restaurant-city bg-black"></span>
                 </div>
-                <p class="card-ticket-last_updated"></p>
-                <p class="card-ticket-working"></p>
+                <p>
+                    <strong>Last Updated: </strong>
+                    <span class="card-restaurant-lastUpdated"></span>
+                </p>
+                <p>
+                    <strong>Status: </strong>
+                    <span class="card-restaurant-working"></span>
+                </p>
             </div>
         </div>
         <a class="btn btn-primary">View Details</a>
