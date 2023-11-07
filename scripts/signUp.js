@@ -1,3 +1,35 @@
+/* --------------------------------------------------------
+CONTRIBUTORS: SimonLotzkar
+DESCRIPTION: contains sign in listener
+-------------------------------------------------------- */
+
+// // EFFECTS: adds listener to sign up form and attempts to
+// //          sign up user when submitted
+// const formSignUp = document.querySelector("#formSignUp");
+
+// formSignUp.addEventListener("submit", 
+//   (event) => {
+//     const email = formSignUp["inputSignUpEmail"].value;
+//     const password = formSignUp["inputSignUpPassword"].value;
+//     const userName = formSignUp["inputSignUpUserName"].value;
+
+//     firebase.auth().createUserWithEmailAndPassword(email, password)
+//       .then(userCredential => {
+//         db.collection("users").doc(userCredential.user.uid).set({
+//           userName: userName,
+//           email: email,
+//           date: firebase.firestore.Timestamp.now()
+//         })
+//         .then(() => {
+//           window.location.assign("index.html"); 
+//         });
+//       })
+//       .catch(error => {
+//         alert("ERROR: " + error.code + " " + error.message);
+//       });
+//   }
+// );
+
 // Initialize the FirebaseUI Widget using Firebase.
 var ui = new firebaseui.auth.AuthUI(firebase.auth());
 
@@ -16,14 +48,17 @@ ui.start('#firebaseui-auth-container', {
       // Before this works, you must enable "Firestore" from the firebase console.
       // The Firestore rules must allow the user to write. 
       //------------------------------------------------------------------------------------------
-      var user = authResult.user;                            // get the user object from the Firebase authentication database
-      if (authResult.additionalUserInfo.isNewUser) {         //if new user
-          db.collection("users").doc(user.uid).set({         //write to firestore. We are using the UID for the ID in users collection
-                 displayName: user.displayName,                    //"users" collection
-                 email: user.email,                         //with authenticated user's ID (user.uid)
+      var user = authResult.user;
+      if (authResult.additionalUserInfo.isNewUser) {
+        
+          db.collection("users").doc(user.uid).set({
+            userName: user.displayName,
+            email: user.email,
+            date: firebase.firestore.Timestamp.now()
+
           }).then(function () {
                  console.log("New user added to firestore");
-                 window.location.assign("main.html");       //re-direct to main.html after signup
+                 window.location.assign("index.html");
           }).catch(function (error) {
                  console.log("Error adding new user: " + error);
           });
@@ -36,8 +71,6 @@ ui.start('#firebaseui-auth-container', {
     uiShown: 
       function() {
       // The widget is rendered.
-      // Hide the loader.
-      document.getElementById('loader').style.display = 'none';
     }
   },
 

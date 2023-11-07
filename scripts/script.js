@@ -1,7 +1,17 @@
+/* --------------------------------------------------------
+CONTRIBUTORS: SimonLotzkar
+DESCRIPTION: contains functions needed on most pages
+-------------------------------------------------------- */
+
 // EFFECTS: Attempts to log out user.
 function logout() {
   firebase.auth().signOut()
-    .then(() => {})    // Successfully logged out user
+    .then(
+      () => {
+        // Successfully logged out user
+        window.location.assign("index.html"); 
+      }
+    )
     .catch(
       (error) => {
         console.log("ERROR: could not log out user: " + error);
@@ -21,39 +31,42 @@ function generateWorkingString(boolean) {
 
 // EFFECTS: Returns a string that represents the number of:
 //              - days,
-//              - hours,
-//              - minutes, and
-//              - seconds
+//              - hours, and
+//              - minutes
 //          between the server's current timestamp and the given timestamp. 
 //          Excludes units that have a value of 0 and prints the unit name 
 //          without a pluralization if the value is 1. 
-//          Exceptions: If the day delta is greater than 28, returns whether 
-//          the timestamp was one of the following (in order):
-//              - more than 1 year ago,
-//              - last year, 
-//              - more than 1 month ago, or
-//              - last month.
+//          Exceptions: 
+//              - If the time delta is less than 1 minute, returns "just now".
+//              - If the day delta is greater than 28, returns whether 
+//                the timestamp was one of the following (in order):
+//                  - more than 1 year ago,
+//                  - last year, 
+//                  - more than 1 month ago, or
+//                  - last month.
 function generateTimeSinceString(timestamp) {
-  var timeSinceString = "";
-  var now = firebase.firestore.Timestamp.now();
+  let timeSinceString = "";
+  let now = firebase.firestore.Timestamp.now();
 
   // Delta variables
-  var millisDifference = now.toMillis() - timestamp.toMillis();
+  let millisDifference = now.toMillis() - timestamp.toMillis();
 
-  var daysSince = Math.floor(millisDifference / 1000 / 60 / 60 / 24);
+  // Seconds check
+  if ((millisDifference / 1000) < 60) {
+    return "just now";
+  }
+
+  let daysSince = Math.floor(millisDifference / 1000 / 60 / 60 / 24);
   millisDifference -= daysSince * 24 * 60 * 60 * 1000;
 
-  var hoursSince = Math.floor(millisDifference / 1000 / 60 / 60);
+  let hoursSince = Math.floor(millisDifference / 1000 / 60 / 60);
   millisDifference -= hoursSince * 60 * 60 * 1000;
 
-  var minutesSince = Math.floor(millisDifference / 1000 / 60);
-  millisDifference -= minutesSince * 60 * 1000;
-
-  var secondsSince = Math.floor(millisDifference / 1000);
+  let minutesSince = Math.floor(millisDifference / 1000 / 60);
 
   // Year Check (returns "last year" or "more than 1 year" ago)
-  var thenYear = timestamp.toDate().getFullYear();
-  var nowYear = now.toDate().getFullYear();
+  let thenYear = timestamp.toDate().getFullYear();
+  let nowYear = now.toDate().getFullYear();
   if ((thenYear != nowYear) && (daysSince > 28)) {
     if (thenYear == (nowYear - 1)) {
       return "last year";
@@ -63,8 +76,8 @@ function generateTimeSinceString(timestamp) {
   }
 
   // Month Check (returns "last month" or "more than 1 month ago")
-  var thenMonth = timestamp.toDate().getMonth();
-  var nowMonth = now.toDate().getMonth();
+  let thenMonth = timestamp.toDate().getMonth();
+  let nowMonth = now.toDate().getMonth();
   if ((thenMonth != nowMonth) && (daysSince > 28)) {
     if (thenMonth == (nowMonth - 1)) {
       return "last month";
@@ -74,7 +87,7 @@ function generateTimeSinceString(timestamp) {
   }
 
   // Day check (returns "1 day", "# days", or does nothing)
-  var daysSinceString = daysSince;
+  let daysSinceString = daysSince;
   if (daysSince != 0) {
     if (daysSince == 1) {
       daysSinceString += " day, ";
@@ -85,7 +98,7 @@ function generateTimeSinceString(timestamp) {
   }
 
   // Hours check (returns "1 hour", "# hours", or does nothing)
-  var hoursSinceString = hoursSince;
+  let hoursSinceString = hoursSince;
   if (hoursSince != 0) {
       if (hoursSince == 1) {
         hoursSinceString += " hour, ";
@@ -96,7 +109,7 @@ function generateTimeSinceString(timestamp) {
   }
 
   // Minute check (returns "1 minute", "# minutes", or does nothing)
-  var minutesSinceString = minutesSince;
+  let minutesSinceString = minutesSince;
   if (minutesSince != 0) {
       if (minutesSince == 1) {
         minutesSinceString += " minute, ";
@@ -106,18 +119,98 @@ function generateTimeSinceString(timestamp) {
       timeSinceString += minutesSinceString;
   }
 
-  // Second check (returns "1 second", "# seconds", or does nothing)
-  var secondsSinceString = secondsSince;
-  if (secondsSince != 0) {
-      if (secondsSince == 1) {
-        secondsSinceString +=" second";
-      } else {
-        secondsSinceString +=" seconds";
-      }
-      timeSinceString += secondsSinceString;
+  return timeSinceString + " ago";
+}
+
+// EFFECTS: Returns a descriptive string of the given timestamp
+function generateDateString(timestamp) {
+  let dateString = "";
+  let timestampDate = timestamp.toDate();
+
+  let year = timestampDate.getUTCFullYear();
+  let month = "January";
+  switch (timestampDate.getUTCMonth()) {
+    case 1:
+      month = "February";
+      break;
+    case 2:
+      month = "March";
+      break;
+    case 3:
+      month = "April";
+      break;
+    case 4:
+      month = "May";
+      break;
+    case 5:
+      month = "June";
+      break;
+    case 6:
+      month = "July";
+      break;
+    case 7:
+      month = "August";
+      break;
+    case 8:
+      month = "September";
+      break;
+    case 9:
+      month = "October";
+      break;
+    case 10:
+      month = "November";
+      break;
+    case 11:
+      month = "December";
+      break;
   }
 
-  return timeSinceString + " ago";    // Return concatenated string
+  let date = timestampDate.getUTCDate();
+
+  let day = "Sunday";
+  switch (timestampDate.getUTCDay()) {
+    case 1:
+      day = "Monday";
+      break;
+    case 2:
+      day = "Tuesday";
+      break;
+    case 3:
+      day = "Wednesday";
+      break;
+    case 4:
+      day = "Thursday";
+      break;
+    case 5:
+      day = "Friday";
+      break;
+    case 6:
+      day = "Saturday";
+      break;
+  }
+
+  let minute = timestampDate.getUTCMinutes();
+  if (minute < 10) {
+    minute = "0" + minute;
+  }
+
+  let hour = timestampDate.getUTCHours();
+  if (hour > 12) {
+    hour -= 12;
+    minute += "PM";
+  } else {
+    minute += "AM";
+  }
+
+  dateString = 
+    day + ", " 
+    + month + " " 
+    + date + " " 
+    + year + " at "
+    + hour + ":"
+    + minute + " (GMT)";
+
+  return dateString;
 }
 
 // REQUIRES: A user to be logged in.
@@ -129,14 +222,14 @@ function generateTimeSinceString(timestamp) {
 //          reflect the new update.
 function submitUpdate(working) {
   // Get currently logged in user
-  db.collection("users").doc(firebase.auth().currentUser.uid).get()
-    .then(userDoc => {      
+  db.collection("users").doc(firebase.auth().currentUser.uid).onSnapshot(
+    (doc => {      
       let restaurantID = new URL(window.location.href).searchParams.get("docID");
 
       // Add new update to the current restaurant's "updates" collection
       db.collection("restaurants/" + restaurantID + "/updates").add({
         working: working,
-        displayName: userDoc.data().displayName,
+        userName: doc.data().userName,
         date: firebase.firestore.Timestamp.now()
       });
     
@@ -145,5 +238,6 @@ function submitUpdate(working) {
         lastUpdated: firebase.firestore.Timestamp.now(),
         working: working
       })
-    });
+    })
+  );
 }

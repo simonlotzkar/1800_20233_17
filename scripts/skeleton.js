@@ -1,13 +1,14 @@
-//---------------------------------------------------
-// This function loads the parts of your skeleton 
-// (navbar, footer, and other things) into html doc. 
-//---------------------------------------------------
+/* --------------------------------------------------------
+CONTRIBUTORS: SimonLotzkar
+DESCRIPTION: populates the placeholders on every page
+-------------------------------------------------------- */
+
+// EFFECTS: Loads parts of page depending on whether user is logged in.
 function loadSkeleton() {
 
     firebase.auth().onAuthStateChanged(function (user) {
-        if (user) {                   //if the pointer to "user" object is not null, then someone is logged in
+        if (user) {
             // User is signed in.
-            // Do something for the user here.
             console.log($('#navbarPlaceholder').load('./text/navAfterLogin.html'));
             console.log($('#updatePlaceholder').load('./text/updateAfterLogin.html'));
         } else {
@@ -18,7 +19,6 @@ function loadSkeleton() {
     });
 
     console.log($('#footerPlaceholder').load('./text/footer.html'));
-    console.log($('#previewPlaceholder').load('./text/preview.html'));
 }
 
-loadSkeleton(); //invoke the function
+loadSkeleton();

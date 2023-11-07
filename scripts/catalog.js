@@ -1,4 +1,9 @@
-function generateRestaurantCards() {
+/* --------------------------------------------------------
+CONTRIBUTORS: SimonLotzkar
+DESCRIPTION: populates restauarnt catalog
+-------------------------------------------------------- */
+
+function populateRestaurantCards() {
     let cardTemplate = document.getElementById("restaurantCardTemplate");
   
     db.collection("restaurants").get()
@@ -36,4 +41,4 @@ function generateRestaurantCards() {
         })
   }
   
-  generateRestaurantCards();
+  populateRestaurantCards();
