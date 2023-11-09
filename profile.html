@@ -4,6 +4,7 @@
 <head>
     <title>McWorking</title>
     <meta name="McWorking" content="McDonalds Ice Cream Machine Status Tracker">
+    <link rel="icon" type="image/x-icon" href="./images/icecream-bw.png">
 
     <!------------------------>
     <!-- Required meta tags -->
@@ -50,16 +51,12 @@
     <div class="container text-center">
         <h1 class="mt-2">Profile Page</h1>
 
-        <!-- Key Details (Form) -->
+        <!-- Editable Details -->
         <form class="mb-2">
             <fieldset class="mb-3" id="fieldset-profile">
                 <div class="form-group mb-1">
                     <label class="d-flex justify-content-start ms-1">Username</label>
                     <input disabled type="text" id="input-profile-username" class="form-control" placeholder="ERROR: No username found!">
-                </div>
-                <div class="form-group">
-                    <label class="d-flex justify-content-start ms-1">Sign-Up Date</label>
-                    <input disabled type="text" id="input-profile-dateSignUp" class="form-control" placeholder="ERROR: No sign up date found!">
                 </div>
             </fieldset>
             <div class="d-flex justify-content-end">
@@ -68,24 +65,28 @@
             </div>
         </form>
 
-        <!-- Update Stats -->
+        <!-- Profile Details -->
         <div class="container">
-            <h3>Update Stats</h3>
-            <div class="container">
-                <strong>Updates:</strong>
+            <div class="container form-control">
+                <strong class="ms-1">Sign-Up Date: </strong>
+                <span id="profile-dateSignUp">loading...</span>
+            </div>
+
+            <div class="container form-control">
+                <strong>Updates: </strong>
                 <span id="profile-updateCount">loading...</span>
             </div>
-            <div class="container">
-                <strong>Score:</strong>
+            <div class="container form-control">
+                <strong>User Score: </strong>
                 <span id="profile-userScore">loading...</span>
             </div>
         </div>
         
         <!-- Update Log -->
-        <div class="container">
-            <h5>Update Log:</h5>
+        <div class="container mt-3">
+            <h3>Update Log:</h3>
             <div id="refUpdates-go-here"></div>
-            <h5>End of log...</h5>
+            <h3>End of log...</h3>
         </div>
     </div>
 

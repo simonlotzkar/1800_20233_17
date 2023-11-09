@@ -56,6 +56,7 @@ ui.start('#firebaseui-auth-container', {
           db.collection("users").doc(user.uid).set({
             dateSignUp: firebase.firestore.Timestamp.now(),
             dateLogIn: firebase.firestore.Timestamp.now(),
+            username: user.displayName,
 
           }).then(function () {
                  window.location.assign("index.html");

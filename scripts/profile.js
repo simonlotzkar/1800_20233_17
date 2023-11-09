@@ -19,8 +19,8 @@ firebase.auth().onAuthStateChanged((user) => {
       let dateSignUp = generateDateString(doc.data().dateSignUp);
       
       document.getElementById("input-profile-username").value = username;
-      document.getElementById("input-profile-dateSignUp").value = dateSignUp;
 
+      document.getElementById("profile-dateSignUp").innerHTML = dateSignUp;
       document.getElementById("profile-userScore").innerHTML = userScore;
       document.getElementById("profile-updateCount").innerHTML = updateCount;
     });

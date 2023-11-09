@@ -37,39 +37,59 @@ db.collection("restaurants").doc(restaurantID)
 db.collection("restaurants/" + restaurantID + "/updates").orderBy("dateSubmitted")
     .onSnapshot(snapshot => {
         snapshot.docChanges().forEach(change => { 
-            // update was added
-            if (change.type === "added") {
-                let updateID = change.doc.id;
-                let username = "ERROR";
-                let userID = change.doc.data().userID;
-                let status = generateWorkingString(change.doc.data().status);
-                let dateSubmitted = generateDateString(change.doc.data().dateSubmitted);
-                let upvotes = change.doc.data().upvotes;
-                let downvotes = change.doc.data().downvotes;
-                let score = upvotes - downvotes;
+            document.getElementById("updates-go-here").innerHTML = "";
+            populateUpdateCards();
+        })
+    });
 
+// EFFECTS: ...TODO
+function populateUpdateCards() {
+    db.collection("restaurants/" + restaurantID + "/updates").orderBy("dateSubmitted")
+        .get().then(updateCollection => {
+            updateCollection.forEach(updateDoc => {
+                let updateID = updateDoc.id;
+                let username = "ERROR";
+                let userID = updateDoc.data().userID;
+                let status = generateWorkingString(updateDoc.data().status);
+                let dateSubmitted = generateDateString(updateDoc.data().dateSubmitted);
+
+                let upvotes = updateDoc.data().upvotes;
+                let downvotes = updateDoc.data().downvotes;
+                let score = (upvotes - downvotes) + " (Upvotes: " + upvotes + ", Downvotes: " + downvotes + ")";
+
+                // get user collection for username display
                 db.collection("users").doc(userID).get()
                     .then(userDoc => {
                         username = userDoc.data().username;
 
                         let newcard = cardTemplate.content.cloneNode(true);
-    
+
                         newcard.querySelector(".card-update-ID").innerHTML = updateID;
                         newcard.querySelector(".card-update-username").innerHTML = username;
                         newcard.querySelector(".card-update-status").innerHTML = status;
                         newcard.querySelector(".card-update-dateSubmitted").innerHTML = dateSubmitted;
                         newcard.querySelector(".card-update-score").innerHTML = score;
-            
+
                         document.getElementById("updates-go-here").prepend(newcard);
+                        
+                        // adds listener to upvote btn and increments when clicked
+                        document.getElementById("input-update-upvote").addEventListener("click", function() {
+                            db.collection("restaurants/" + restaurantID + "/updates").doc(updateID)
+                            .update({
+                                upvotes: firebase.firestore.FieldValue.increment(1),
+                            });
+                        });
+
+                        // adds listener to downvote btn and increments when clicked
+                        document.getElementById("input-update-downvote").addEventListener("click", function() {
+                            db.collection("restaurants/" + restaurantID + "/updates").doc(updateID)
+                            .update({
+                                downvotes: firebase.firestore.FieldValue.increment(1),
+                            });
+                        });
                     });
-            }
-            // update was modified
-            if (change.type === "modified") {
-                console.log("Modified update: ", change.doc.data());
-            }
-            // update was removed
-            if (change.type === "removed") {
-                console.log("Removed update: ", change.doc.data());
-            }
-        })
-    });
+            });
+            // for the collection
+        });
+    // for the function
+}
