@@ -44,31 +44,84 @@
     <!------------------------------>
 
     <!-- NAVBAR -->
-    <nav id="navbarPlaceholder"></nav>
+    <nav id="navPlaceholder">loading nav...</nav>
 
     <!-- CONTENT -->
     <div class="container text-center">
+        <h1 class="mt-2">Profile Page</h1>
 
-        <!-- Title -->
+        <!-- Key Details (Form) -->
+        <form class="mb-2">
+            <fieldset class="mb-3" id="fieldset-profile">
+                <div class="form-group mb-1">
+                    <label class="d-flex justify-content-start ms-1">Username</label>
+                    <input disabled type="text" id="input-profile-username" class="form-control" placeholder="ERROR: No username found!">
+                </div>
+                <div class="form-group">
+                    <label class="d-flex justify-content-start ms-1">Sign-Up Date</label>
+                    <input disabled type="text" id="input-profile-dateSignUp" class="form-control" placeholder="ERROR: No sign up date found!">
+                </div>
+            </fieldset>
+            <div class="d-flex justify-content-end">
+                <button type="button" class="btn btn-secondary" onclick="enableFieldsetProfile()">Edit</button>
+                <button type="button" class="btn btn-info ms-2" onclick="saveProfile()">Save</button>
+            </div>
+        </form>
+
+        <!-- Update Stats -->
         <div class="container">
-            <h1>Your Profile</h1>
-            <h6>
-                user name: 
-                <span id="profile-userName"></span>
-            </h6>
-            <h6>
-                email: 
-                <span id="profile-email"></span>
-            </h6>
-            <h6>
-                date created: 
-                <span id="profile-date"></span>
-            </h6>
+            <h3>Update Stats</h3>
+            <div class="container">
+                <strong>Updates:</strong>
+                <span id="profile-updateCount">loading...</span>
+            </div>
+            <div class="container">
+                <strong>Score:</strong>
+                <span id="profile-userScore">loading...</span>
+            </div>
+        </div>
+        
+        <!-- Update Log -->
+        <div class="container">
+            <h5>Update Log:</h5>
+            <div id="refUpdates-go-here"></div>
+            <h5>End of log...</h5>
         </div>
     </div>
 
+    <!-- Templates for general use, not displayed -->
+    <template id="refUpdatesCardTemplate">
+        <div class="card py-2 mx-2">
+            <div class="card-body">
+                <div class="text-black">
+                    <p>
+                        <strong>Status: </strong>
+                        <span class="card-refUpdate-status">loading...</span>
+                    </p>
+                    <p>
+                        <strong>Restaurant: </strong>
+                        <span class="card-refUpdate-restaurant"></span>
+                        <a>View</a>
+                    </p>
+                    <p>
+                        <strong>Submitted on: </strong>
+                        <span class="card-refUpdate-dateSubmitted">loading...</span>
+                    </p>
+                    <p>
+                        <strong>Update ID: </strong>
+                        <span class="card-refUpdate-ID">loading...</span>
+                    </p>
+                    <p>
+                        <strong>Score: </strong>
+                        <span class="card-refUpdate-score">loading...</span>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </template>
+
     <!-- FOOTER -->
-    <nav id="footerPlaceholder"></nav>
+    <nav id="footerPlaceholder">loading footer...</nav>
 
     <!---------------------------------------------->
     <!-- Your own JavaScript functions go here    -->

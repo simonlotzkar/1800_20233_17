@@ -9,11 +9,11 @@ function loadSkeleton() {
     firebase.auth().onAuthStateChanged(function (user) {
         if (user) {
             // User is signed in.
-            console.log($('#navbarPlaceholder').load('./text/navAfterLogin.html'));
+            console.log($('#navPlaceholder').load('./text/navAfterLogin.html'));
             console.log($('#updatePlaceholder').load('./text/updateAfterLogin.html'));
         } else {
             // No user is signed in.
-            console.log($('#navbarPlaceholder').load('./text/navBeforeLogin.html'));
+            console.log($('#navPlaceholder').load('./text/navBeforeLogin.html'));
             console.log($('#updatePlaceholder').load('./text/updateBeforeLogin.html'));
         }
     });

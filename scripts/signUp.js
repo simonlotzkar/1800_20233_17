@@ -18,7 +18,9 @@ DESCRIPTION: contains sign in listener
 //         db.collection("users").doc(userCredential.user.uid).set({
 //           userName: userName,
 //           email: email,
-//           date: firebase.firestore.Timestamp.now()
+//           date: firebase.firestore.Timestamp.now(),
+//           score: 0,
+//           updatesCount: 0,
 //         })
 //         .then(() => {
 //           window.location.assign("index.html"); 
@@ -52,15 +54,13 @@ ui.start('#firebaseui-auth-container', {
       if (authResult.additionalUserInfo.isNewUser) {
         
           db.collection("users").doc(user.uid).set({
-            userName: user.displayName,
-            email: user.email,
-            date: firebase.firestore.Timestamp.now()
+            dateSignUp: firebase.firestore.Timestamp.now(),
+            dateLogIn: firebase.firestore.Timestamp.now(),
 
           }).then(function () {
-                 console.log("New user added to firestore");
                  window.location.assign("index.html");
           }).catch(function (error) {
-                 console.log("Error adding new user: " + error);
+                 alert("Error adding new user: " + error);
           });
       } else {
           return true;

@@ -15,7 +15,6 @@ formLogIn.addEventListener("submit",
 
     firebase.auth().signInWithEmailAndPassword(email, password)
       .then(credentialToken => {
-        console.log("Logged in: " + credentialToken.user.uid);
         window.location.assign("index.html"); 
       })
       .catch(error => {

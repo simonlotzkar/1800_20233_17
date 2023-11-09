@@ -13,51 +13,63 @@ db.collection("restaurants").doc(restaurantID)
         let address = doc.data().address;
         let city = doc.data().city;
         let postalCode = doc.data().postalCode;
-        let workingString = "Unknown";
-        let lastUpdatedString = "Never";
+        let status = doc.data().status; 
+        let dateUpdated = doc.data().dateUpdated;
 
-        if (doc.data().working != undefined) {
-            workingString = generateWorkingString(doc.data().working);
+        let statusString = "unknown";
+        let dateUpdatedString = "never";
+
+        if ((status != null) && (status != undefined)) {
+            statusString = generateWorkingString(status);
         }
-        if (doc.data().lastUpdated != undefined) {
-            lastUpdatedString = generateTimeSinceString(doc.data().lastUpdated);
+        if ((dateUpdated != null) && (dateUpdated != undefined)) {
+            dateUpdatedString = generateTimeSinceString(dateUpdated);
         }
 
         document.getElementById("restaurant-address").innerHTML = address;
         document.getElementById("restaurant-city").innerHTML = city;
         document.getElementById("restaurant-postalCode").innerHTML = postalCode;
-        document.getElementById("restaurant-lastUpdated").innerHTML = lastUpdatedString;
-        document.getElementById("restaurant-working").innerHTML = workingString;
+        document.getElementById("restaurant-dateUpdated").innerHTML = dateUpdatedString;
+        document.getElementById("restaurant-status").innerHTML = statusString;
     });
 
 // restaurant's update subcollection listener
-db.collection("restaurants/" + restaurantID + "/updates").orderBy("date")
+db.collection("restaurants/" + restaurantID + "/updates").orderBy("dateSubmitted")
     .onSnapshot(snapshot => {
         snapshot.docChanges().forEach(change => { 
-            let changedUpdateData = change.doc.data();
-            // new update added
+            // update was added
             if (change.type === "added") {
-                let userName = changedUpdateData.userName;
-                let working = changedUpdateData.working;
-                let date = changedUpdateData.date;
                 let updateID = change.doc.id;
+                let username = "ERROR";
+                let userID = change.doc.data().userID;
+                let status = generateWorkingString(change.doc.data().status);
+                let dateSubmitted = generateDateString(change.doc.data().dateSubmitted);
+                let upvotes = change.doc.data().upvotes;
+                let downvotes = change.doc.data().downvotes;
+                let score = upvotes - downvotes;
+
+                db.collection("users").doc(userID).get()
+                    .then(userDoc => {
+                        username = userDoc.data().username;
+
+                        let newcard = cardTemplate.content.cloneNode(true);
     
-                let newcard = cardTemplate.content.cloneNode(true);
-    
-                newcard.querySelector(".card-update-ID").innerHTML = updateID;
-                newcard.querySelector(".card-update-userName").innerHTML = userName;
-                newcard.querySelector(".card-update-working").innerHTML = generateWorkingString(working);
-                newcard.querySelector(".card-update-date").innerHTML = generateDateString(date);
-    
-                document.getElementById("updates-go-here").prepend(newcard);
+                        newcard.querySelector(".card-update-ID").innerHTML = updateID;
+                        newcard.querySelector(".card-update-username").innerHTML = username;
+                        newcard.querySelector(".card-update-status").innerHTML = status;
+                        newcard.querySelector(".card-update-dateSubmitted").innerHTML = dateSubmitted;
+                        newcard.querySelector(".card-update-score").innerHTML = score;
+            
+                        document.getElementById("updates-go-here").prepend(newcard);
+                    });
             }
-            // update edited
+            // update was modified
             if (change.type === "modified") {
-                console.log("Modified update: ", changedUpdateData);
+                console.log("Modified update: ", change.doc.data());
             }
-            // update deleted
+            // update was removed
             if (change.type === "removed") {
-                console.log("Removed update: ", changedUpdateData);
+                console.log("Removed update: ", change.doc.data());
             }
         })
     });

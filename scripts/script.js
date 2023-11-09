@@ -215,29 +215,49 @@ function generateDateString(timestamp) {
 
 // REQUIRES: A user to be logged in.
 // EFFECTS: Adds an update to the restaurant that is currently open in the window
-//          with the given working value.
+//          with the given status value.
 //          Sets the user name to the name of the currently logged-in user and the
 //          date to the current time.
-//          Also changes the restaurant's last updated and working fields to
+//          Also changes the restaurant's date and status fields to
 //          reflect the new update.
-function submitUpdate(working) {
-  // Get currently logged in user
-  db.collection("users").doc(firebase.auth().currentUser.uid).onSnapshot(
-    (doc => {      
-      let restaurantID = new URL(window.location.href).searchParams.get("docID");
+function submitUpdate(status) {
+  let currentUser = firebase.auth().currentUser;
+  let restaurantID = new URL(window.location.href).searchParams.get("docID");
+  let now = firebase.firestore.Timestamp.now();
 
-      // Add new update to the current restaurant's "updates" collection
-      db.collection("restaurants/" + restaurantID + "/updates").add({
-        working: working,
-        userName: doc.data().userName,
-        date: firebase.firestore.Timestamp.now()
-      });
+  // Get currently logged in user from users collection
+  db.collection("users").doc(currentUser.uid).get()
+    .then((doc => {    
+      
+      // get restaurant's updates subcollection
+      db.collection("restaurants/" + restaurantID + "/updates")
+        // ...add new update
+        .add({
+          status: status,
+          userID: currentUser.uid,
+          dateSubmitted: now,
+          upvotes: 0,
+          downvotes: 0,
+        })
+        // ...add new update to user's reference updates subcollection
+        .then((docRef) => {
+          db.collection("users/" + doc.id + "/refUpdates")
+            .add({
+              restaurantID: restaurantID,
+              updateID: docRef.id,
+              date: now,
+            });
+        })
+        // Catch and alert errors
+        .catch((error) => {
+            alert("Error adding document: ", error);
+        });
     
-      // Update current restaurant fields
-      db.collection("restaurants").doc(restaurantID).update({
-        lastUpdated: firebase.firestore.Timestamp.now(),
-        working: working
-      })
-    })
-  );
+      // Set restaurant's last updated and working fields to reflect the new update
+      db.collection("restaurants").doc(restaurantID)
+        .update({
+          dateUpdated: now,
+          status: status,
+        });
+    }));
 }

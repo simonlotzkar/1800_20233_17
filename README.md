@@ -19,9 +19,8 @@ The app is ready straight away for viewing, but to submit data users must sign u
 
 ## 5. Known Bugs and Limitations
 Here are some known bugs:
-* ...
-* ...
-* ...
+* Username is saved to update, should be the user's id so username can be retrieved dynamically.
+* 
 
 ## 6. Features for Future
 * Expanding from just icecream machines to all products (eg. chicken nuggets)
@@ -62,4 +61,34 @@ It has the following subfolders and files:
     /navBeforeLogin.html         # navigation bar (after login)
     /updateAfterLogin.html       # allows update submission
     /updateBeforeLogin.html      # prompts for login/signup
+```
+
+## 7. Contents of Database
+Content of the firestore database:
+
+```
+├── restaurants              # [collection] mcdonalds restaurant locations
+    /ID                          
+        .city                    # [string] name of location's city
+        .dateUpdated             # [timestamp] last time an update was submitted
+        .postalCode              # [string] name of location's postal code
+        .status                  # [boolean] status of ice cream machine
+        .address                 # [string] street number and name of location
+        /updates                 # [collection] icecream machine status updates
+            /ID
+                .dateSubmitted       # [timestamp] when the update was submitted
+                .upvotes             # [number] indicates a user thought the update was accurate
+                .downvotes           # [number] indicates a user thought the update was inaccurate
+                .status              # [boolean] status of icecream machine
+                .userID              # [string] update owner's user id
+├── users                    # [collection] user profiles
+    /ID
+        .dateSignUp              # [timestamp] when user signed-up
+        .dateLogIn               # [timestamp] when user last logged-in
+        .username                # [string] display name of user
+        /refUpdates              #[collection] points to an update the user submitted
+            /ID
+                .date                # [timestamp] when the update was submitted
+                .restaurantID        # [string] restaurant id where update was submitted
+                .updateID            # [string] update's id
 ```
