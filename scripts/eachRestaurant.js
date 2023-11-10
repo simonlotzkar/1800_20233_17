@@ -34,19 +34,18 @@ db.collection("restaurants").doc(restaurantID)
     });
 
 // restaurant's update subcollection listener
-db.collection("restaurants/" + restaurantID + "/updates").orderBy("dateSubmitted")
+db.collection("restaurants/" + restaurantID + "/updates")
     .onSnapshot(snapshot => {
-        snapshot.docChanges().forEach(change => { 
-            document.getElementById("updates-go-here").innerHTML = "";
-            populateUpdateCards();
-        })
+        populateUpdateCards();
     });
 
 // EFFECTS: ...TODO
 function populateUpdateCards() {
-    db.collection("restaurants/" + restaurantID + "/updates").orderBy("dateSubmitted")
-        .get().then(updateCollection => {
-            updateCollection.forEach(updateDoc => {
+    document.getElementById("updates-go-here").innerHTML = "";
+
+    db.collection("restaurants/" + restaurantID + "/updates").orderBy("dateSubmitted").get()
+        .then(updatesCollection => {
+            updatesCollection.forEach(updateDoc => {
                 let updateID = updateDoc.id;
                 let username = "ERROR";
                 let userID = updateDoc.data().userID;
@@ -70,10 +69,8 @@ function populateUpdateCards() {
                         newcard.querySelector(".card-update-dateSubmitted").innerHTML = dateSubmitted;
                         newcard.querySelector(".card-update-score").innerHTML = score;
 
-                        document.getElementById("updates-go-here").prepend(newcard);
-                        
                         // adds listener to upvote btn and increments when clicked
-                        document.getElementById("input-update-upvote").addEventListener("click", function() {
+                        newcard.getElementById("input-update-upvote").addEventListener("click", function() {
                             db.collection("restaurants/" + restaurantID + "/updates").doc(updateID)
                             .update({
                                 upvotes: firebase.firestore.FieldValue.increment(1),
@@ -81,15 +78,16 @@ function populateUpdateCards() {
                         });
 
                         // adds listener to downvote btn and increments when clicked
-                        document.getElementById("input-update-downvote").addEventListener("click", function() {
+                        newcard.getElementById("input-update-downvote").addEventListener("click", function() {
                             db.collection("restaurants/" + restaurantID + "/updates").doc(updateID)
                             .update({
                                 downvotes: firebase.firestore.FieldValue.increment(1),
                             });
                         });
+
+                        document.getElementById("updates-go-here").prepend(newcard);
+
                     });
             });
-            // for the collection
         });
-    // for the function
 }
