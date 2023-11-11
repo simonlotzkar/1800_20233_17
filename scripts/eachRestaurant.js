@@ -77,6 +77,7 @@ db.collection("restaurants/" + restaurantID + "/updates")
 
                             // adds listener to upvote btn
                             newcard.getElementById("input-update-upvote").addEventListener("click", function() {
+                                // check if the user is logged in or if they are the author of the update
                                 if (!currentUser) {
                                     return alert("You must be logged-in to vote!");
                                 } else if (updateUserID == currentUser.uid) {
@@ -115,11 +116,13 @@ db.collection("restaurants/" + restaurantID + "/updates")
 
                             // adds listener to downvote btn
                             newcard.getElementById("input-update-downvote").addEventListener("click", function() {
+                                // check if the user is logged in or if they are the author of the update
                                 if (!currentUser) {
                                     return alert("You must be logged-in to vote!");
                                 } else if (updateUserID == currentUser.uid) {
                                     return alert("You cannot vote on your own update!");
                                 }
+
                                 db.collection("restaurants/" + restaurantID + "/updates").doc(updateID).get()
                                     .then(doc => {
                                         // if the user has downvoted, remove their downvote

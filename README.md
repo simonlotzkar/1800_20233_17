@@ -83,7 +83,8 @@ Content of the firestore database:
                 .downvotes           # [number] indicates a user thought the update was inaccurate
                 .status              # [boolean] status of icecream machine
                 .userID              # [string] update owner's user id
-                .voterIDList              # [string array] list of users' IDs that voted on the update
+                .upvoterIDList              # [string array] list of users' IDs that upvoted on the update
+                .downvoterIDList              # [string array] list of users' IDs that downvoted on the update
 ├── users                    # [collection] user profiles
     /ID
         .dateSignUp              # [timestamp] when user signed-up
