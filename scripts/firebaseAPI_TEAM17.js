@@ -13,6 +13,8 @@ var firebaseConfig = {
 //--------------------------------------------
 // initialize the Firebase app
 // initialize Firestore database if using it
+// shortcut Firestore fieldvalue constant
 //--------------------------------------------
 const app = firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
+const fv = firebase.firestore.FieldValue;

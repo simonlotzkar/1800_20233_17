@@ -37,6 +37,7 @@ Content of the project folder:
 ├── index.html               # landing page
 ├── profile.html             # user profile page
 └── README.md
+└── signUp.html              # signs up user with firebase auth
 ├── template.html            # template for making pages
 
 It has the following subfolders and files:
@@ -46,12 +47,13 @@ It has the following subfolders and files:
     /icecream-green.png          # icecream logo (green)
     /icecream-red.png            # icecream logo (red)
 ├── scripts                  # Folder for java script files
-    /authentication.js           # signs up and logs in users
-    /catalog.js                  # loads content for catalog.html
-    /eachRestauarant.js          # loads content for eachRestaurant.html
+    /catalog.js                  # runs catalog page
+    /eachRestauarant.js          # runs restaurant page
     /firebaseAPI_TEAM17.js       # connects to firebase API
-    /profile.js                  # loads content for profile.html
+    /login.js                    # logs in user to firebase auth
+    /profile.js                  # runs profile page
     /script.js                   # general functions used by multiple pages
+    /signUp.js                   # runs sign up page
     /skeleton.js                 # loads content on all pages (footer, header, etc)
 ├── styles                   # Folder for cascading style sheet files
     /style.css                   # styles all pages
@@ -74,19 +76,20 @@ Content of the firestore database:
         .postalCode              # [string] name of location's postal code
         .status                  # [boolean] status of ice cream machine
         .address                 # [string] street number and name of location
-        /updates                 # [collection] icecream machine status updates
+        /updates                 # [subcollection] icecream machine status updates
             /ID
                 .dateSubmitted       # [timestamp] when the update was submitted
                 .upvotes             # [number] indicates a user thought the update was accurate
                 .downvotes           # [number] indicates a user thought the update was inaccurate
                 .status              # [boolean] status of icecream machine
                 .userID              # [string] update owner's user id
+                .voterIDList              # [string array] list of users' IDs that voted on the update
 ├── users                    # [collection] user profiles
     /ID
         .dateSignUp              # [timestamp] when user signed-up
         .dateLogIn               # [timestamp] when user last logged-in
         .username                # [string] display name of user
-        /refUpdates              #[collection] points to an update the user submitted
+        /refUpdates              # [subcollection] points to an update the user submitted
             /ID
                 .date                # [timestamp] when the update was submitted
                 .restaurantID        # [string] restaurant id where update was submitted

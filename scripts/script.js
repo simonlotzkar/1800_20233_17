@@ -238,6 +238,8 @@ function submitUpdate(status) {
           dateSubmitted: now,
           upvotes: 0,
           downvotes: 0,
+          upvoterIDList: [],
+          downvoterIDList: [],
         })
         // ...add new update to user's reference updates subcollection
         .then((docRef) => {
