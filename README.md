@@ -19,8 +19,7 @@ The app is ready straight away for viewing, but to submit data users must sign u
 
 ## 5. Known Bugs and Limitations
 Here are some known bugs:
-* Username is saved to update, should be the user's id so username can be retrieved dynamically.
-* 
+* ...
 
 ## 6. Features for Future
 * Expanding from just icecream machines to all products (eg. chicken nuggets)
@@ -38,6 +37,7 @@ Content of the project folder:
 ├── profile.html             # user profile page
 └── README.md
 └── signUp.html              # signs up user with firebase auth
+├── submitRestaurant.html    # page for adding new restaurants to database
 ├── template.html            # template for making pages
 
 It has the following subfolders and files:
@@ -55,6 +55,7 @@ It has the following subfolders and files:
     /script.js                   # general functions used by multiple pages
     /signUp.js                   # runs sign up page
     /skeleton.js                 # loads content on all pages (footer, header, etc)
+    /submitRestaurant.js         # runs submit restaurant page
 ├── styles                   # Folder for cascading style sheet files
     /style.css                   # styles all pages
 ├── text                     # Folder for insertable html files
@@ -71,6 +72,7 @@ Content of the firestore database:
 ```
 ├── restaurants              # [collection] mcdonalds restaurant locations
     /ID                          
+        .location                # [geopoint] lat and long coordinates
         .city                    # [string] name of location's city
         .dateUpdated             # [timestamp] last time an update was submitted
         .postalCode              # [string] name of location's postal code
@@ -83,8 +85,8 @@ Content of the firestore database:
                 .downvotes           # [number] indicates a user thought the update was inaccurate
                 .status              # [boolean] status of icecream machine
                 .userID              # [string] update owner's user id
-                .upvoterIDList              # [string array] list of users' IDs that upvoted on the update
-                .downvoterIDList              # [string array] list of users' IDs that downvoted on the update
+                .upvoterIDList       # [string array] list of users' IDs that upvoted on the update
+                .downvoterIDList     # [string array] list of users' IDs that downvoted on the update
 ├── users                    # [collection] user profiles
     /ID
         .dateSignUp              # [timestamp] when user signed-up
@@ -92,7 +94,7 @@ Content of the firestore database:
         .username                # [string] display name of user
         /refUpdates              # [subcollection] points to an update the user submitted
             /ID
-                .date                # [timestamp] when the update was submitted
+                .date                # [timestamp] when the update was submitted (this is needed for easy sequential ordering on profile page)
                 .restaurantID        # [string] restaurant id where update was submitted
                 .updateID            # [string] update's id
 ```
