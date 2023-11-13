@@ -57,8 +57,6 @@ async function populateRestaurants() {
                     document.getElementById("restaurants-go-here").appendChild(newcard);
                 });
             });
-        
-
     } catch (error) {
         alert("Geolocation denied by browser!" + error);
     }

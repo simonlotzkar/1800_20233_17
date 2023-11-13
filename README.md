@@ -78,7 +78,6 @@ Content of the firestore database:
         .address                 # [string] street number and name of location
         /updates                 # [subcollection] icecream machine status updates
             /ID
-                .distance            # [number] temporary field: calculated distance between a user and the restaurant
                 .dateSubmitted       # [timestamp] when the update was submitted
                 .upvotes             # [number] indicates a user thought the update was accurate
                 .downvotes           # [number] indicates a user thought the update was inaccurate
