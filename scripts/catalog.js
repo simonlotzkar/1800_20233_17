@@ -1,5 +1,5 @@
 /* --------------------------------------------------------
-CONTRIBUTORS: SimonLotzkar, CarlyOrr
+CONTRIBUTORS: SimonLotzkar
 DESCRIPTION: populates restaurant catalog
 -------------------------------------------------------- */
 
@@ -8,37 +8,40 @@ async function populateRestaurants() {
     try {
         const userLocation = await getLocationFromUser();
 
-        // updates each restaurant's distance field
+        // get restaurant collection
         db.collection("restaurants").get()
-            .then(function(querySnapshot) {
-                querySnapshot.forEach(function(doc) {
-                    doc.ref.update({
-                        distance: getDistanceFromLatLonInKm(
-                            userLocation.coords.latitude, 
-                            userLocation.coords.longitude, 
-                            doc.data().location.latitude, 
-                            doc.data().location.longitude),
-                    });
-                });
-            });
+            .then(restaurantCollection => {
+                let unsortedMap = new Map();
+                
+                // create map with each restaurant and its distance 
+                restaurantCollection.forEach(doc => { 
+                    let distance = getDistanceFromLatLonInKm(
+                        userLocation.coords.latitude, 
+                        userLocation.coords.longitude, 
+                        doc.data().location.latitude, 
+                        doc.data().location.longitude);
+                    unsortedMap.set(doc, distance);
+                });    
+                
+                let sortedMap = new Map([...unsortedMap].sort());
 
-        // restaurant collection listener, adds a card for each restaurant
-        db.collection("restaurants").orderBy("distance").get()
-            .then(allRestaurants => {
-                allRestaurants.forEach(doc => { 
+                sortedMap.forEach(function(value, key) {
+                    let doc = key;
+                    let distance = value;
+
                     let cardTemplate = document.getElementById("restaurantCardTemplate");
                     let newcard = cardTemplate.content.cloneNode(true);
                     let address = doc.data().address;
                     let city = doc.data().city;
                     let postalCode = doc.data().postalCode;
-                    let distanceString = doc.data().distance.toFixed(2) + "km away";
+                    let distanceString = distance.toFixed(2) + "km away";
                     let statusString = "unknown";
                     let dateUpdatedString = "never";
-
+        
                     if ((doc.data().status != undefined) && (doc.data().status != null)) {
                         statusString = generateWorkingString(doc.data().status);
                     }
-
+        
                     if ((doc.data().dateUpdated != undefined) && (doc.data().dateUpdated != null)) {
                         dateUpdatedString = generateTimeSinceString(doc.data().dateUpdated);
                     }
@@ -54,6 +57,8 @@ async function populateRestaurants() {
                     document.getElementById("restaurants-go-here").appendChild(newcard);
                 });
             });
+        
+
     } catch (error) {
         alert("Geolocation denied by browser!" + error);
     }
