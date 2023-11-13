@@ -15,12 +15,32 @@ Our team is developing "McWorking" to inform everyone of which McDonalds have br
 ## 4. Complete setup/installion/usage
 The app is ready straight away for viewing, but to submit data users must sign up for an account. This can be done from any page on the website either from the navbar, or a prompt on the page.
 
-## 5. Known Bugs and Limitations
+## 5. Bugs and Limitations
 Here are some known bugs:
 * ...
 
-## 6. Features for Future
-* Expanding from just icecream machines to all products (eg. chicken nuggets)
+## 6. TODO List
+Features and tasks needed to be done:
+* Allow admin field to be added to users that grants the following:
+    * Access to "add restaurant page"
+    * View and use "delete" button on restaurants and updates
+* Add "delete" button to updates, visible to owner and admins only
+* Add "delete" button to restaurants, visible to admins only
+* Add "about us" page
+* Profile customization
+    * Add profile picture section to profile page (view all and select one)
+        * Display profile picture on owner's updates and navbar
+    * Add profile banner section to profile page (view all and select one)
+        * Display profile banner to owner's updates
+    * Add achievements section to profile page (view all and their unlock conditions)
+        * Display achievements on owner's updates
+        * Grant achievements to owner based on preconditions
+* Footer update (github links, etc)
+* Header update (display username and profile picture)
+* Home update (display closest 3 restaurants)
+
+## 6. Future Features
+* Expanding from just icecream machines to all products (eg. smoothies)
 * Expanding to other businesses (eg. TimHortons)
 	
 ## 7. Contents of Folder
