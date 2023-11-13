@@ -149,17 +149,19 @@ firebase.auth().onAuthStateChanged((user) => {
   }
 });
 
-// EFFECTS: ...TODO
+// EFFECTS: enables edit profile input fields
 function enableFieldsetProfile() {
   document.getElementById("input-profile-username").disabled = false;
 }
 
-// EFFECTS: ...TODO
+// EFFECTS: disables edit profile input fields
 function disableFieldsetProfile() {
   document.getElementById("input-profile-username").disabled = true;
 }
 
-// EFFECTS: ...TODO
+// MODIFIES: currentUser
+// EFFECTS: sets the user's username to what is in the username input field,
+//          then disables edit profile input fields
 function saveProfile() {
   let username = document.getElementById("input-profile-username").value;
 
@@ -170,7 +172,9 @@ function saveProfile() {
   disableFieldsetProfile();
 }
 
-// EFFECTS: ...TODO
+// MODIFIES: currentUser
+// REQUIRES: the given doc is a customization document
+// EFFECTS: sets the user's avatar to the given doc
 function setAvatar(doc) {
   let url = "/customizations/" + doc.id;
   currentUser.update({
@@ -179,7 +183,9 @@ function setAvatar(doc) {
   alert("set avatar to: " + doc.data().name);
 }
 
-// EFFECTS: ...TODO
+// MODIFIES: currentUser
+// REQUIRES: the given doc is a customization document
+// EFFECTS: sets the user's banner to the given doc
 function setBanner(doc) {
   let url = "/customizations/" + doc.id;
   currentUser.update({
