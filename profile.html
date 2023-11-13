@@ -81,42 +81,65 @@
                 <span id="profile-userScore">loading...</span>
             </div>
         </div>
+
+        <!-- Customization -->
+        <div class="container mt-3">
+            <h2>Customizations</h2>
+            <h4>Avatars</h4>
+            <div id="avatars-go-here"></div>
+            <h4>Banners</h4>
+            <div id="banners-go-here"></div>
+            <h4>Achievements</h4>
+            <div id="achievements-go-here"></div>
+        </div>
         
         <!-- Update Log -->
         <div class="container mt-3">
-            <h3>Update Log:</h3>
+            <h2>Update Log</h2>
             <div id="refUpdates-go-here"></div>
-            <h3>End of log...</h3>
+            <h4>End of log...</h4>
         </div>
     </div>
 
-    <!-- Templates for general use, not displayed -->
-    <template id="refUpdatesCardTemplate">
-        <div class="card py-2 mx-2">
+    <!-- customization card template -->
+    <template id="customizationCardTemplate">
+        <div class="card mb-2">
             <div class="card-body">
-                <div class="text-black">
-                    <p>
-                        <strong>Status: </strong>
-                        <span class="card-refUpdate-status">loading...</span>
-                    </p>
-                    <p>
-                        <strong>Restaurant: </strong>
-                        <span class="card-refUpdate-restaurant"></span>
-                        <a>View</a>
-                    </p>
-                    <p>
-                        <strong>Submitted on: </strong>
-                        <span class="card-refUpdate-dateSubmitted">loading...</span>
-                    </p>
-                    <p>
-                        <strong>Update ID: </strong>
-                        <span class="card-refUpdate-ID">loading...</span>
-                    </p>
-                    <p>
-                        <strong>Score: </strong>
-                        <span class="card-refUpdate-score">loading...</span>
-                    </p>
-                </div>
+                <h5 class="card-customization-name">loading...</h5>
+                <img class="card-customization-image" style="width: 20%; height: auto;"/>
+                <p>
+                    <span class="card-customization-description">loading...</span>
+                </p>
+                <a class="btn btn-secondary">Choose</a>
+            </div>
+        </div>
+    </template>
+
+    <!-- reference update card template -->
+    <template id="refUpdateCardTemplate">
+        <div class="card mb-2">
+            <div class="card-body">
+                <p>
+                    <strong>Status: </strong>
+                    <span class="card-refUpdate-status">loading...</span>
+                </p>
+                <p>
+                    <strong>Restaurant: </strong>
+                    <span class="card-refUpdate-restaurant"></span>
+                    <a>View</a>
+                </p>
+                <p>
+                    <strong>Submitted on: </strong>
+                    <span class="card-refUpdate-dateSubmitted">loading...</span>
+                </p>
+                <p>
+                    <strong>Update ID: </strong>
+                    <span class="card-refUpdate-ID">loading...</span>
+                </p>
+                <p>
+                    <strong>Score: </strong>
+                    <span class="card-refUpdate-score">loading...</span>
+                </p>
             </div>
         </div>
     </template>

@@ -108,11 +108,19 @@ Content of the firestore database:
 ├── users                    # [collection] user profiles
     /ID
         .dateSignUp              # [timestamp] when user signed-up
-        .dateLogIn               # [timestamp] when user last logged-in
         .username                # [string] display name of user
+        .avatar                  # [reference] points to the avatar the user has chosen
+        .banner                  # [reference] points to the banner the user has chosen
+        .achievements            # [reference array] each reference points to an achievement the user has unlocked
         /refUpdates              # [subcollection] points to an update the user submitted
             /ID
                 .date                # [timestamp] when the update was submitted (this is needed for easy sequential ordering on profile page)
                 .restaurantID        # [string] restaurant id where update was submitted
                 .updateID            # [string] update's id
+├── customizations           # [collection] profile customizations
+    /ID
+        .name                    # [string] name of the customization
+        .type                    # [string] type of the customization (one of: avatar, banner, achievement)
+        .imageURL                # [string] name of image in url
+        .description             # [string] description of the customization
 ```

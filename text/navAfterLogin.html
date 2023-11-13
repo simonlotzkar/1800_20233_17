@@ -2,8 +2,8 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-warning">
     <div class="container-fluid">
         <a class="navbar-brand" href="#">
-            <img src="../images/icecream-bw.png" height="36">
-            Logged In!
+            <img class="currentUser-avatar" height=36/>
+            <span class="currentUser-username">loading...</span>
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
             data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
@@ -31,3 +31,17 @@
         </div>
     </div>
 </nav>
+
+<script>
+    userID = firebase.auth().currentUser.uid;
+    db.collection("users").doc(userID).get()
+        .then(doc => {
+            let imageURL;
+            doc.data().avatar.get()
+                .then(doc => {
+                    imageURL = doc.data().imageURL;
+                    document.querySelector(".currentUser-avatar").src = "../images/" + imageURL + ".png";
+                });
+            document.querySelector(".currentUser-username").innerHTML = doc.data().username;
+        });
+</script>
