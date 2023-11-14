@@ -56,6 +56,9 @@ ui.start('#firebaseui-auth-container', {
           db.collection("users").doc(user.uid).set({
             dateSignUp: firebase.firestore.Timestamp.now(),
             username: user.displayName,
+            avatar: db.doc("/customizations/XFW9nFFAyZNI7wKNG2ex"),
+            banner: db.doc("/customizations/BCBWRu4WW2kw7B1egLYx"),
+            achievements: [],
 
           }).then(function () {
                  window.location.assign("index.html");

@@ -40,8 +40,7 @@ Features and tasks needed to be done:
         * Add "delete" button to restaurants, visible to admins only
 * Minor
     * Footer update (github links, etc)
-    * Add default profile picture and banner to user sign up
-
+    
 ## 6. Future Features
 * Expanding from just icecream machines to all products (eg. smoothies)
 * Expanding to other businesses (eg. TimHortons)
