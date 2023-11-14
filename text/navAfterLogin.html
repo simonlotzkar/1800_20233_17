@@ -34,8 +34,8 @@
 
 <script>
     userID = firebase.auth().currentUser.uid;
-    db.collection("users").doc(userID).get()
-        .then(doc => {
+    db.collection("users").doc(userID)
+        .onSnapshot(doc => {
             let imageURL;
             doc.data().avatar.get()
                 .then(doc => {

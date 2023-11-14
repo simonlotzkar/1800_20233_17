@@ -17,29 +17,26 @@ The app is ready straight away for viewing, but to submit data users must sign u
 
 ## 5. Bugs and Limitations
 Here are some known bugs:
-* When updating the user's avatar and/or username, the header doesn't update until refreshing the page
+* ...
 
 ## 6. TODO List
-Features and tasks needed to be done:
-* Major
-    * Create custom sign in page
-    * Grant achievements to owner based on preconditions
-    * Allow admin field to be added to users that grants the following:
-        * Access to "add restaurant page"
-        * View and use "delete" button on restaurants and updates
-* Medium
-    * Home update (display closest 3 restaurants)
-    * Prevent user from adding new update if last was added within 5min
-    * Add "about us" page
-    * Updates...
-        * Add "delete" button to updates, visible to owner and admins only
-        * Display owner's profile picture
-        * Display owner's profile banner
-        * Display owners' achievements
-    * Restaurants...
-        * Add "delete" button to restaurants, visible to admins only
-* Minor
-    * Footer update (github links, etc)
+Features and tasks needed to be done (in order of priority):
+* Grant achievements to owner based on preconditions
+* Updates...
+    * Add "delete" button to updates, visible to owner and admins only
+    * Display owner's profile picture
+    * Display owner's profile banner
+    * Display owners' achievements
+    * Display owners' total score and number of posts
+* Allow admin field to be added to users that grants the following:
+    * Access to "add restaurant page"
+    * View and use "delete" button on restaurants and updates
+* Restaurants...
+    * Add "delete" button to restaurants, visible to admins only
+* Home page update (display closest 3 restaurants)
+* Prevent user from adding new update if last was added within 5min
+* Add "about" page
+* Create custom sign up page
     
 ## 6. Future Features
 * Expanding from just icecream machines to all products (eg. smoothies)
