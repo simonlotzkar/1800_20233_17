@@ -17,26 +17,44 @@ The app is ready straight away for viewing, but to submit data users must sign u
 
 ## 5. Bugs and Limitations
 Here are some known bugs:
-* ...
+* Restaurant displays updates out of order
 
 ## 6. TODO List
 Features and tasks needed to be done (in order of priority):
-* Grant achievements to owner based on preconditions
 * Updates...
-    * Add "delete" button to updates, visible to owner and admins only
-    * Display owner's profile picture
-    * Display owner's profile banner
+    * Add "delete" button to updates visible to owner only (later will include admins)
     * Display owners' achievements
-    * Display owners' total score and number of posts
+    * Display owners' total score, average score, and number of posts
+* Profile...
+    * Add average score display
+* Restaurants...
+    * Add "delete" button to restaurants (later make only visible to admins)
+* Updates (2, lower prio)...
+    * Prevent user from adding new update if last was added within 5min
+    * Display countdown below add update
+* Home page...
+    * Brief introduction, link to about us
+    * Show closest 3 restaurants with quick update submission
+* About page...
+    * introduction
+    * FAQs
+    * Team info
+    * links
+    * plans for future
+    * etc!
+* Sign up page...
+    * Add email / password / username(doesn't have to be unique) submission
+    * Add email verification
+    * Add google sign-up/log-in
 * Allow admin field to be added to users that grants the following:
     * Access to "add restaurant page"
     * View and use "delete" button on restaurants and updates
-* Restaurants...
-    * Add "delete" button to restaurants, visible to admins only
-* Home page update (display closest 3 restaurants)
-* Prevent user from adding new update if last was added within 5min
-* Add "about" page
-* Create custom sign up page
+* Data entry...
+    * Add all avatars to the db
+    * Add all banners to the db
+    * Add all achievements to the db and implement their unlock conditions
+    * Add all McDonalds in vancouver to the db
+* CSS design visuals and animations!
     
 ## 6. Future Features
 * Expanding from just icecream machines to all products (eg. smoothies)

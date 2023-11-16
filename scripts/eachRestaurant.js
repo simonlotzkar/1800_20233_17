@@ -60,9 +60,11 @@ async function populateRestaurant() {
         // restaurant's update subcollection listener
         db.collection("restaurants/" + restaurantID + "/updates")
             .onSnapshot(snapshot => {
+                // reset update log
                 document.getElementById("updates-go-here").innerHTML = "";
 
-                db.collection("restaurants/" + restaurantID + "/updates").orderBy("dateSubmitted").get()
+                // populate update log
+                db.collection("restaurants/" + restaurantID + "/updates").get()
                     .then(updatesCollection => {
                         updatesCollection.forEach(updateDoc => {
                             let updateID = updateDoc.id;
@@ -80,94 +82,109 @@ async function populateRestaurant() {
                                 .then(userDoc => {
                                     username = userDoc.data().username;
 
-                                    let newcard = cardTemplate.content.cloneNode(true);
+                                    // get avatar doc from ref
+                                    userDoc.data().avatar.get()
+                                        .then(avatarDoc => {
+                                            avatarImageURL = avatarDoc.data().imageURL;
 
-                                    newcard.querySelector(".card-update-ID").innerHTML = updateID;
-                                    newcard.querySelector(".card-update-username").innerHTML = username;
-                                    newcard.querySelector(".card-update-status").innerHTML = status;
-                                    newcard.querySelector(".card-update-dateSubmitted").innerHTML = dateSubmitted;
-                                    newcard.querySelector(".card-update-score").innerHTML = score;
+                                            // get banner doc from ref
+                                            userDoc.data().banner.get()
+                                                .then(bannerDoc => {
+                                                    bannerImageURL = bannerDoc.data().imageURL;
+                                                    let newcard = cardTemplate.content.cloneNode(true);
 
-                                    // adds listener to upvote btn
-                                    newcard.getElementById("input-update-upvote").addEventListener("click", function() {
-                                        // check if the user is logged in or if they are the author of the update
-                                        if (!currentUser) {
-                                            return alert("You must be logged-in to vote!");
-                                        } else if (updateUserID == currentUser.uid) {
-                                            return alert("You cannot vote on your own update!");
-                                        }
+                                                    newcard.querySelector(".card-update-ID").innerHTML = updateID;
+                                                    newcard.querySelector(".card-update-username").innerHTML = username;
+                                                    newcard.querySelector(".card-update-status").innerHTML = status;
+                                                    newcard.querySelector(".card-update-dateSubmitted").innerHTML = dateSubmitted;
+                                                    newcard.querySelector(".card-update-score").innerHTML = score;
 
-                                        db.collection("restaurants/" + restaurantID + "/updates").doc(updateID).get()
-                                            .then(doc => {
-                                                // if the user has upvoted, remove their upvote
-                                                if (doc.data().upvoterIDList.includes(currentUser.uid)) {
-                                                    db.collection("restaurants/" + restaurantID + "/updates").doc(updateID)
-                                                    .update({
-                                                        upvotes: fv.increment(-1),
-                                                        upvoterIDList: fv.arrayRemove(currentUser.uid),
+                                                    newcard.querySelector(".card-update-avatar").src = "../images/" + avatarImageURL + ".png";
+                                                    newcard.querySelector(".card-update-banner").src = "../images/" + bannerImageURL + ".png";
+
+                                                    // adds listener to upvote btn
+                                                    newcard.getElementById("input-update-upvote").addEventListener("click", function() {
+                                                        // check if the user is logged in or if they are the author of the update
+                                                        if (!currentUser) {
+                                                            return alert("You must be logged-in to vote!");
+                                                        } else if (updateUserID == currentUser.uid) {
+                                                            return alert("You cannot vote on your own update!");
+                                                        }
+
+                                                        // user is clear to vote, first get the update doc...
+                                                        db.collection("restaurants/" + restaurantID + "/updates").doc(updateID).get()
+                                                            .then(doc => {
+                                                                // if the user has upvoted, remove their upvote
+                                                                if (doc.data().upvoterIDList.includes(currentUser.uid)) {
+                                                                    db.collection("restaurants/" + restaurantID + "/updates").doc(updateID)
+                                                                    .update({
+                                                                        upvotes: fv.increment(-1),
+                                                                        upvoterIDList: fv.arrayRemove(currentUser.uid),
+                                                                    });
+                                                                // if the user has downvoted, remove their downvote then add their upvote
+                                                                } else if (doc.data().downvoterIDList.includes(currentUser.uid)) {
+                                                                    db.collection("restaurants/" + restaurantID + "/updates").doc(updateID)
+                                                                        .update({
+                                                                            downvotes: fv.increment(-1),
+                                                                            downvoterIDList: fv.arrayRemove(currentUser.uid),
+
+                                                                            upvotes: fv.increment(1),
+                                                                            upvoterIDList: fv.arrayUnion(currentUser.uid),
+                                                                        });
+                                                                // if the user has not voted, add their upvote
+                                                                } else {
+                                                                    db.collection("restaurants/" + restaurantID + "/updates").doc(updateID)
+                                                                        .update({
+                                                                            upvotes: fv.increment(1),
+                                                                            upvoterIDList: fv.arrayUnion(currentUser.uid),
+                                                                        });
+                                                                }
+                                                            });
                                                     });
-                                                // if the user has downvoted, remove their downvote then add their upvote
-                                                } else if (doc.data().downvoterIDList.includes(currentUser.uid)) {
-                                                    db.collection("restaurants/" + restaurantID + "/updates").doc(updateID)
-                                                        .update({
-                                                            downvotes: fv.increment(-1),
-                                                            downvoterIDList: fv.arrayRemove(currentUser.uid),
 
-                                                            upvotes: fv.increment(1),
-                                                            upvoterIDList: fv.arrayUnion(currentUser.uid),
-                                                        });
-                                                // if the user has not voted, add their upvote
-                                                } else {
-                                                    db.collection("restaurants/" + restaurantID + "/updates").doc(updateID)
-                                                        .update({
-                                                            upvotes: fv.increment(1),
-                                                            upvoterIDList: fv.arrayUnion(currentUser.uid),
-                                                        });
-                                                }
-                                            });
-                                    });
+                                                    // adds listener to downvote btn
+                                                    newcard.getElementById("input-update-downvote").addEventListener("click", function() {
+                                                        // check if the user is logged in or if they are the author of the update
+                                                        if (!currentUser) {
+                                                            return alert("You must be logged-in to vote!");
+                                                        } else if (updateUserID == currentUser.uid) {
+                                                            return alert("You cannot vote on your own update!");
+                                                        }
 
-                                    // adds listener to downvote btn
-                                    newcard.getElementById("input-update-downvote").addEventListener("click", function() {
-                                        // check if the user is logged in or if they are the author of the update
-                                        if (!currentUser) {
-                                            return alert("You must be logged-in to vote!");
-                                        } else if (updateUserID == currentUser.uid) {
-                                            return alert("You cannot vote on your own update!");
-                                        }
-
-                                        db.collection("restaurants/" + restaurantID + "/updates").doc(updateID).get()
-                                            .then(doc => {
-                                                // if the user has downvoted, remove their downvote
-                                                if (doc.data().downvoterIDList.includes(currentUser.uid)) {
-                                                    db.collection("restaurants/" + restaurantID + "/updates").doc(updateID)
-                                                    .update({
-                                                        downvotes: fv.increment(-1),
-                                                        downvoterIDList: fv.arrayRemove(currentUser.uid),
+                                                        db.collection("restaurants/" + restaurantID + "/updates").doc(updateID).get()
+                                                            .then(doc => {
+                                                                // if the user has downvoted, remove their downvote
+                                                                if (doc.data().downvoterIDList.includes(currentUser.uid)) {
+                                                                    db.collection("restaurants/" + restaurantID + "/updates").doc(updateID)
+                                                                    .update({
+                                                                        downvotes: fv.increment(-1),
+                                                                        downvoterIDList: fv.arrayRemove(currentUser.uid),
+                                                                    });
+                                                                // if the user has upvoted, remove their upvote then add their downvote
+                                                                } else if (doc.data().upvoterIDList.includes(currentUser.uid)) {
+                                                                    db.collection("restaurants/" + restaurantID + "/updates").doc(updateID)
+                                                                        .update({
+                                                                            upvotes: fv.increment(-1),
+                                                                            upvoterIDList: fv.arrayRemove(currentUser.uid),
+                                                                            
+                                                                            downvotes: fv.increment(1),
+                                                                            downvoterIDList: fv.arrayUnion(currentUser.uid),
+                                                                        });
+                                                                // if the user has not voted, add their downvote
+                                                                } else {
+                                                                    db.collection("restaurants/" + restaurantID + "/updates").doc(updateID)
+                                                                        .update({
+                                                                            downvotes: fv.increment(1),
+                                                                            downvoterIDList: fv.arrayUnion(currentUser.uid),
+                                                                        });
+                                                                }
+                                                            });
                                                     });
-                                                // if the user has upvoted, remove their upvote then add their downvote
-                                                } else if (doc.data().upvoterIDList.includes(currentUser.uid)) {
-                                                    db.collection("restaurants/" + restaurantID + "/updates").doc(updateID)
-                                                        .update({
-                                                            upvotes: fv.increment(-1),
-                                                            upvoterIDList: fv.arrayRemove(currentUser.uid),
-                                                            
-                                                            downvotes: fv.increment(1),
-                                                            downvoterIDList: fv.arrayUnion(currentUser.uid),
-                                                        });
-                                                // if the user has not voted, add their downvote
-                                                } else {
-                                                    db.collection("restaurants/" + restaurantID + "/updates").doc(updateID)
-                                                        .update({
-                                                            downvotes: fv.increment(1),
-                                                            downvoterIDList: fv.arrayUnion(currentUser.uid),
-                                                        });
-                                                }
-                                            });
-                                    });
 
-                                    document.getElementById("updates-go-here").prepend(newcard);
+                                                    document.getElementById("updates-go-here").prepend(newcard);
 
+                                                });
+                                        });                                    
                                 });
                         });
                     });

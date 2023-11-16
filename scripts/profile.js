@@ -13,74 +13,77 @@ firebase.auth().onAuthStateChanged((user) => {
   if (user) {
     currentUser = db.collection("users").doc(user.uid);
 
-    let userAvatarRef;
-    let userBannerRef;
-    let userAchievementRefs = [];
-
     // user doc
     db.collection("users").doc(user.uid).get()
-      .then(doc => {
-        let username = doc.data().username;
-        let dateSignUp = generateDateString(doc.data().dateSignUp);
+      .then(userDoc => {
+        let username = userDoc.data().username;
+        let dateSignUp = generateDateString(userDoc.data().dateSignUp);
 
-        userAvatarRef = doc.data().avatar;
-        userBannerRef = doc.data().banner;
-        userAchievementRefs = doc.data().achievements;
+        userAvatarRef = userDoc.data().avatar;
+        userBannerRef = userDoc.data().banner;
+        userAchievementRefs = userDoc.data().achievements;
         
         document.getElementById("input-profile-username").value = username;
         document.getElementById("profile-dateSignUp").innerHTML = dateSignUp;
         document.getElementById("profile-userScore").innerHTML = userScore;
         document.getElementById("profile-updateCount").innerHTML = updateCount;
-      });
 
-    // customizations collection
-    db.collection("customizations").get()
-      .then(customizationsCollection => {
-        // for each customization
-        customizationsCollection.forEach(doc => {
-          let type = doc.data().type;
-          let name = doc.data().name;
-          let imageURL = doc.data().imageURL;
-          let description = doc.data().description;
+        // customizations collection
+        db.collection("customizations").get()
+        .then(customizationsCollection => {
+          // for each customization
+          customizationsCollection.forEach(customizationDoc => {
+            let type = customizationDoc.data().type;
+            let name = customizationDoc.data().name;
+            let imageURL = customizationDoc.data().imageURL;
+            let description = customizationDoc.data().description;
 
-          if (type == "avatar") {
-            // build customization card template for avatar
-            let newcard = customizationCardTemplate.content.cloneNode(true);
+            if (type == "avatar") {
+              // build customization card template for avatars
+              let newcard = customizationCardTemplate.content.cloneNode(true);
 
-            newcard.querySelector(".card-customization-name").innerHTML = name;
-            newcard.querySelector(".card-customization-image").src = "/images/" + imageURL + ".png";
-            newcard.querySelector(".card-customization-image").alt = "/images/" + imageURL + ".png";
-            newcard.querySelector(".card-customization-description").innerHTML = description;
-            newcard.querySelector("a").onclick = function() {
-              setAvatar(doc)
-            };
-            
-            document.getElementById("avatars-go-here").append(newcard);
-          } else if (type == "banner") {
-            // build customization card template for avatar
-            let newcard = customizationCardTemplate.content.cloneNode(true);
+              newcard.querySelector(".card-customization-name").innerHTML = name;
+              newcard.querySelector(".card-customization-image").src = "/images/" + imageURL + ".png";
+              newcard.querySelector(".card-customization-image").alt = "/images/" + imageURL + ".png";
+              newcard.querySelector(".card-customization-description").innerHTML = description;
+              newcard.querySelector("a").onclick = function() {
+                setAvatar(customizationDoc)
+              };
+              
+              document.getElementById("avatars-go-here").append(newcard);
+              
+            } else if (type == "banner") {
+              // build customization card template for banners
+              let newcard = customizationCardTemplate.content.cloneNode(true);
 
-            newcard.querySelector(".card-customization-name").innerHTML = name;
-            newcard.querySelector(".card-customization-image").src = "/images/" + imageURL + ".png";
-            newcard.querySelector(".card-customization-image").alt = "/images/" + imageURL + ".png";
-            newcard.querySelector(".card-customization-description").innerHTML = description;
-            newcard.querySelector("a").onclick = function() {
-              setBanner(doc)
-            };
+              newcard.querySelector(".card-customization-name").innerHTML = name;
+              newcard.querySelector(".card-customization-image").src = "/images/" + imageURL + ".png";
+              newcard.querySelector(".card-customization-image").alt = "/images/" + imageURL + ".png";
+              newcard.querySelector(".card-customization-description").innerHTML = description;
+              newcard.querySelector("a").onclick = function() {
+                setBanner(customizationDoc)
+              };
 
-            document.getElementById("banners-go-here").append(newcard);
-          } else if (type == "achievement") {
-            // build customization card template for avatar
-            let newcard = customizationCardTemplate.content.cloneNode(true);
+              document.getElementById("banners-go-here").append(newcard);
 
-            newcard.querySelector(".card-customization-name").innerHTML = name;
-            newcard.querySelector(".card-customization-image").src = "/images/" + imageURL + ".png";
-            newcard.querySelector(".card-customization-image").alt = "/images/" + imageURL + ".png";
-            newcard.querySelector(".card-customization-description").innerHTML = description;
-            newcard.querySelector("a").innerHTML = "Locked!";
-            
-            document.getElementById("achievements-go-here").append(newcard);
-          }
+            } else if (type == "achievement") {
+              // build customization card template for achievements
+              let newcard = customizationCardTemplate.content.cloneNode(true);
+              newcard.querySelector(".card-customization-name").innerHTML = name;
+              newcard.querySelector(".card-customization-image").src = "/images/" + imageURL + ".png";
+              newcard.querySelector(".card-customization-description").innerHTML = description;
+              newcard.querySelector("a").innerHTML = "Locked.";
+
+              // check user's achievements and change display to unlocked if this customization is among them
+              userDoc.data().achievements.forEach(achievementDoc => {
+                if (achievementDoc.id == customizationDoc.id) {
+                  newcard.querySelector("a").innerHTML = "Unlocked!";
+                }
+              });
+              
+              document.getElementById("achievements-go-here").append(newcard);
+            }
+          });
         });
       });
 

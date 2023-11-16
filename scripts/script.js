@@ -228,13 +228,12 @@ function submitUpdate(status) {
   // Get currently logged in user from users collection
   db.collection("users").doc(currentUser.uid).get()
     .then((doc => {    
-      
       // get restaurant's updates subcollection
       db.collection("restaurants/" + restaurantID + "/updates")
         // ...add new update
         .add({
           status: status,
-          userID: currentUser.uid,
+          userID: doc.id,
           dateSubmitted: now,
           upvotes: 0,
           downvotes: 0,
@@ -242,13 +241,39 @@ function submitUpdate(status) {
           downvoterIDList: [],
         })
         // ...add new update to user's reference updates subcollection
-        .then((docRef) => {
-          db.collection("users/" + doc.id + "/refUpdates")
-            .add({
-              restaurantID: restaurantID,
-              updateID: docRef.id,
-              date: now,
-            });
+        .then(docRef => {
+          let decaTroubleID = "0cUJnwSxpytOdB4qClIU";
+          let doubleTroubleId = "D6yfEs5SbZBCTu50bXm3";
+          let refUpdatesCount = 0;
+          let refUpdates = db.collection("users/" + doc.id + "/refUpdates");
+          
+          // update user's reference updates
+          refUpdates.add({
+            restaurantID: restaurantID,
+            updateID: docRef.id,
+            date: now,
+          });
+
+          // count user's ref update collection size
+          refUpdates.get().then(col => {
+            col.forEach(doc => {
+              refUpdatesCount += 1;
+            })
+            // check if they unlock achievements and award if so
+            if (refUpdatesCount >= 2) {            
+              if (refUpdatesCount >= 10) {
+                db.collection("users").doc(currentUser.uid).update({
+                  achievements: fv.arrayUnion(db.doc("customizations/" + decaTroubleID)),
+                })
+                alert("Achievement Awarded! View \"DecaTrouble!\" in your profile for details.")
+              } else {
+                db.collection("users").doc(currentUser.uid).update({
+                  achievements: fv.arrayUnion(db.doc("customizations/" + doubleTroubleId)),
+                });
+                alert("Achievement Awarded! View \"DecaTrouble!\" in your profile for details.")
+              }
+            }
+          })          
         })
         // Catch and alert errors
         .catch((error) => {
