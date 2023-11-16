@@ -23,7 +23,6 @@ Here are some known bugs:
 Features and tasks needed to be done (in order of priority):
 * Updates...
     * Add "delete" button to updates visible to owner only (later will include admins)
-    * Display owners' achievements
     * Display owners' total score, average score, and number of posts
 * Profile...
     * Add average score display

@@ -312,12 +312,12 @@ function deg2rad(deg) {
 }
 
 // EFFECTS: returns a promise of the user's geolocation
-function getLocationFromUser () {
+function getLocationFromUser() {
   return new Promise((resolve, reject) => {
     if (navigator.geolocation) {
       navigator.geolocation
           .getCurrentPosition((position) => {
-              resolve(position);
+            resolve(position);
           }, 
           reject);
     } else {

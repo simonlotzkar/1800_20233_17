@@ -7,6 +7,7 @@ DESCRIPTION: populates the restaurant display and its list
 let restaurantID = new URL(window.location.href).searchParams.get("docID");
 let cardTemplate = document.getElementById("updateCardTemplate");
 let currentUser;
+let numOfCards = 0;
 
 // assign currentUser if logged in
 firebase.auth().onAuthStateChanged((user) => {
@@ -57,7 +58,7 @@ async function populateRestaurant() {
                 document.getElementById("restaurant-status").innerHTML = statusString;
             });
 
-        // restaurant's update subcollection listener
+        // restaurant's update subcollection listens to changes in db
         db.collection("restaurants/" + restaurantID + "/updates")
             .onSnapshot(snapshot => {
                 // reset update log
@@ -91,6 +92,7 @@ async function populateRestaurant() {
                                             userDoc.data().banner.get()
                                                 .then(bannerDoc => {
                                                     bannerImageURL = bannerDoc.data().imageURL;
+                                                    
                                                     let newcard = cardTemplate.content.cloneNode(true);
 
                                                     newcard.querySelector(".card-update-ID").innerHTML = updateID;
@@ -181,10 +183,10 @@ async function populateRestaurant() {
                                                             });
                                                     });
 
-                                                    document.getElementById("updates-go-here").prepend(newcard);
-
+                                                    addAchievements(newcard);
+                                                    document.getElementById("updates-go-here").appendChild(newcard);
                                                 });
-                                        });                                    
+                                        });        
                                 });
                         });
                     });
@@ -192,6 +194,33 @@ async function populateRestaurant() {
     } catch (error) {
         alert("Geolocation denied by browser!" + error);
     }
+}
+
+// REQUIRES: card has already been populated with other data
+// EFFECTS: retrieves the user's data from the given card, then goes through their 
+//          achievement array and adds each one as an image to the card
+function addAchievements(card) {
+
+    let cardID = card.querySelector(".card-update-ID").innerHTML;
+    let cardAchievementsDiv = card.querySelector(".achievements-go-here");
+
+    db.collection("restaurants/" + restaurantID + "/updates").doc(cardID).get()
+        .then(updateDoc => {
+            let cardUserID = updateDoc.data().userID;
+
+            db.collection("users").doc(cardUserID).get()
+                .then(userDoc => {
+                    userDoc.data().achievements.forEach(achievementRef => {
+                        achievementRef.get()
+                            .then(achievementDoc => {
+                                let achievementImage = document.createElement("img");
+                                achievementImage.setAttribute("src", "../images/" + achievementDoc.data().imageURL + ".png");
+                                achievementImage.setAttribute("height", "42");
+                                cardAchievementsDiv.appendChild(achievementImage);
+                        });
+                    });
+                });
+        });
 }
 
 populateRestaurant();
