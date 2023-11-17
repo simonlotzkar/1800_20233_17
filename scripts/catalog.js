@@ -27,24 +27,28 @@ async function populateRestaurants() {
 
                 // add restaurant card for each key-value pair in the map
                 sortedMap.forEach(function(value, key) {
-                    let doc = key;
+                    let restaurantDoc = key;
                     let distance = value;
 
                     let cardTemplate = document.getElementById("restaurantCardTemplate");
                     let newcard = cardTemplate.content.cloneNode(true);
-                    let address = doc.data().address;
-                    let city = doc.data().city;
-                    let postalCode = doc.data().postalCode;
+
+                    let restaurantID = restaurantDoc.id;
+                    let address = restaurantDoc.data().address;
+                    let city = restaurantDoc.data().city;
+                    let postalCode = restaurantDoc.data().postalCode;
+                    let status = restaurantDoc.data().status;
+                    let dateUpdated = restaurantDoc.data().dateUpdated;
                     let distanceString = distance.toFixed(2) + "km away";
                     let statusString = "unknown";
                     let dateUpdatedString = "never";
         
-                    if ((doc.data().status != undefined) && (doc.data().status != null)) {
-                        statusString = generateWorkingString(doc.data().status);
+                    if ((status != undefined) && (status != null)) {
+                        statusString = generateWorkingString(status);
                     }
         
-                    if ((doc.data().dateUpdated != undefined) && (doc.data().dateUpdated != null)) {
-                        dateUpdatedString = generateTimeSinceString(doc.data().dateUpdated);
+                    if ((dateUpdated != undefined) && (dateUpdated != null)) {
+                        dateUpdatedString = generateTimeSinceString(dateUpdated);
                     }
                     
                     newcard.querySelector(".card-restaurant-address").innerHTML = address;
@@ -53,9 +57,10 @@ async function populateRestaurants() {
                     newcard.querySelector(".card-restaurant-dateUpdated").innerHTML = dateUpdatedString;
                     newcard.querySelector(".card-restaurant-status").innerHTML = statusString;
                     newcard.querySelector(".card-restaurant-distance").innerHTML = distanceString;
-                    newcard.querySelector("a").href = "eachRestaurant.html?docID=" + doc.id;
+                    newcard.querySelector("a").href = "eachRestaurant.html?docID=" + restaurantID;
                     
                     document.getElementById("restaurants-go-here").appendChild(newcard);
+
                 });
             });
     } catch (error) {

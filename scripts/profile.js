@@ -5,7 +5,8 @@ DESCRIPTION: populates the profile display
 let refUpdateCardTemplate = document.getElementById("refUpdateCardTemplate");
 let customizationCardTemplate = document.getElementById("customizationCardTemplate");
 let currentUser;
-let userScore = 0;
+let totalScore = 0;
+let averageScore = 0;
 let updateCount = 0;
 
 // when user is logged in, populates the profile display
@@ -25,7 +26,8 @@ firebase.auth().onAuthStateChanged((user) => {
         
         document.getElementById("input-profile-username").value = username;
         document.getElementById("profile-dateSignUp").innerHTML = dateSignUp;
-        document.getElementById("profile-userScore").innerHTML = userScore;
+        document.getElementById("profile-totalScore").innerHTML = totalScore;
+        document.getElementById("profile-averageScore").innerHTML = averageScore;
         document.getElementById("profile-updateCount").innerHTML = updateCount;
 
         // customizations collection
@@ -130,8 +132,10 @@ firebase.auth().onAuthStateChanged((user) => {
                     
                     // update user count and score fields
                     updateCount += 1;
-                    userScore += score;
-                    document.getElementById("profile-userScore").innerHTML = userScore;
+                    totalScore += score;
+                    averageScore = (totalScore / updateCount).toFixed(3);
+                    document.getElementById("profile-totalScore").innerHTML = totalScore;
+                    document.getElementById("profile-averageScore").innerHTML = averageScore;
                     document.getElementById("profile-updateCount").innerHTML = updateCount;
                   });
               });

@@ -104,8 +104,39 @@ async function populateRestaurant() {
                                                     newcard.querySelector(".card-update-avatar").src = "../images/" + avatarImageURL + ".png";
                                                     newcard.querySelector(".card-update-banner").src = "../images/" + bannerImageURL + ".png";
 
+                                                    // adds listener to delete btn; deletes the update and its corresponding refUpdate
+                                                    newcard.querySelector(".btn-update-delete").addEventListener("click", function() {
+                                                        if (confirm("Are you sure you want to delete this update?")) {
+                                                            // get this update and delete it
+                                                            db.collection("restaurants/" + restaurantID + "/updates").doc(updateID).delete()
+                                                                .then(() => {
+                                                                    console.log("Deleted updateID=" + updateID);
+                                                                })
+                                                                .catch((error) => {
+                                                                    console.log(error)
+                                                                });
+
+                                                            // get the user that posted this update's refUpdates subcollection, then iterate through it and where 
+                                                            // the refUpdate has the same updateID as this update, delete that refUpdate from the subcollection
+                                                            db.collection("users/" + userDoc.id + "/refUpdates").get()
+                                                                .then(refUpdatesCollection => {
+                                                                    refUpdatesCollection.forEach(refUpdateDoc => {
+                                                                        if (refUpdateDoc.data().updateID == updateID) {
+                                                                            db.collection("users/" + userDoc.id + "/refUpdates").doc(refUpdateDoc.id).delete()
+                                                                                .then(() => {
+                                                                                    console.log("Deleted refUpdateID=" + refUpdateDoc.id);
+                                                                                })
+                                                                                .catch((error) => {
+                                                                                    console.log(error)
+                                                                                });
+                                                                        }
+                                                                    });
+                                                                });
+                                                        }
+                                                    });
+
                                                     // adds listener to upvote btn
-                                                    newcard.getElementById("input-update-upvote").addEventListener("click", function() {
+                                                    newcard.querySelector(".btn-update-upvote").addEventListener("click", function() {
                                                         // check if the user is logged in or if they are the author of the update
                                                         if (!currentUser) {
                                                             return alert("You must be logged-in to vote!");
@@ -145,7 +176,7 @@ async function populateRestaurant() {
                                                     });
 
                                                     // adds listener to downvote btn
-                                                    newcard.getElementById("input-update-downvote").addEventListener("click", function() {
+                                                    newcard.querySelector(".btn-update-downvote").addEventListener("click", function() {
                                                         // check if the user is logged in or if they are the author of the update
                                                         if (!currentUser) {
                                                             return alert("You must be logged-in to vote!");

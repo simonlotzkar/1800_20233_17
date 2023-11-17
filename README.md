@@ -18,42 +18,46 @@ The app is ready straight away for viewing, but to submit data users must sign u
 ## 5. Bugs and Limitations
 Here are some known bugs:
 * Restaurant displays updates out of order
+* Decatrouble achievement awarded even after earning it
 
 ## 6. TODO List
 Features and tasks needed to be done (in order of priority):
-* Updates...
-    * Add "delete" button to updates visible to owner only (later will include admins)
-    * Display owners' total score, average score, and number of posts
-* Profile...
-    * Add average score display
-* Restaurants...
-    * Add "delete" button to restaurants (later make only visible to admins)
-* Updates (2, lower prio)...
-    * Prevent user from adding new update if last was added within 5min
-    * Display countdown below add update
-* Home page...
+* Home page
     * Brief introduction, link to about us
     * Show closest 3 restaurants with quick update submission
-* About page...
+* About page
     * introduction
     * FAQs
     * Team info
     * links
     * plans for future
     * etc!
-* Sign up page...
+* Sign up page
     * Add email / password / username(doesn't have to be unique) submission
     * Add email verification
     * Add google sign-up/log-in
-* Allow admin field to be added to users that grants the following:
-    * Access to "add restaurant page"
-    * View and use "delete" button on restaurants and updates
-* Data entry...
+* Updates
+    * Prevent user from adding new update if last was added within 5min
+    * Display countdown below add update
+    * Create modal popup to display achievement details when clicking on a user's achievement image from their updates
+    * Display owners' total score, average score, and number of posts
+    * Hide delete button for non-owners
+* Restaurants
+    * Hide "delete" button
+* Admin
+    * Add admin field to users
+    * Hide "add restaurant page" if not logged in as an admin
+    * Show "delete" button on updates if logged in as an admin
+    * Show ribbon on navbar if logged in as an admin
+* Profile
+    * Add a preview of what the user's posts will look like
+* Data entry
     * Add all avatars to the db
     * Add all banners to the db
     * Add all achievements to the db and implement their unlock conditions
     * Add all McDonalds in vancouver to the db
-* CSS design visuals and animations!
+* Visuals
+    * (profile.html) Change customization view to a compact grid layout of each option, with the user's chosen one (or unlocked ones) as highlighted. Allow clicking on each one for a larger view and details. 
     
 ## 6. Future Features
 * Expanding from just icecream machines to all products (eg. smoothies)
