@@ -25,18 +25,6 @@ Here are some known bugs:
 
 ## 6. TODO List
 Features and tasks needed to be done (in order of priority):
-* About page
-    * introduction
-    * FAQs
-    * Team info
-    * links
-    * plans for future
-    * business valuation
-* Admin
-    * Add admin field to users
-    * Hide "add restaurant page" if not logged in as an admin
-    * Show "delete" button on updates if logged in as an admin
-    * Show ribbon on navbar if logged in as an admin
 * Sign up page
     * Add email / password / username(doesn't have to be unique) submission
     * Add email verification
@@ -47,7 +35,7 @@ Features and tasks needed to be done (in order of priority):
     * Display countdown below add update
     * Create modal popup to display achievement details when clicking on a user's achievement image from their updates
     * Display owners' total score, average score, and number of posts
-    * Hide delete button for non-owners
+    * Hide delete button for non-owners and non-admins
 * Profile
     * Add a preview 'dummy update' of what the user's posts will look like
 * Data entry
@@ -55,6 +43,7 @@ Features and tasks needed to be done (in order of priority):
     * Add all banners to the db
     * Add all achievements to the db and implement their unlock conditions
     * Add all McDonalds in vancouver to the db
+    * About page content
 * Visuals
     * (profile.html) Change customization view to a compact grid layout of each option, with the user's chosen one (or unlocked ones) as highlighted. Allow clicking on each one for a larger view and details. 
     

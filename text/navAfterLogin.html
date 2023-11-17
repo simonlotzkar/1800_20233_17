@@ -23,7 +23,7 @@
                 <li class="nav-item">
                     <a class="nav-link" href="../about.html">About</a>
                 </li>
-                <li class="nav-item">
+                <li id="nav-submitRestaurant" class="nav-item" style="display: none;">
                     <a class="nav-link" href="../submitRestaurant.html">Submit Restaurant</a>
                 </li>
                 <li class="nav-item">
@@ -39,6 +39,7 @@
         </div>
     </div>
 </nav>
+<h6 id="banner-admin" class="text-bg-danger text-center" style="display: none;">ADMIN ACCOUNT</h6>
 
 <script>
     userID = firebase.auth().currentUser.uid;
@@ -51,5 +52,10 @@
                     document.querySelector(".currentUser-avatar").src = "../images/" + imageURL + ".png";
                 });
             document.querySelector(".currentUser-username").innerHTML = doc.data().username;
+
+            if (doc.data().admin) {
+                document.querySelector("#nav-submitRestaurant").style.display = "block";
+                document.querySelector("#banner-admin").style.display = "block";
+            }
         });
 </script>
