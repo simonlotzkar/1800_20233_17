@@ -22,22 +22,20 @@ Here are some known bugs:
 * Last updated and status don't change after deleting updates
     => replace lastUpdated and status fields with listeners that iterate through the update collection to determine last updated and status
 * Update log in profile page doesn't update when deleting updates
+* Github commits contain api key!!!
 
 ## 6. TODO List
 Features and tasks needed to be done (in order of priority):
-* Sign up page
-    * Add email / password / username(doesn't have to be unique) submission
-    * Add email verification
-    * Add google sign-up/log-in
 * Updates
     * add submission on restaurant cards
     * Prevent user from adding new update if last was added within 5min
-    * Display countdown below add update
     * Create modal popup to display achievement details when clicking on a user's achievement image from their updates
     * Display owners' total score, average score, and number of posts
     * Hide delete button for non-owners and non-admins
 * Profile
     * Add a preview 'dummy update' of what the user's posts will look like
+    * Add password changing
+    * Add email changing
 * Data entry
     * Add all avatars to the db
     * Add all banners to the db
@@ -50,6 +48,8 @@ Features and tasks needed to be done (in order of priority):
 ## 6. Future Features
 * Expanding from just icecream machines to all products (eg. smoothies)
 * Expanding to other businesses (eg. TimHortons)
+* Add email verification (requires domain hosting)
+* Add google sign-up/log-in
 	
 ## 7. Contents of Folder
 Content of the project folder:
