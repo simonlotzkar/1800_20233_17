@@ -19,38 +19,37 @@ The app is ready straight away for viewing, but to submit data users must sign u
 Here are some known bugs:
 * Restaurant displays updates out of order
 * Decatrouble achievement awarded even after earning it
+* Last updated and status don't change after deleting updates
+    => replace lastUpdated and status fields with listeners that iterate through the update collection to determine last updated and status
+* Update log in profile page doesn't update when deleting updates
 
 ## 6. TODO List
 Features and tasks needed to be done (in order of priority):
-* Home page
-    * Brief introduction, link to about us
-    * Show closest 3 restaurants with quick update submission
 * About page
     * introduction
     * FAQs
     * Team info
     * links
     * plans for future
-    * etc!
-* Sign up page
-    * Add email / password / username(doesn't have to be unique) submission
-    * Add email verification
-    * Add google sign-up/log-in
-* Updates
-    * Prevent user from adding new update if last was added within 5min
-    * Display countdown below add update
-    * Create modal popup to display achievement details when clicking on a user's achievement image from their updates
-    * Display owners' total score, average score, and number of posts
-    * Hide delete button for non-owners
-* Restaurants
-    * Hide "delete" button
+    * business valuation
 * Admin
     * Add admin field to users
     * Hide "add restaurant page" if not logged in as an admin
     * Show "delete" button on updates if logged in as an admin
     * Show ribbon on navbar if logged in as an admin
+* Sign up page
+    * Add email / password / username(doesn't have to be unique) submission
+    * Add email verification
+    * Add google sign-up/log-in
+* Updates
+    * add submission on restaurant cards
+    * Prevent user from adding new update if last was added within 5min
+    * Display countdown below add update
+    * Create modal popup to display achievement details when clicking on a user's achievement image from their updates
+    * Display owners' total score, average score, and number of posts
+    * Hide delete button for non-owners
 * Profile
-    * Add a preview of what the user's posts will look like
+    * Add a preview 'dummy update' of what the user's posts will look like
 * Data entry
     * Add all avatars to the db
     * Add all banners to the db
@@ -69,6 +68,7 @@ Content of the project folder:
 ```
  Top level of project folder: 
 ├── .gitignore               # Git ignore file
+├── about.html               # info page on app and authors
 ├── catalog.html             # restaurant browser page
 ├── eachRestaurant.html      # individual restaurant page
 ├── index.html               # landing page
@@ -88,6 +88,7 @@ It has the following subfolders and files:
     /catalog.js                  # runs catalog page
     /eachRestauarant.js          # runs restaurant page
     /firebaseAPI_TEAM17.js       # connects to firebase API
+    /index.js                    # runs index (home) page
     /login.js                    # logs in user to firebase auth
     /profile.js                  # runs profile page
     /script.js                   # general functions used by multiple pages
@@ -100,6 +101,7 @@ It has the following subfolders and files:
     /footer.html                 # footer information
     /navAfterLogin.html          # navigation bar (after login)
     /navBeforeLogin.html         # navigation bar (after login)
+    /restaurantCardTemplate.html # template for generating restaurant cards
     /updateAfterLogin.html       # allows update submission
     /updateBeforeLogin.html      # prompts for login/signup
 ```

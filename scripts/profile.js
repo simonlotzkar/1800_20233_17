@@ -105,8 +105,8 @@ firebase.auth().onAuthStateChanged((user) => {
             let working = "ERROR";
             
             // restaurants collection
-            db.collection("restaurants").doc(restaurantID)
-              .get().then(doc => {  
+            db.collection("restaurants").doc(restaurantID).get()
+              .then(doc => {  
                 restaurantName = doc.data().address;
 
                 // restaurant's updates subcollection
@@ -128,9 +128,14 @@ firebase.auth().onAuthStateChanged((user) => {
                     newcard.querySelector(".card-refUpdate-restaurant").innerHTML = restaurantName;
                     newcard.querySelector("a").href = "eachRestaurant.html?docID=" + restaurantID;
                     
+                    // adds listener to delete btn; deletes the update and its corresponding refUpdate
+                    newcard.querySelector(".btn-update-delete").addEventListener("click", function() {
+                      deleteUpdate(restaurantID, updateID);
+                    });
+
                     document.getElementById("refUpdates-go-here").append(newcard);
                     
-                    // update user count and score fields
+                    // update user count and score fields after adding update card
                     updateCount += 1;
                     totalScore += score;
                     averageScore = (totalScore / updateCount).toFixed(3);

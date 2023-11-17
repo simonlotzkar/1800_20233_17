@@ -49,36 +49,22 @@
 
     <!-- CONTENT -->
     <div class="container text-center">
-        <!-- Title -->
+        <!-- Intro -->
         <div class="container">
-            <h1>
-                Restaurant Catalog
-            </h1>
-        </div>
-
-        <!-- Restaurants -->
-        <div class="container">
-            <h6>If you see a restaurant you've recently been to, please submit whether their machine was working on not!</h6>
-            <!-- Search Bar -->
-            <div class="input-group mb-2 d-flex justify-content-center">
-                <div>
-                    <input type="text" id="input-searchbar" class="form-control" placeholder="Filter by address..."/>
-                </div>
-                <button type="button" class="btn btn-primary" onclick="populateFilteredRestaurants()">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
-                        <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 
-                        1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
-                    </svg>
-                </button>
-            </div>
-            <div class="container">
-                <div id="restaurants-go-here" class="row row-cols-auto"></div>
-            </div>
+            <h2>
+                Find out if the icecream machine is working!
+            </h2>
+            <span>Have you ever wished you knew ahead of time whether a McDonalds 
+                location had its icecream available, <em>before</em> you arrived? 
+                McWorking helps you answer this very question by providing a 
+                user-driven tracking app that targets this very issue. When you find 
+                yourself heading over to McDonalds for icecream, simply check the 
+                location on here to see if anyone has reported the machine's status 
+                recently! To repay the favour, after visiting please submit an update 
+                to let others know. Doing so not only earns you real life karma, but 
+                also will be rewarded with in-app rewards.</span>
         </div>
     </div>
-
-    <!-- restaurant card template -->
-    <template id="restaurantCardTemplatePlaceholder">loading...</template>
 
     <!-- FOOTER -->
     <nav id="footerPlaceholder">loading footer...</nav>
@@ -89,7 +75,6 @@
     <script src="./scripts/firebaseAPI_TEAM17.js"></script>
     <script src="./scripts/skeleton.js"></script>
     <script src="./scripts/script.js"></script>
-    <script src="./scripts/catalog.js"></script>
 
 </body>
 
