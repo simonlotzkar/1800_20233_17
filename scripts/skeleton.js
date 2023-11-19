@@ -2,7 +2,6 @@
 CONTRIBUTORS: SimonLotzkar
 DESCRIPTION: populates the placeholders on every page
 -------------------------------------------------------- */
-
 // loads placeholders irrespective of auth
 $("#footerPlaceholder").load("./text/footer.html");
 $("#restaurantCardTemplatePlaceholder").load("./text/restaurantCardTemplate.html");

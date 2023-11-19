@@ -218,10 +218,26 @@ function addAchievements(card) {
                     userDoc.data().achievements.forEach(achievementRef => {
                         achievementRef.get()
                             .then(achievementDoc => {
+                                let achievementName = achievementDoc.data().name;
+                                let achievementDescription = achievementDoc.data().description;
+
                                 let achievementImage = document.createElement("img");
                                 achievementImage.setAttribute("src", "../images/" + achievementDoc.data().imageURL + ".png");
                                 achievementImage.setAttribute("height", "42");
-                                cardAchievementsDiv.appendChild(achievementImage);
+
+                                let achievementPopup = document.createElement("a");
+                                achievementPopup.appendChild(achievementImage);
+                                achievementPopup.setAttribute("data-bs-toggle", "popover");
+                                achievementPopup.setAttribute("data-bs-trigger", "focus");
+                                achievementPopup.setAttribute("data-bs-title", achievementName);
+                                achievementPopup.setAttribute("data-bs-content", achievementDescription);
+                                achievementPopup.setAttribute("tabindex", "0");
+                                
+                                cardAchievementsDiv.appendChild(achievementPopup);
+
+                                // Enable popovers https://getbootstrap.com/docs/5.2/components/popovers/
+                                const popoverTriggerList = document.querySelectorAll('[data-bs-toggle="popover"]');
+                                const popoverList = [...popoverTriggerList].map(popoverTriggerEl => new bootstrap.Popover(popoverTriggerEl));
                         });
                     });
                 });

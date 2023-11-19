@@ -38,6 +38,7 @@ Here are some known bugs, limitations, and security risks:
 * Expanding to other businesses (eg. TimHortons)
 * Add email verification (requires domain hosting)
 * Add google sign-up/log-in
+* Prevent users from adding updates too rapidly (anti spam)
 	
 ## 6. Contents of Folder
 Content of the project folder:
@@ -126,8 +127,6 @@ Content of the firestore database:
 ## 8. TODO List
 Features and tasks needed to be done (in order of priority):
 * Updates
-    * Prevent user from adding new update if last was added within 5min
-    * Provide tooltip to show the name and description of each achievement.
     * Display owners' total score, average score, and number of posts
     * Hide delete button for non-owners and non-admins
 * Profile
@@ -141,4 +140,3 @@ Features and tasks needed to be done (in order of priority):
     * Add all McDonalds in vancouver to the db
     * About page content
 * Visuals
-    * (profile.html) Change customization view to a compact grid layout of each option, with the user's unchosen ones (or locked ones) as greyed out. Provide tooltip to show the name and description of each.
