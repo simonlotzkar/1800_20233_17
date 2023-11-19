@@ -214,15 +214,13 @@ function generateDateString(timestamp) {
 }
 
 // REQUIRES: A user to be logged in.
-// EFFECTS: Adds an update to the restaurant that is currently open in the window
-//          with the given status value.
+// EFFECTS: Adds an update to the given restaurant with the given status value.
 //          Sets the user name to the name of the currently logged-in user and the
 //          date to the current time.
 //          Also changes the restaurant's date and status fields to
 //          reflect the new update.
-function submitUpdate(status) {
+function submitUpdate(status, restaurantID) {
   let currentUser = firebase.auth().currentUser;
-  let restaurantID = new URL(window.location.href).searchParams.get("docID");
   let now = firebase.firestore.Timestamp.now();
 
   // Get currently logged in user from users collection
@@ -360,4 +358,39 @@ function deleteUpdate(restaurantID, updateID) {
             });
         });    
   }
+}
+
+// EFFECTS: if user is logged in:
+//          show all submit update options, hide all log in prompts
+//          if user is logged out:
+//          hide all submit update options, show all log in prompts
+function displaySubmitUpdate() {
+  const nodeList_submitUpdate = document.querySelectorAll(".card-restaurant-submitUpdate");
+  const nodeList_promptLogIn = document.querySelectorAll(".card-restaurant-promptLogIn");
+  
+  firebase.auth().onAuthStateChanged(function (user) {
+    if (user) {
+        // User is signed in.
+        for (let i = 0; i < nodeList_submitUpdate.length; i++) {
+          nodeList_submitUpdate[i].classList.add("d-block");
+          nodeList_submitUpdate[i].classList.remove("d-none");
+        }
+    
+        for (let i = 0; i < nodeList_promptLogIn.length; i++) {
+          nodeList_promptLogIn[i].classList.add("d-none");
+          nodeList_promptLogIn[i].classList.remove("d-block");
+        }
+    } else {
+        // No user is signed in.
+        for (let i = 0; i < nodeList_submitUpdate.length; i++) {
+          nodeList_submitUpdate[i].classList.add("d-none");
+          nodeList_submitUpdate[i].classList.remove("d-block");
+        }
+    
+        for (let i = 0; i < nodeList_promptLogIn.length; i++) {
+          nodeList_promptLogIn[i].classList.add("d-block");
+          nodeList_promptLogIn[i].classList.remove("d-none");
+        }
+    }
+  });
 }

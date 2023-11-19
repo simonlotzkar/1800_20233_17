@@ -59,7 +59,19 @@ async function populateRestaurants() {
                     newcard.querySelector(".card-restaurant-distance").innerHTML = distanceString;
                     newcard.querySelector("a").href = "eachRestaurant.html?docID=" + restaurantID;
                     
+                    newcard.querySelector(".brokenBtn").addEventListener("click", function() {
+                        submitUpdate(false, restaurantID);
+                        alert("submitted update, refresh page to see changes.")
+                    });
+
+                    newcard.querySelector(".workingBtn").addEventListener("click", function() {
+                        submitUpdate(true, restaurantID);
+                        alert("submitted update, refresh page to see changes.")
+                    });
+
                     document.getElementById("restaurants-go-here").appendChild(newcard);
+
+                    displaySubmitUpdate();
 
                 });
             });
@@ -128,7 +140,19 @@ async function populateFilteredRestaurants() {
                         newcard.querySelector(".card-restaurant-distance").innerHTML = distanceString;
                         newcard.querySelector("a").href = "eachRestaurant.html?docID=" + doc.id;
                         
+                        newcard.querySelector(".brokenBtn").addEventListener("click", function() {
+                            submitUpdate(false, doc.id);
+                            alert("submitted update, refresh page to see changes.")
+                        });
+    
+                        newcard.querySelector(".workingBtn").addEventListener("click", function() {
+                            submitUpdate(true, doc.id);
+                            alert("submitted update, refresh page to see changes.")
+                        });
+
                         document.getElementById("restaurants-go-here").appendChild(newcard);
+
+                        displaySubmitUpdate();
                     }
                 });
             });

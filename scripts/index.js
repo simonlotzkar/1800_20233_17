@@ -31,9 +31,6 @@ async function populateClosestRestaurants(amountToPopulate) {
                     let restaurantDoc = key;
                     let distance = value;
 
-                    let cardTemplate = document.getElementById("restaurantCardTemplate");
-                    let newcard = cardTemplate.content.cloneNode(true);
-
                     let restaurantID = restaurantDoc.id;
                     let address = restaurantDoc.data().address;
                     let city = restaurantDoc.data().city;
@@ -51,6 +48,9 @@ async function populateClosestRestaurants(amountToPopulate) {
                     if ((dateUpdated != undefined) && (dateUpdated != null)) {
                         dateUpdatedString = generateTimeSinceString(dateUpdated);
                     }
+
+                    let cardTemplate = document.getElementById("restaurantCardTemplate");
+                    let newcard = cardTemplate.content.cloneNode(true);
                     
                     newcard.querySelector(".card-restaurant-address").innerHTML = address;
                     newcard.querySelector(".card-restaurant-city").innerHTML = city;
@@ -59,12 +59,22 @@ async function populateClosestRestaurants(amountToPopulate) {
                     newcard.querySelector(".card-restaurant-status").innerHTML = statusString;
                     newcard.querySelector(".card-restaurant-distance").innerHTML = distanceString;
                     newcard.querySelector("a").href = "eachRestaurant.html?docID=" + restaurantID;
-                    
+
+                    newcard.querySelector(".brokenBtn").addEventListener("click", function() {
+                        submitUpdate(false, restaurantID);
+                        alert("submitted update, refresh page to see changes.")
+                    });
+
+                    newcard.querySelector(".workingBtn").addEventListener("click", function() {
+                        submitUpdate(true, restaurantID);
+                        alert("submitted update, refresh page to see changes.")
+                    });
+
                     let insertDiv = document.getElementById("closest-go-here");
                     if (insertDiv.children.length < amountToPopulate) {
                         insertDiv.appendChild(newcard);
+                        displaySubmitUpdate();
                     }
-
                 });
             });
     } catch (error) {

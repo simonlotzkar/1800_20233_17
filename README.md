@@ -15,21 +15,27 @@ Our team is developing "McWorking" to inform everyone of which McDonalds have br
 ## 4. Complete setup/installion/usage
 The app is ready straight away for viewing, but to submit data users must sign up for an account. This can be done from any page on the website either from the navbar, or a prompt on the page.
 
-## 5. Bugs and Limitations
-Here are some known bugs:
-* Restaurant displays updates out of order
-* Decatrouble achievement awarded even after earning it
-* Last updated and status don't change after deleting updates
+## 5. Bugs, Limitations, and Security Risks
+Here are some known bugs, limitations, and security risks:
+* [Bug] Restaurant displays updates out of order
+* [Bug] Decatrouble achievement awarded even after earning it
+* [Bug] Update log in profile page doesn't update when deleting updates
+* [SecurityRisk] Github commits contain api key!!!
+* [Limitation] Last updated and status don't change after deleting updates
     => replace lastUpdated and status fields with listeners that iterate through the update collection to determine last updated and status
-* Update log in profile page doesn't update when deleting updates
-* Github commits contain api key!!!
+* [Limitation] If the user denies or doesnt have geolocation, breaks app
+    => display restaurants without distance information if the user's geolocation fails
+* [Limitation] Each update has an upvote/downvote number field and an upvoterID/downvoterID array field, this is redundant.
+    => can be simplified to just the latter. The score can be simply found by counting the number of voterIDs.
+* [Limitation] Code is repeated for displaying restaurant cards 3 times: 1. for unfiltered display on catalog, 2. for filtered display on catalog, and 3. for short display on home
+    => Refactor into single function with parameters that change behavior
+* [Bug] updates aren't shown on catalog or home page until refresh
 
 ## 6. TODO List
 Features and tasks needed to be done (in order of priority):
 * Updates
-    * add submission on restaurant cards
     * Prevent user from adding new update if last was added within 5min
-    * Create modal popup to display achievement details when clicking on a user's achievement image from their updates
+    * Create popup to display achievement details when clicking on a user's achievement image from their updates
     * Display owners' total score, average score, and number of posts
     * Hide delete button for non-owners and non-admins
 * Profile

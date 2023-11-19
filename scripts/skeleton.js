@@ -3,23 +3,19 @@ CONTRIBUTORS: SimonLotzkar
 DESCRIPTION: populates the placeholders on every page
 -------------------------------------------------------- */
 
-// EFFECTS: Loads parts of page depending on whether user is logged in.
-function loadSkeleton() {
+// loads placeholders irrespective of auth
+$("#footerPlaceholder").load("./text/footer.html");
+$("#restaurantCardTemplatePlaceholder").load("./text/restaurantCardTemplate.html");
 
-    firebase.auth().onAuthStateChanged(function (user) {
-        if (user) {
-            // User is signed in.
-            console.log($('#navPlaceholder').load('./text/navAfterLogin.html'));
-            console.log($('#updatePlaceholder').load('./text/updateAfterLogin.html'));
-        } else {
-            // No user is signed in.
-            console.log($('#navPlaceholder').load('./text/navBeforeLogin.html'));
-            console.log($('#updatePlaceholder').load('./text/updateBeforeLogin.html'));
-        }
-    });
-
-    console.log($('#footerPlaceholder').load('./text/footer.html'));
-    console.log($('#restaurantCardTemplatePlaceholder').load('./text/restaurantCardTemplate.html'));
-}
-
-loadSkeleton();
+// loads placeholders depending on whether someone is logged-in
+firebase.auth().onAuthStateChanged(function (user) {
+    if (user) {
+        // User is signed in.
+        $("#navPlaceholder").load("./text/navAfterLogin.html");
+        $("#submitUpdatePlaceholder").load("./text/submitUpdateAfterLogin.html");
+    } else {
+        // No user is signed in.
+        $("#navPlaceholder").load("./text/navBeforeLogin.html");
+        $("#submitUpdatePlaceholder").load("./text/submitUpdateBeforeLogin.html");
+    }
+});
