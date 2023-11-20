@@ -134,7 +134,16 @@ Features and tasks needed to be done (in order of priority):
 * Data entry
     * Add all avatars to the db
     * Add all banners to the db
-    * Add all achievements to the db and implement their unlock conditions
+    * Implement achievement unlock conditions:
+        * changeUp              =not_started
+        * detective             =not_started
+        * explorer              =not_started
+        * firstSubmission       =not_started
+        * frigophilBoss         =not_started
+        * qualityControl        =not_started
+        * respectedFrigophil    =not_started
+        * touchUp               =not_started
+        * updater               =in_progress
+        * voter                 =not_started
     * Add all McDonalds in vancouver to the db
     * About page content
-* Visuals
