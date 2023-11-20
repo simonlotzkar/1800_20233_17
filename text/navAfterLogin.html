@@ -49,7 +49,7 @@
             doc.data().avatar.get()
                 .then(doc => {
                     imageURL = doc.data().imageURL;
-                    document.querySelector(".currentUser-avatar").src = "../images/" + imageURL + ".png";
+                    document.querySelector(".currentUser-avatar").src = "../images/avatars/" + imageURL + ".png";
                 });
             document.querySelector(".currentUser-username").innerHTML = doc.data().username;
 

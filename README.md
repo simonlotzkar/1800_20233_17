@@ -19,8 +19,8 @@ The app is ready straight away for viewing, but to submit data users must sign u
 ## 5. Bugs, Limitations, and Security Risks
 Here are some known bugs, limitations, and security risks:
 * [Bug] When displaying last updated, adds a comma before "ago" (eg. 10 minutes, ago)
-* [Bug] Restaurant displays updates out of order
 * [Bug] Decatrouble achievement awarded even after earning it
+* [Bug] Restaurant displays in order of users then time, when it should just be based off time
 * [Bug] Update log in profile page doesn't update when deleting updates
 * [SecurityRisk] Github commits contain api key!!!
 * [Limitation] Last updated and status don't change after deleting updates
@@ -31,14 +31,19 @@ Here are some known bugs, limitations, and security risks:
     => can be simplified to just the latter. The score can be simply found by counting the number of voterIDs.
 * [Limitation] Code is repeated for displaying restaurant cards 3 times: 1. for unfiltered display on catalog, 2. for filtered display on catalog, and 3. for short display on home
     => Refactor into single function with parameters that change behavior
-* [Bug] updates aren't shown on catalog or home page until refresh
+* [Bug] New updates aren't shown on catalog or home page until refresh
     
 ## 5. Future Features
 * Expanding from just icecream machines to all products (eg. smoothies)
 * Expanding to other businesses (eg. TimHortons)
-* Add email verification (requires domain hosting)
 * Add google sign-up/log-in
-* Prevent users from adding updates too rapidly (anti spam)
+* Anti-Spam
+    * Email verification: only allow user to submit posts after verifying
+    * Prevent users from adding updates within a time fram (eg 3min)
+* Profile page
+    * Display update owners' total score, average score, and number of posts
+    * Add a preview 'dummy update' of what the user's posts will look like
+* Add customization adder (like restaurant adder), accessible to admins only
 	
 ## 6. Contents of Folder
 Content of the project folder:
@@ -126,13 +131,6 @@ Content of the firestore database:
 
 ## 8. TODO List
 Features and tasks needed to be done (in order of priority):
-* Updates
-    * Display owners' total score, average score, and number of posts
-    * Hide delete button for non-owners and non-admins
-* Profile
-    * Add a preview 'dummy update' of what the user's posts will look like
-    * Add password changing
-    * Add email changing
 * Data entry
     * Add all avatars to the db
     * Add all banners to the db
