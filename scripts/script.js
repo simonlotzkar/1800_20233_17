@@ -240,8 +240,9 @@ function submitUpdate(status, restaurantID) {
         })
         // ...add new update to user's reference updates subcollection
         .then(docRef => {
-          let decaTroubleID = "0cUJnwSxpytOdB4qClIU";
-          let doubleTroubleId = "D6yfEs5SbZBCTu50bXm3";
+          let updaterBronzeID = "yOMHZvh3PGUYwF4q9nEl";
+          let updaterSilverID = "W3xreGfL5O5sfOiy7wtI";
+          let updaterGoldID = "y1oo3TupIdFsoE439cso";
           let refUpdatesCount = 0;
           let refUpdates = db.collection("users/" + doc.id + "/refUpdates");
           
@@ -256,22 +257,63 @@ function submitUpdate(status, restaurantID) {
           refUpdates.get().then(col => {
             col.forEach(doc => {
               refUpdatesCount += 1;
-            })
-            // check if they unlock achievements and award if so
-            if (refUpdatesCount >= 2) {            
-              if (refUpdatesCount >= 10) {
-                db.collection("users").doc(currentUser.uid).update({
-                  achievements: fv.arrayUnion(db.doc("customizations/" + decaTroubleID)),
-                })
-                alert("Achievement Awarded! View \"DecaTrouble!\" in your profile for details.")
-              } else {
-                db.collection("users").doc(currentUser.uid).update({
-                  achievements: fv.arrayUnion(db.doc("customizations/" + doubleTroubleId)),
+            });
+
+            // check if they unlock voting achievements and award if they don't already have it
+            if (refUpdatesCount >= 10) {
+              let isUnlocked = false;
+              db.collection("users").doc(currentUser.uid).get()
+                .then(doc => {
+                  doc.data().achievements.forEach(achievementRef => {
+                    if (achievementRef.id == updaterBronzeID) {
+                      isUnlocked = true;
+                    }
+                  });
+                  if (!isUnlocked) {
+                    db.collection("users").doc(currentUser.uid).update({
+                      achievements: fv.arrayUnion(db.doc("customizations/" + updaterBronzeID)),
+                    });
+                    alert("Achievement Awarded! View \"Updater (Bronze)\" in your profile for details.")
+                  }
                 });
-                alert("Achievement Awarded! View \"DecaTrouble!\" in your profile for details.")
-              }
+            } 
+            
+            if (refUpdatesCount >= 25) {
+              let isUnlocked = false;
+              db.collection("users").doc(currentUser.uid).get()
+                .then(doc => {
+                  doc.data().achievements.forEach(achievementRef => {
+                    if (achievementRef.id == updaterSilverID) {
+                      isUnlocked = true;
+                    }
+                  });
+                  if (!isUnlocked) {
+                    db.collection("users").doc(currentUser.uid).update({
+                      achievements: fv.arrayUnion(db.doc("customizations/" + updaterSilverID)),
+                    });
+                    alert("Achievement Awarded! View \"Updater (Silver)\" in your profile for details.")
+                  }
+                });
+            } 
+            
+            if (refUpdatesCount >= 50) {
+              let isUnlocked = false;
+              db.collection("users").doc(currentUser.uid).get()
+                .then(doc => {
+                  doc.data().achievements.forEach(achievementRef => {
+                    if (achievementRef.id == updaterGoldID) {
+                      isUnlocked = true;
+                    }
+                  });
+                  if (!isUnlocked) {
+                    db.collection("users").doc(currentUser.uid).update({
+                      achievements: fv.arrayUnion(db.doc("customizations/" + updaterGoldID)),
+                    });
+                    alert("Achievement Awarded! View \"Updater (Gold)\" in your profile for details.")
+                  }
+                });
             }
-          })          
+          });          
         })
         // Catch and alert errors
         .catch((error) => {

@@ -236,5 +236,6 @@ function setBanner(doc) {
   currentUser.update({
     banner: db.doc(url),
   });
+  
   alert("set banner to: " + doc.data().name);
 }

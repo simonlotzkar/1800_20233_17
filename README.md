@@ -16,22 +16,18 @@ Our team is developing "McWorking" to inform everyone of which McDonalds have br
 ## 4. Complete setup/installion/usage
 The app is ready straight away for viewing, but to submit data users must sign up for an account. This can be done from any page using the website's navbar.
 
-## 5. Bugs, Limitations, and Security Risks
-Here are some known bugs, limitations, and security risks:
+## 5. Bugs and Limitations
+Here are some known bugs and limitations:
 * [Bug] When displaying last updated, adds a comma before "ago" (eg. 10 minutes, ago)
-* [Bug] Decatrouble achievement awarded even after earning it
-* [Bug] Restaurant displays in order of users then time, when it should just be based off time
-* [Bug] Update log in profile page doesn't update when deleting updates
-* [SecurityRisk] Github commits contain api key!!!
-* [Limitation] Last updated and status don't change after deleting updates
-    => replace lastUpdated and status fields with listeners that iterate through the update collection to determine last updated and status
-* [Limitation] If the user denies or doesnt have geolocation, breaks app
-    => display restaurants without distance information if the user's geolocation fails
-* [Limitation] Each update has an upvote/downvote number field and an upvoterID/downvoterID array field, this is redundant.
-    => can be simplified to just the latter. The score can be simply found by counting the number of voterIDs.
-* [Limitation] Code is repeated for displaying restaurant cards 3 times: 1. for unfiltered display on catalog, 2. for filtered display on catalog, and 3. for short display on home
-    => Refactor into single function with parameters that change behavior
-* [Bug] New updates aren't shown on catalog or home page until refresh
+* [Bug] Restaurant displays in order of users THEN by time, when it should just be based off time
+* [Bug] Update log in profile page and restaurant page doesn't update when deleting updates, NO ALERT
+* [Bug] New updates aren't shown on catalog or home page until refresh, YES ALERT
+* [Bug] Last updated and status don't change after deleting updates
+    * => replace lastUpdated and status fields with listeners that iterate through the update collection to determine last updated and status
+* [Bug] If the user denies or doesnt have geolocation, breaks app
+    * => display restaurants without distance information (random sort) if the user's geolocation fails
+* [Limitation] Each update has an upvote/downvote number field and an upvoterID/downvoterID array field, this is redundant. 
+    * => can be simplified to just the latter. The score can be simply found by counting the number of voterIDs.
     
 ## 5. Future Features
 * Expanding from just icecream machines to all products (eg. smoothies)
@@ -40,10 +36,10 @@ Here are some known bugs, limitations, and security risks:
 * Anti-Spam
     * Email verification: only allow user to submit posts after verifying
     * Prevent users from adding updates within a time fram (eg 3min)
-* Profile page
-    * Display update owners' total score, average score, and number of posts
-    * Add a preview 'dummy update' of what the user's posts will look like
-* Add customization adder (like restaurant adder), accessible to admins only
+* Display every update's owner total score, average score, and number of posts
+* Add a preview 'dummy update' of what the user's posts will look like on their profile page
+* Customization manager page accessible to admins only
+* Submit restaurant page => Restaurant manager page
 	
 ## 6. Contents of Folder
 Content of the project folder:
@@ -132,18 +128,16 @@ Content of the firestore database:
 ## 8. TODO List
 Features and tasks needed to be done (in order of priority):
 * Data entry
-    * Add all avatars to the db
-    * Add all banners to the db
     * Implement achievement unlock conditions:
         * changeUp              =not_started
         * detective             =not_started
-        * explorer              =not_started
-        * firstSubmission       =not_started
+        * explorer              =in_progress
+        * firstSubmission       =in_progress
         * frigophilBoss         =not_started
         * qualityControl        =not_started
         * respectedFrigophil    =not_started
         * touchUp               =not_started
-        * updater               =in_progress
+        * updater               =done
         * voter                 =not_started
     * Add all McDonalds in vancouver to the db
     * About page content

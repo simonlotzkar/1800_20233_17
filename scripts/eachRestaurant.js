@@ -254,7 +254,7 @@ function addAchievements(card) {
                                 let achievementDescription = achievementDoc.data().description;
 
                                 let achievementImage = document.createElement("img");
-                                achievementImage.setAttribute("src", "../images/" + achievementDoc.data().imageURL + ".png");
+                                achievementImage.setAttribute("src", "../images/achievements/" + achievementDoc.data().imageURL + ".png");
                                 achievementImage.setAttribute("height", "42");
 
                                 let achievementPopup = document.createElement("a");
