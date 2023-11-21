@@ -112,14 +112,14 @@ function generateTimeSinceString(timestamp) {
   let minutesSinceString = minutesSince;
   if (minutesSince != 0) {
       if (minutesSince == 1) {
-        minutesSinceString += " minute, ";
+        minutesSinceString += " minute ";
       } else {
-        minutesSinceString +=" minutes, ";
+        minutesSinceString +=" minutes ";
       }
       timeSinceString += minutesSinceString;
   }
 
-  return timeSinceString + " ago";
+  return timeSinceString + "ago";
 }
 
 // EFFECTS: Returns a descriptive string of the given timestamp
@@ -391,6 +391,7 @@ function deleteUpdate(restaurantID, updateID) {
                   db.collection("users/" + userID + "/refUpdates").doc(refUpdateDoc.id).delete()
                     .then(() => {
                         console.log("Deleted refUpdateID=" + refUpdateDoc.id);
+                        // alert("Deleted refUpdateID=" + refUpdateDoc.id + ", refresh page to see changes.")
                     })
                     .catch((error) => {
                         console.log(error)

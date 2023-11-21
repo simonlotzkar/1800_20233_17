@@ -18,10 +18,8 @@ The app is ready straight away for viewing, but to submit data users must sign u
 
 ## 5. Bugs and Limitations
 Here are some known bugs and limitations:
-* [Bug] When displaying last updated, adds a comma before "ago" (eg. 10 minutes, ago)
-* [Bug] Restaurant displays in order of users THEN by time, when it should just be based off time
-* [Bug] Update log in profile page and restaurant page doesn't update when deleting updates, NO ALERT
-* [Bug] New updates aren't shown on catalog or home page until refresh, YES ALERT
+* [Bug] Restaurant displays updates in order of users THEN by time, when it should just be based off time
+* [Bug] Restaurant cards don't refresh after new updates added, YES ALERT
 * [Bug] Last updated and status don't change after deleting updates
     * => replace lastUpdated and status fields with listeners that iterate through the update collection to determine last updated and status
 * [Bug] If the user denies or doesnt have geolocation, breaks app
@@ -127,6 +125,7 @@ Content of the firestore database:
 
 ## 8. TODO List
 Features and tasks needed to be done (in order of priority):
+* Bugfixing
 * Data entry
     * Implement achievement unlock conditions:
         * changeUp              =not_started
@@ -141,3 +140,10 @@ Features and tasks needed to be done (in order of priority):
         * voter                 =not_started
     * Add all McDonalds in vancouver to the db
     * About page content
+* Cosmetics
+    * Overall need of touching up
+    * Upvote/Downvote Icons
+    * Working/Broken Icon implementation
+    * Rework costmetic display on profile page to be compact, icons only (grey out locked / unselected), and with popups for details
+    * Alerts and confirms custom designs
+* Code documentation (TODOs)

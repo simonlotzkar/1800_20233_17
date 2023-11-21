@@ -28,7 +28,7 @@ async function populateRestaurantPage() {
         populateUpdateLog();
         displaySubmitUpdate();
     } catch (error) {
-        alert("Geolocation denied by browser!" + error);
+        alert(error);
     }
 }
 

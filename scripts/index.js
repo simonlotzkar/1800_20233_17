@@ -24,7 +24,7 @@ async function populateClosestRestaurants(amountToPopulate) {
                     unsortedMap.set(doc, distance);
                 });    
                 
-                let sortedMap = new Map([...unsortedMap].sort());
+                let sortedMap = new Map([...unsortedMap].sort((a,b) => a[1] - b[1]));
 
                 // add restaurant card for each key-value pair in the map
                 sortedMap.forEach(function(value, key) {
