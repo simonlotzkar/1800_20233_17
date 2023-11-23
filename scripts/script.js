@@ -14,7 +14,7 @@ function logout() {
     )
     .catch(
       (error) => {
-        console.log("ERROR: could not log out user: " + error);
+        ("ERROR: could not log out user: " + error);
       }
     );
 }
@@ -319,13 +319,6 @@ function submitUpdate(status, restaurantID) {
         .catch((error) => {
             alert("Error adding document: ", error);
         });
-    
-      // Set restaurant's last updated and working fields to reflect the new update
-      db.collection("restaurants").doc(restaurantID)
-        .update({
-          dateUpdated: now,
-          status: status,
-        });
     }));
 }
 
@@ -406,7 +399,7 @@ function deleteUpdate(restaurantID, updateID) {
 //          show all submit update options, hide all log in prompts
 //          if user is logged out:
 //          hide all submit update options, show all log in prompts
-function displaySubmitUpdate() {
+function displayOrHideAllSubmitUpdates() {
   const nodeList_submitUpdate = document.querySelectorAll(".card-restaurant-submitUpdate");
   const nodeList_promptLogIn = document.querySelectorAll(".card-restaurant-promptLogIn");
   
@@ -435,4 +428,93 @@ function displaySubmitUpdate() {
         }
     }
   });
+}
+
+// MODIFIES: insertElement
+// EFFECTS: tries to populate the closest N (amountToPopulate) restaurant cards
+//          as children in the given element (insertElement). also filters only
+//          restaurants address/postalcode/city matching given param
+async function populateClosestRestaurants(insertElement, amountToPopulate, filterParam) {
+  let userLocation;
+  
+  try {
+      userLocation = await getLocationFromUser();
+  } catch (error) {
+      alert("Geolocation denied by browser!" + error);
+  }
+
+  insertElement.innerHTML = "";
+
+  // get restaurant collection
+  db.collection("restaurants")
+    .onSnapshot(restaurantCollection => {
+        let unsortedMap = new Map();
+        
+        // create map with each restaurant and its distance 
+        restaurantCollection.forEach(doc => { 
+            let distance = getDistanceFromLatLonInKm(
+                userLocation.coords.latitude, 
+                userLocation.coords.longitude, 
+                doc.data().location.latitude, 
+                doc.data().location.longitude);
+            unsortedMap.set(doc, distance);
+        });    
+        
+        // create new map that is a sorted version of the previous (unsorted) one
+        let sortedMap = new Map([...unsortedMap].sort((a,b) => a[1] - b[1]));
+
+        // add restaurant card for each key-value pair in the map
+        sortedMap.forEach(function(value, key) {
+          let doc = key;
+          let distance = value;
+
+          let cardTemplate = document.getElementById("restaurantCardTemplate");
+          let newcard = cardTemplate.content.cloneNode(true);
+          let restaurantID = doc.id;
+          let address = doc.data().address;
+          let city = doc.data().city;
+          let postalCode = doc.data().postalCode;
+          let containsFilterParam = (address.toLowerCase().includes(filterParam) 
+            || city.toLowerCase().includes(filterParam) 
+            || postalCode.toLowerCase().includes(filterParam));
+
+          if (containsFilterParam) {
+              let distanceString = distance.toFixed(2) + "km away";
+              let statusString = "unknown";
+              let dateUpdatedString = "never";
+
+              db.collection("restaurants/" + restaurantID + "/updates").orderBy("dateSubmitted", "desc").limit(1)
+                .onSnapshot(updateCollection => {
+                    updateCollection.forEach(updateDoc => {          
+                        statusString = generateWorkingString(updateDoc.data().status);
+                        dateUpdatedString = generateTimeSinceString(updateDoc.data().dateSubmitted);
+
+                        newcard.querySelector(".card-restaurant-address").innerHTML = address;
+                        newcard.querySelector(".card-restaurant-id").innerHTML = restaurantID;
+                        newcard.querySelector(".card-restaurant-city").innerHTML = city;
+                        newcard.querySelector(".card-restaurant-postalCode").innerHTML = postalCode;
+                        newcard.querySelector(".card-restaurant-dateUpdated").innerHTML = dateUpdatedString;
+                        newcard.querySelector(".card-restaurant-status").innerHTML = statusString;
+                        newcard.querySelector(".card-restaurant-distance").innerHTML = distanceString;
+                        newcard.querySelector("a").href = "eachRestaurant.html?docID=" + doc.id;
+                        
+                        newcard.querySelector(".brokenBtn").addEventListener("click", function() {
+                          submitUpdate(false, doc.id);
+                          alert("SUCCESS: Update added ERROR: failed to display, refresh page to see changes.");
+                        });
+
+                        newcard.querySelector(".workingBtn").addEventListener("click", function() {
+                          alert("SUCCESS: Update added ERROR: failed to display, refresh page to see changes.");
+                          submitUpdate(true, doc.id);
+                        });
+
+                        if (insertElement.children.length < amountToPopulate) {
+                            insertElement.appendChild(newcard);
+                            displayOrHideAllSubmitUpdates();
+                        }
+                    });
+                });
+            }
+        });
+    });
 }

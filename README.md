@@ -18,13 +18,10 @@ The app is ready straight away for viewing, but to submit data users must sign u
 
 ## 5. Bugs and Limitations
 Here are some known bugs and limitations:
-* [Bug] Restaurant cards don't refresh after new updates added, YES ALERT
-* [Bug] Last updated and status don't change after deleting updates
-    * => replace lastUpdated and status fields with listeners that iterate through the update collection to determine last updated and status
-* [Bug] If the user denies or doesnt have geolocation, breaks app
+* [Bug] Restaurant cards don't refresh after adding new update
+* [Bug] After deleting updates, bugs out the profile page update counter until refresh
+* [Limitation] If the user denies or doesnt have geolocation, breaks app
     * => display restaurants without distance information (random sort) if the user's geolocation fails
-* [Limitation] Each update has an upvote/downvote number field and an upvoterID/downvoterID array field, this is redundant. 
-    * => can be simplified to just the latter. The score can be simply found by counting the number of voterIDs.
     
 ## 5. Future Plans
 Expansions (large multi-feature additions), features, and optimizations that can be made after launching the app:
@@ -39,7 +36,7 @@ Expansions (large multi-feature additions), features, and optimizations that can
 * [Feature] Customization manager page accessible to admins only (allow for editing, deleting, and creating customizations)
 * [Feature] Restaurant manager page to replace submit restaurant page (allow for editing and creating restaurants)
 * [Feature] Add % of users that have unlocked achievement
-* [Optimization] General code refactoring
+* [Optimization] Each update has an upvote/downvote number field and an upvoterID/downvoterID array field, this is redundant as the score can be simply found by counting the number of voterIDs.
 	
 ## 6. Contents of Folder
 Content of the project folder:
@@ -91,9 +88,7 @@ Content of the firestore database:
     /ID                          
         .location                # [geopoint] lat and long coordinates
         .city                    # [string] name of location's city
-        .dateUpdated             # [timestamp] last time an update was submitted
         .postalCode              # [string] name of location's postal code
-        .status                  # [boolean] status of ice cream machine
         .address                 # [string] street number and name of location
         /updates                 # [subcollection] icecream machine status updates
             /ID
@@ -128,12 +123,9 @@ Content of the firestore database:
 ## 8. TODO List
 Features and tasks needed to be done (in order of priority):
 * Bugfixing
+* Add "display 5/10/20/50" updates and restaurants, set default to 5
 * Home Page
     * Make "closest 3" => "closest 3 working"
-* Catalog Page
-    * Add city and postal code for search bar
-* Optimization
-    * Change population of restaurant from refreshing and loading all on any change => loading all on initial state, adding when new are made, removing when old are removed, and replacing when old are modified
 * Anti-Spam
     * Email verification: only allow user to submit posts after verifying
     * Prevent users from adding updates within a time fram (eg 3min)
@@ -152,7 +144,6 @@ Features and tasks needed to be done (in order of priority):
     * Add all McDonalds in vancouver to the db
     * About page content
 * Cosmetics
-    * Overall need of touching up
     * Upvote/Downvote Icons
     * Working/Broken Icon implementation
     * Rework costmetic display on profile page to be compact, icons only (grey out locked / unselected), and with popups for details

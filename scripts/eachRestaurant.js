@@ -7,7 +7,8 @@ DESCRIPTION: populates the restaurant display and its list
 let restaurantID = new URL(window.location.href).searchParams.get("docID");
 let cardTemplate = document.getElementById("updateCardTemplate");
 let currentUser;
-let numOfCards = 0;
+let restaurantStatus;
+let restaurantLastUpdated;
 
 // assign currentUser if logged in
 firebase.auth().onAuthStateChanged((user) => {
@@ -26,7 +27,7 @@ async function populateRestaurantPage() {
 
         populateRestaurantDetails(restaurantID, userLocation);
         dynamicallyPopulateUpdateLog();
-        displaySubmitUpdate();
+        displayOrHideAllSubmitUpdates();
     } catch (error) {
         alert(error);
     }
@@ -41,8 +42,6 @@ function populateRestaurantDetails(restaurantID, userLocation) {
             let address = doc.data().address;
             let city = doc.data().city;
             let postalCode = doc.data().postalCode;
-            let status = doc.data().status; 
-            let dateUpdated = doc.data().dateUpdated;
 
             let statusString = "unknown";
             let dateUpdatedString = "never";
@@ -53,13 +52,6 @@ function populateRestaurantDetails(restaurantID, userLocation) {
                 doc.data().location.latitude, 
                 doc.data().location.longitude);
             let distanceString = distance.toFixed(2) + "km away";
-
-            if ((status != null) && (status != undefined)) {
-                statusString = generateWorkingString(status);
-            }
-            if ((dateUpdated != null) && (dateUpdated != undefined)) {
-                dateUpdatedString = generateTimeSinceString(dateUpdated);
-            }
 
             document.getElementById("restaurant-address").innerHTML = address;
             document.getElementById("restaurant-city").innerHTML = city;
@@ -105,6 +97,7 @@ function dynamicallyPopulateUpdateLog() {
                     initializeBtnListeners(newcard, restaurantID, change.doc);
                     addProfileDetails(newcard, updateUserID);
                     displayDeleteUpdate(newcard);
+                    populateLastUpdated();
                     document.getElementById("updates-go-here").prepend(newcard);
                 }
                 if (change.type === "modified") {
@@ -133,6 +126,32 @@ function dynamicallyPopulateUpdateLog() {
                             nodeList[i].parentElement.parentElement.parentElement.remove();
                         }
                     }
+
+                    restaurantLastUpdated = undefined;
+                    restaurantStatus = undefined;
+
+                    populateLastUpdated();
+                }
+            });
+        });
+}
+
+// EFFECTS: ...TODO
+function populateLastUpdated() {
+    db.collection("restaurants/" + restaurantID + "/updates")
+        .onSnapshot(updateCollection => {
+            updateCollection.forEach(updateDoc => {
+                let date = updateDoc.data().dateSubmitted;
+
+                if (!restaurantLastUpdated || (restaurantLastUpdated.toMillis() < date.toMillis())) {
+                    restaurantLastUpdated = date;
+                    restaurantStatus = updateDoc.data().status;
+
+                    let statusString = generateWorkingString(restaurantStatus);
+                    let dateUpdatedString = generateTimeSinceString(restaurantLastUpdated);
+
+                    document.getElementById("restaurant-dateUpdated").innerHTML = dateUpdatedString;
+                    document.getElementById("restaurant-status").innerHTML = statusString;
                 }
             });
         });

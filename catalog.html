@@ -60,17 +60,15 @@
         <div class="container">
             <h6>If you see a restaurant you've recently been to, please submit whether their machine was working on not!</h6>
             <!-- Search Bar -->
-            <div class="input-group mb-2 d-flex justify-content-center">
-                <div>
-                    <input type="text" id="input-searchbar" class="form-control" placeholder="Filter by address..."/>
-                </div>
-                <button type="button" class="btn btn-primary" onclick="populateFilteredRestaurants()">
+            <form id="form-filter" class="input-group mb-2 d-flex justify-content-center">
+                <input type="text" id="input-filter" class="form-control" placeholder="Filter by address, city, or postal code"/>
+                <button type="submit" class="btn btn-primary">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
                         <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 
                         1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
                     </svg>
                 </button>
-            </div>
+            </form>
             <div class="container">
                 <div id="restaurants-go-here" class="row row-cols-auto"></div>
             </div>
