@@ -376,7 +376,7 @@ function deleteUpdate(restaurantID, updateID) {
           // get this update and delete it
           db.collection("restaurants/" + restaurantID + "/updates").doc(updateID).delete()
             .then(() => {
-              console.log("Deleted updateID=" + updateID);
+              // console.log("Deleted updateID=" + updateID);
             })
             .catch((error) => {
               console.log(error)
@@ -390,8 +390,7 @@ function deleteUpdate(restaurantID, updateID) {
                 if (refUpdateDoc.data().updateID == updateID) {
                   db.collection("users/" + userID + "/refUpdates").doc(refUpdateDoc.id).delete()
                     .then(() => {
-                        console.log("Deleted refUpdateID=" + refUpdateDoc.id);
-                        // alert("Deleted refUpdateID=" + refUpdateDoc.id + ", refresh page to see changes.")
+                        // console.log("Deleted refUpdateID=" + refUpdateDoc.id);
                     })
                     .catch((error) => {
                         console.log(error)

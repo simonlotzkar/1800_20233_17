@@ -111,7 +111,8 @@ function populateUpdateLog() {
                                                 username = userDoc.data().username;
                                                 avatarImageURL = avatarDoc.data().imageURL;
                                                 bannerImageURL = bannerDoc.data().imageURL;
-                                                
+
+                                                // make the card and append it to the page                                                
                                                 let newcard = cardTemplate.content.cloneNode(true);
 
                                                 newcard.querySelector(".card-update-ID").innerHTML = updateID;
@@ -123,23 +124,9 @@ function populateUpdateLog() {
                                                 newcard.querySelector(".card-update-avatar").src = "../images/avatars/" + avatarImageURL + ".png";
                                                 newcard.querySelector(".card-update-banner").src = "../images/banners/" + bannerImageURL + ".png";
 
-                                                // adds listener to delete btn
-                                                newcard.querySelector(".btn-update-delete").addEventListener("click", function() {
-                                                    deleteUpdate(restaurantID, updateID);
-                                                });
-
-                                                // adds listener to upvote btn
-                                                newcard.querySelector(".btn-update-upvote").addEventListener("click", function() {
-                                                    processUpvote(restaurantID, updateDoc);
-                                                });
-
-                                                // adds listener to downvote btn
-                                                newcard.querySelector(".btn-update-downvote").addEventListener("click", function() {
-                                                    processDownvote(restaurantID, updateDoc);                                                                                                
-                                                });
-
+                                                initializeBtnListeners(newcard, restaurantID, updateDoc);
                                                 addAchievements(newcard);
-                                                displayDeleteUpdate(newcard)
+                                                displayDeleteUpdate(newcard);
                                                 document.getElementById("updates-go-here").appendChild(newcard);
                                             });
                                     });        
@@ -147,6 +134,24 @@ function populateUpdateLog() {
                     });
                 });
         });
+}
+
+// EFFECTS: ...TODO
+function initializeBtnListeners(card, restaurantID, updateDoc) {
+    // adds listener to delete btn
+    card.querySelector(".btn-update-delete").addEventListener("click", function() {
+        deleteUpdate(restaurantID, updateDoc.id);
+    });
+
+    // adds listener to upvote btn
+    card.querySelector(".btn-update-upvote").addEventListener("click", function() {
+        processUpvote(restaurantID, updateDoc);
+    });
+
+    // adds listener to downvote btn
+    card.querySelector(".btn-update-downvote").addEventListener("click", function() {
+        processDownvote(restaurantID, updateDoc);                                                                                                
+    });
 }
 
 // EFFECTS: ...TODO

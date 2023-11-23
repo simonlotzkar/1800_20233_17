@@ -18,6 +18,7 @@ The app is ready straight away for viewing, but to submit data users must sign u
 
 ## 5. Bugs and Limitations
 Here are some known bugs and limitations:
+* [Bug] When spam clicking "add update", the achievement system breaks and spams the user with "achievement unlocked" alerts, but doesn't actually unlock anything
 * [Bug] Restaurant displays updates in order of users THEN by time, when it should just be based off time
 * [Bug] Restaurant cards don't refresh after new updates added, YES ALERT
 * [Bug] Last updated and status don't change after deleting updates
@@ -30,14 +31,13 @@ Here are some known bugs and limitations:
 ## 5. Future Features
 * Expanding from just icecream machines to all products (eg. smoothies)
 * Expanding to other businesses (eg. TimHortons)
+* Add MapBox display at top of catalog page
 * Add google sign-up/log-in
-* Anti-Spam
-    * Email verification: only allow user to submit posts after verifying
-    * Prevent users from adding updates within a time fram (eg 3min)
 * Display every update's owner total score, average score, and number of posts
 * Add a preview 'dummy update' of what the user's posts will look like on their profile page
 * Customization manager page accessible to admins only
 * Submit restaurant page => Restaurant manager page
+* Add % of users that have unlocked achievement
 	
 ## 6. Contents of Folder
 Content of the project folder:
@@ -126,6 +126,15 @@ Content of the firestore database:
 ## 8. TODO List
 Features and tasks needed to be done (in order of priority):
 * Bugfixing
+* Home Page
+    * Make "closest 3" => "closest 3 working"
+* Catalog Page
+    * Add city and postal code for search bar
+* Optimization
+    * Change population of restaurant and update cards from refreshing and loading all on any change => loading all on initial state, adding when new are made, removing when old are removed, and replacing when old are modified
+* Anti-Spam
+    * Email verification: only allow user to submit posts after verifying
+    * Prevent users from adding updates within a time fram (eg 3min)
 * Data entry
     * Implement achievement unlock conditions:
         * changeUp              =not_started
@@ -146,4 +155,13 @@ Features and tasks needed to be done (in order of priority):
     * Working/Broken Icon implementation
     * Rework costmetic display on profile page to be compact, icons only (grey out locked / unselected), and with popups for details
     * Alerts and confirms custom designs
+    * Make restaurant cards horizontal cards and display in vertical lists
+	* Compact restaurant and update cards => 
+        * remove updateID, 
+        * replace status with icon and colours, 
+        * replace vote btns and score with single line: downvote icon-score-upvote icon
+        * modify last updated string to be more compact:
+            * minutes => min
+            * hours => hr
+            * remove "ago"
 * Code documentation (TODOs)
