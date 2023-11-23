@@ -80,59 +80,40 @@ function populateRestaurantDetails(restaurantID, userLocation) {
 
 // EFFECTS: ...TODO
 function populateUpdateLog() {
-    db.collection("restaurants/" + restaurantID + "/updates")
+    db.collection("restaurants/" + restaurantID + "/updates").orderBy("dateSubmitted", "asc")
         .onSnapshot(snapshot => {
-            // reset update log
-            document.getElementById("updates-go-here").innerHTML = "";
+            snapshot.docChanges().forEach(change => {
+                if (change.type === "added") {
+                    // go through each update for the current restaurant...
+                    let updateID = change.doc.id;
+                    let username = "loading...";
+                    let updateUserID = change.doc.data().userID;
+                    let status = generateWorkingString(change.doc.data().status);
+                    let dateSubmitted = generateDateString(change.doc.data().dateSubmitted);
 
-            // go through each update for the current restaurant...
-            db.collection("restaurants/" + restaurantID + "/updates").orderBy("dateSubmitted", "desc").get()
-                .then(updatesCollection => {
-                    updatesCollection.forEach(updateDoc => {
-                        let updateID = updateDoc.id;
-                        let username = "ERROR";
-                        let updateUserID = updateDoc.data().userID;
-                        let status = generateWorkingString(updateDoc.data().status);
-                        let dateSubmitted = generateDateString(updateDoc.data().dateSubmitted);
+                    let upvotes = change.doc.data().upvotes;
+                    let downvotes = change.doc.data().downvotes;
+                    let score = (upvotes - downvotes) + " (Upvotes: " + upvotes + ", Downvotes: " + downvotes + ")";
 
-                        let upvotes = updateDoc.data().upvotes;
-                        let downvotes = updateDoc.data().downvotes;
-                        let score = (upvotes - downvotes) + " (Upvotes: " + upvotes + ", Downvotes: " + downvotes + ")";
+                    let newcard = cardTemplate.content.cloneNode(true);
+                    newcard.querySelector(".card-update-ID").innerHTML = updateID;
+                    newcard.querySelector(".card-update-status").innerHTML = status;
+                    newcard.querySelector(".card-update-username").innerHTML = username;
+                    newcard.querySelector(".card-update-dateSubmitted").innerHTML = dateSubmitted;
+                    newcard.querySelector(".card-update-score").innerHTML = score;
 
-                        // get the update's user doc
-                        db.collection("users").doc(updateUserID).get()
-                            .then(userDoc => {
-                                // get avatar doc from user doc's avatar ref
-                                userDoc.data().avatar.get()
-                                    .then(avatarDoc => {
-                                        // get banner doc from user doc's banner ref
-                                        userDoc.data().banner.get()
-                                            .then(bannerDoc => {
-                                                username = userDoc.data().username;
-                                                avatarImageURL = avatarDoc.data().imageURL;
-                                                bannerImageURL = bannerDoc.data().imageURL;
-
-                                                // make the card and append it to the page                                                
-                                                let newcard = cardTemplate.content.cloneNode(true);
-
-                                                newcard.querySelector(".card-update-ID").innerHTML = updateID;
-                                                newcard.querySelector(".card-update-username").innerHTML = username;
-                                                newcard.querySelector(".card-update-status").innerHTML = status;
-                                                newcard.querySelector(".card-update-dateSubmitted").innerHTML = dateSubmitted;
-                                                newcard.querySelector(".card-update-score").innerHTML = score;
-
-                                                newcard.querySelector(".card-update-avatar").src = "../images/avatars/" + avatarImageURL + ".png";
-                                                newcard.querySelector(".card-update-banner").src = "../images/banners/" + bannerImageURL + ".png";
-
-                                                initializeBtnListeners(newcard, restaurantID, updateDoc);
-                                                addAchievements(newcard);
-                                                displayDeleteUpdate(newcard);
-                                                document.getElementById("updates-go-here").appendChild(newcard);
-                                            });
-                                    });        
-                            });
-                    });
-                });
+                    initializeBtnListeners(newcard, restaurantID, change.doc);
+                    addProfileDetails(newcard, updateUserID);
+                    displayDeleteUpdate(newcard);
+                    document.getElementById("updates-go-here").prepend(newcard);
+                }
+                if (change.type === "modified") {
+                    console.log("Modified: ", change.doc.data());
+                }
+                if (change.type === "removed") {
+                    console.log("Removed: ", change.doc.data());
+                }
+            });
         });
 }
 
@@ -236,6 +217,35 @@ function processDownvote(restaurantID, updateDoc) {
             }
         });
     }
+}
+
+function addProfileDetails(card, updateUserID) {
+
+    let cardUsernameClass = card.querySelector(".card-update-username");
+    let cardAvatarClass = card.querySelector(".card-update-avatar");
+    let cardBannerClass = card.querySelector(".card-update-banner");
+
+    // get the update's user doc
+    db.collection("users").doc(updateUserID).get()
+        .then(userDoc => {
+            // get avatar doc from user doc's avatar ref
+            userDoc.data().avatar.get()
+                .then(avatarDoc => {
+                    // get banner doc from user doc's banner ref
+                    userDoc.data().banner.get()
+                        .then(bannerDoc => {
+                            username = userDoc.data().username;
+                            avatarImageURL = avatarDoc.data().imageURL;
+                            bannerImageURL = bannerDoc.data().imageURL;
+
+                            cardUsernameClass.innerHTML = username;
+                            cardAvatarClass.setAttribute("src", "../images/avatars/" + avatarImageURL + ".png");
+                            cardBannerClass.setAttribute("src", "../images/banners/" + bannerImageURL + ".png");
+                        });
+                });        
+        });
+
+    addAchievements(card);
 }
 
 // REQUIRES: card has already been populated with other data

@@ -18,8 +18,6 @@ The app is ready straight away for viewing, but to submit data users must sign u
 
 ## 5. Bugs and Limitations
 Here are some known bugs and limitations:
-* [Bug] When spam clicking "add update", the achievement system breaks and spams the user with "achievement unlocked" alerts, but doesn't actually unlock anything
-* [Bug] Restaurant displays updates in order of users THEN by time, when it should just be based off time
 * [Bug] Restaurant cards don't refresh after new updates added, YES ALERT
 * [Bug] Last updated and status don't change after deleting updates
     * => replace lastUpdated and status fields with listeners that iterate through the update collection to determine last updated and status
@@ -28,16 +26,20 @@ Here are some known bugs and limitations:
 * [Limitation] Each update has an upvote/downvote number field and an upvoterID/downvoterID array field, this is redundant. 
     * => can be simplified to just the latter. The score can be simply found by counting the number of voterIDs.
     
-## 5. Future Features
-* Expanding from just icecream machines to all products (eg. smoothies)
-* Expanding to other businesses (eg. TimHortons)
-* Add MapBox display at top of catalog page
-* Add google sign-up/log-in
-* Display every update's owner total score, average score, and number of posts
-* Add a preview 'dummy update' of what the user's posts will look like on their profile page
-* Customization manager page accessible to admins only
-* Submit restaurant page => Restaurant manager page
-* Add % of users that have unlocked achievement
+## 5. Future Plans
+Expansions (large multi-feature additions), features, and optimizations that can be made after launching the app:
+* [Expansion] Allow users to submit an update for any product instead of just icecream (eg. smoothies)
+* [Expansion] Add other restaurants to the catalog (eg. TimHortons)
+* [Feature] Add a submission form for users to request a missing restaurant to be added
+* [Feature] Add a report form to each restaurant to allow users to flag admins for incorrect locations (eg we added the wrong address)
+* [Feature] Add MapBox display at top of catalog page
+* [Feature] Add google sign-up/log-in
+* [Feature] Display every update's owner total score, average score, and number of posts
+* [Feature] Add a preview 'dummy update' of what the user's posts will look like on their profile page
+* [Feature] Customization manager page accessible to admins only (allow for editing, deleting, and creating customizations)
+* [Feature] Restaurant manager page to replace submit restaurant page (allow for editing and creating restaurants)
+* [Feature] Add % of users that have unlocked achievement
+* [Optimization] General code refactoring
 	
 ## 6. Contents of Folder
 Content of the project folder:
