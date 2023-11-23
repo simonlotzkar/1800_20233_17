@@ -133,7 +133,7 @@ Features and tasks needed to be done (in order of priority):
 * Catalog Page
     * Add city and postal code for search bar
 * Optimization
-    * Change population of restaurant and update cards from refreshing and loading all on any change => loading all on initial state, adding when new are made, removing when old are removed, and replacing when old are modified
+    * Change population of restaurant from refreshing and loading all on any change => loading all on initial state, adding when new are made, removing when old are removed, and replacing when old are modified
 * Anti-Spam
     * Email verification: only allow user to submit posts after verifying
     * Prevent users from adding updates within a time fram (eg 3min)

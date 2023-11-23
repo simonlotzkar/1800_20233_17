@@ -25,7 +25,7 @@ async function populateRestaurantPage() {
         const userLocation = await getLocationFromUser();
 
         populateRestaurantDetails(restaurantID, userLocation);
-        populateUpdateLog();
+        dynamicallyPopulateUpdateLog();
         displaySubmitUpdate();
     } catch (error) {
         alert(error);
@@ -79,12 +79,12 @@ function populateRestaurantDetails(restaurantID, userLocation) {
 }
 
 // EFFECTS: ...TODO
-function populateUpdateLog() {
+function dynamicallyPopulateUpdateLog() {
     db.collection("restaurants/" + restaurantID + "/updates").orderBy("dateSubmitted", "asc")
         .onSnapshot(snapshot => {
             snapshot.docChanges().forEach(change => {
                 if (change.type === "added") {
-                    // go through each update for the current restaurant...
+                    // if added, add to the DOM:
                     let updateID = change.doc.id;
                     let username = "loading...";
                     let updateUserID = change.doc.data().userID;
@@ -96,7 +96,7 @@ function populateUpdateLog() {
                     let score = (upvotes - downvotes) + " (Upvotes: " + upvotes + ", Downvotes: " + downvotes + ")";
 
                     let newcard = cardTemplate.content.cloneNode(true);
-                    newcard.querySelector(".card-update-ID").innerHTML = updateID;
+                    newcard.querySelector(".card-update-id").innerHTML = updateID;
                     newcard.querySelector(".card-update-status").innerHTML = status;
                     newcard.querySelector(".card-update-username").innerHTML = username;
                     newcard.querySelector(".card-update-dateSubmitted").innerHTML = dateSubmitted;
@@ -108,10 +108,31 @@ function populateUpdateLog() {
                     document.getElementById("updates-go-here").prepend(newcard);
                 }
                 if (change.type === "modified") {
-                    console.log("Modified: ", change.doc.data());
+                    // if modified, means the votes changed so update them:
+                    let updateID = change.doc.id;
+                    let nodeList = document.querySelectorAll(".card-update-id");
+
+                    let upvotes = change.doc.data().upvotes;
+                    let downvotes = change.doc.data().downvotes;
+                    let score = (upvotes - downvotes) + " (Upvotes: " + upvotes + ", Downvotes: " + downvotes + ")";
+
+                    for (i = 0; i < nodeList.length; i++) {
+                        if (nodeList[i].innerHTML == updateID) {
+                            card = nodeList[i].parentElement.parentElement.parentElement;
+                            card.querySelector(".card-update-score").innerHTML = score;
+                        }
+                    }
                 }
                 if (change.type === "removed") {
-                    console.log("Removed: ", change.doc.data());
+                    // if removed, go through the DOM and remove corresponding nodes:
+                    let updateID = change.doc.id;
+                    let nodeList = document.querySelectorAll(".card-update-id");
+
+                    for (i = 0; i < nodeList.length; i++) {
+                        if (nodeList[i].innerHTML == updateID) {
+                            nodeList[i].parentElement.parentElement.parentElement.remove();
+                        }
+                    }
                 }
             });
         });
@@ -253,7 +274,7 @@ function addProfileDetails(card, updateUserID) {
 //          achievement array and adds each one as an image to the card
 function addAchievements(card) {
 
-    let cardID = card.querySelector(".card-update-ID").innerHTML;
+    let cardID = card.querySelector(".card-update-id").innerHTML;
     let cardAchievementsDiv = card.querySelector(".achievements-go-here");
 
     db.collection("restaurants/" + restaurantID + "/updates").doc(cardID).get()
@@ -295,7 +316,7 @@ function addAchievements(card) {
 //             - user is owner of card
 //             - user is an admin
 function displayDeleteUpdate(card) {
-    let cardID = card.querySelector(".card-update-ID").innerHTML;
+    let cardID = card.querySelector(".card-update-id").innerHTML;
     let deleteDiv = card.querySelector(".div-update-delete");
 
     db.collection("restaurants/" + restaurantID + "/updates").doc(cardID).get()
