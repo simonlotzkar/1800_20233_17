@@ -36,6 +36,9 @@ Expansions (large multi-feature additions), features, and optimizations that can
 * [Feature] Add % of users that have unlocked achievement
 * [Feature] Before creating accounts, require user email verification (requires hosting)
 * [Feature] Add filter for home and catalog to filter by status
+* [Feature] Include google map links for restaurants
+* [Feature] Have an image stored for each restaurant and load as card image instead of single repeated one
+* [Feature] Add countdown timer below submit update button that displays remaining timeout time
 * [Optimization] Each update has an upvote/downvote number field and an upvoterID/downvoterID array field, this is redundant as the score can be simply found by counting the number of voterIDs.
 	
 ## 6. Contents of Folder
@@ -122,22 +125,6 @@ Content of the firestore database:
 
 ## 8. TODO List
 Features and tasks needed to be done (in order of priority):
-* Anti-Spam
-    * Prevent users from adding updates within a time frame (eg 3min)
-* Data entry
-    * Implement achievement unlock conditions:
-        * changeUp              =not_started
-        * detective             =not_started
-        * explorer              =in_progress
-        * firstSubmission       =in_progress
-        * frigophilBoss         =not_started
-        * qualityControl        =not_started
-        * respectedFrigophil    =not_started
-        * touchUp               =not_started
-        * updater               =done
-        * voter                 =not_started
-    * Add all McDonalds in vancouver to the db
-    * About page content
 * Cosmetics
     * Upvote/Downvote Icons
     * Working/Broken Icon implementation
@@ -152,4 +139,20 @@ Features and tasks needed to be done (in order of priority):
             * minutes => min
             * hours => hr
             * remove "ago"
-* Code documentation (TODOs)
+* Data entry
+    * Implement achievement unlock conditions:
+        * changeUp              =not_started
+        * detective             =not_started
+        * explorer              =in_progress
+        * firstSubmission       =in_progress
+        * frigophilBoss         =not_started
+        * qualityControl        =not_started
+        * respectedFrigophil    =not_started
+        * touchUp               =not_started
+        * updater               =done
+        * voter                 =not_started
+    * Add all McDonalds in vancouver to the db
+    * About page content
+* Clean-Up
+    * Fill in empty/incomplete function signatures and comment on rest of code
+    * Refactor code into smaller fragments where possible

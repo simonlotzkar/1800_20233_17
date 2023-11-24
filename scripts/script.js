@@ -1,5 +1,5 @@
 /* --------------------------------------------------------
-CONTRIBUTORS: SimonLotzkar, CarlyOrr("AUTHOR" comment where contributed)
+CONTRIBUTORS: SimonLotzkar, CarlyOrr("SRC" comment where contributed)
 DESCRIPTION: contains functions needed on most pages
 -------------------------------------------------------- */
 
@@ -213,6 +213,27 @@ function generateDateString(timestamp) {
   return dateString;
 }
 
+// EFFECTS: ...TODO
+function trySubmitUpdate(status, restaurantID) {
+  let nowTime = firebase.firestore.Timestamp.now().toDate().getTime();
+  let secsToWait = 60;
+  let secsRemaining = 0;
+
+  let canUpdateTime = localStorage.getItem("canUpdateTime");
+  if (canUpdateTime) {
+    secsRemaining = (canUpdateTime - nowTime) / 1000;
+    console.log("found secsRemaining=[" + secsRemaining + "]=canUpdateTime(" + canUpdateTime + ")-nowTime(" + nowTime + ") * 1000")
+  }
+
+  if (secsRemaining <= 0) {
+    let newCanUpdateTime = nowTime + (secsToWait * 1000);
+    submitUpdate(status, restaurantID);
+    localStorage.setItem("canUpdateTime", newCanUpdateTime);
+  } else {
+    alert("You must wait: " + (secsRemaining) + "s before submitting again!");
+  }
+}
+
 // REQUIRES: A user to be logged in.
 // EFFECTS: Adds an update to the given restaurant with the given status value.
 //          Sets the user name to the name of the currently logged-in user and the
@@ -259,7 +280,7 @@ function submitUpdate(status, restaurantID) {
               refUpdatesCount += 1;
             });
 
-            // check if they unlock voting achievements and award if they don't already have it
+            // check if they unlock updater bronze and award if they don't already have it
             if (refUpdatesCount >= 10) {
               let isUnlocked = false;
               db.collection("users").doc(currentUser.uid).get()
@@ -277,7 +298,8 @@ function submitUpdate(status, restaurantID) {
                   }
                 });
             } 
-            
+
+            // check if they unlock updater silver and award if they don't already have it
             if (refUpdatesCount >= 25) {
               let isUnlocked = false;
               db.collection("users").doc(currentUser.uid).get()
@@ -296,6 +318,7 @@ function submitUpdate(status, restaurantID) {
                 });
             } 
             
+            // check if they unlock updater gold and award if they don't already have it
             if (refUpdatesCount >= 50) {
               let isUnlocked = false;
               db.collection("users").doc(currentUser.uid).get()
@@ -322,7 +345,7 @@ function submitUpdate(status, restaurantID) {
     }));
 }
 
-// AUTHOR: Carly Orr
+// SRC: 1800-TechTips/B04 (By CarlyOrr)
 // REQUIRES: given coordinates are in latitude/longitude format
 // EFFECTS: returns the distance between the given coordinate pairs
 function getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2) {
@@ -338,7 +361,7 @@ function getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2) {
   return d;
 }
 
-// AUTHOR: Carly Orr
+// SRC: 1800-TechTips/B04 (By CarlyOrr)
 // EFFECTS: returns the given degree converted to radius format
 function deg2rad(deg) {
   return deg * (Math.PI / 180)
@@ -491,11 +514,11 @@ async function populateClosestRestaurants(insertElement, amountToPopulate, filte
             newcard.querySelector("a").href = "eachRestaurant.html?docID=" + doc.id;
             
             newcard.querySelector(".brokenBtn").addEventListener("click", function() {
-              submitUpdate(false, doc.id);
+              trySubmitUpdate(false, doc.id);
             });
 
             newcard.querySelector(".workingBtn").addEventListener("click", function() {
-              submitUpdate(true, doc.id);
+              trySubmitUpdate(true, doc.id);
             });
 
             if (insertElement.children.length < amountToPopulate) {

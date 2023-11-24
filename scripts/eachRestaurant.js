@@ -61,11 +61,11 @@ function populateRestaurantDetails(restaurantID, userLocation) {
             document.getElementById("restaurant-status").innerHTML = statusString;
 
             document.querySelector(".brokenBtn").addEventListener("click", function() {
-                submitUpdate(false, restaurantID);
+                trySubmitUpdate(false, restaurantID);
             });
 
             document.querySelector(".workingBtn").addEventListener("click", function() {
-                submitUpdate(true, restaurantID);
+                trySubmitUpdate(true, restaurantID);
             });
         });
 }
