@@ -59,7 +59,7 @@
         <!-- Restaurants -->
         <div class="container">
             <h6>If you see a restaurant you've recently been to, please submit whether their machine was working on not!</h6>
-            <!-- Search Bar -->
+            <!-- Filter Form -->
             <form id="form-filter" class="input-group mb-2 d-flex justify-content-center">
                 <input type="text" id="input-filter" class="form-control" placeholder="Filter by address, city, or postal code"/>
                 <button type="submit" class="btn btn-primary">
@@ -69,11 +69,29 @@
                     </svg>
                 </button>
             </form>
+            <div class="dropdown mb-2">
+                <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    Restaurants to Display
+                </button>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" id="display-10-restaurants">10</a></li>
+                    <li><a class="dropdown-item" id="display-25-restaurants">25</a></li>
+                    <li><a class="dropdown-item" id="display-50-restaurants">50</a></li>
+                </ul>
+            </div>
             <div class="container">
                 <div id="restaurants-go-here" class="row row-cols-auto"></div>
             </div>
         </div>
+        <p>
+            <span>Showing </span>
+            <span id="currentNumberOfRestaurantsInDisplay">0</span>
+            <span> out of a maximum </span>
+            <span id="maxNumberOfRestaurantsToDisplay">0</span>
+            <span> restaurants</span>
+        </p>
     </div>
+
 
     <!-- restaurant card template -->
     <template id="restaurantCardTemplatePlaceholder">loading...</template>

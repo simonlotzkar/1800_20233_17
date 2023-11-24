@@ -18,10 +18,8 @@ The app is ready straight away for viewing, but to submit data users must sign u
 
 ## 5. Bugs and Limitations
 Here are some known bugs and limitations:
-* [Bug] Restaurant cards don't refresh after adding new update
-* [Bug] After deleting updates, bugs out the profile page update counter until refresh
-* [Limitation] If the user denies or doesnt have geolocation, breaks app
-    * => display restaurants without distance information (random sort) if the user's geolocation fails
+* [Limitation] If the user denies or doesnt have geolocation, doesnt display restaurants
+    * => display restaurants without distance information if the user's geolocation fails
     
 ## 5. Future Plans
 Expansions (large multi-feature additions), features, and optimizations that can be made after launching the app:
@@ -36,6 +34,8 @@ Expansions (large multi-feature additions), features, and optimizations that can
 * [Feature] Customization manager page accessible to admins only (allow for editing, deleting, and creating customizations)
 * [Feature] Restaurant manager page to replace submit restaurant page (allow for editing and creating restaurants)
 * [Feature] Add % of users that have unlocked achievement
+* [Feature] Before creating accounts, require user email verification (requires hosting)
+* [Feature] Add filter for home and catalog to filter by status
 * [Optimization] Each update has an upvote/downvote number field and an upvoterID/downvoterID array field, this is redundant as the score can be simply found by counting the number of voterIDs.
 	
 ## 6. Contents of Folder
@@ -122,13 +122,8 @@ Content of the firestore database:
 
 ## 8. TODO List
 Features and tasks needed to be done (in order of priority):
-* Bugfixing
-* Add "display 5/10/20/50" updates and restaurants, set default to 5
-* Home Page
-    * Make "closest 3" => "closest 3 working"
 * Anti-Spam
-    * Email verification: only allow user to submit posts after verifying
-    * Prevent users from adding updates within a time fram (eg 3min)
+    * Prevent users from adding updates within a time frame (eg 3min)
 * Data entry
     * Implement achievement unlock conditions:
         * changeUp              =not_started
