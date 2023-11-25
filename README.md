@@ -3,15 +3,14 @@
 ## 1. Project Description
 Our team is developing "McWorking" to inform everyone of which McDonalds have broken ice cream machines before visiting by checking our site.
 
-## 2. Names and Roles of Contributors 
-* Simon Lotzkar - Project Manager, Lead Developer, Lead Designer
-* Yongseong Choi - Designer
-* Jacob Ardelean - Designer
+## 2. Project Author 
+* Simon Lotzkar
 	
 ## 3. Technologies and Resources Used
 * HTML, CSS, JavaScript
 * Bootstrap 5.0 (Frontend library)
 * Firebase 8.0 (BAAS - Backend as a Service)
+* MDBootstrap.com (Bootstrap/HTML/CSS/JS Components and Templates)
 
 ## 4. Complete setup/installion/usage
 The app is ready straight away for viewing, but to submit data users must sign up for an account. This can be done from any page using the website's navbar.
@@ -156,3 +155,4 @@ Features and tasks needed to be done (in order of priority):
 * Clean-Up
     * Fill in empty/incomplete function signatures and comment on rest of code
     * Refactor code into smaller fragments where possible
+* Write "Current Features" and "User Tasks" sections in readme

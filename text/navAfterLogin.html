@@ -13,7 +13,7 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav mr-auto">
+            <ul class="navbar-nav mr-auto nav-flex-icons">
                 <li class="nav-item">
                     <a class="nav-link" href="../index.html">Home</a>
                 </li>
@@ -26,18 +26,16 @@
                 <li id="nav-submitRestaurant" class="nav-item" style="display: none;">
                     <a class="nav-link" href="../submitRestaurant.html">Submit Restaurant</a>
                 </li>
-            </ul>
-            <ul class="navbar-nav ml-auto nav-flex-icons">
                 <li class="nav-item avatar">
                     <a class="nav-link p-0" href="../profile.html">
                         <img class="currentUser-avatar rounded-circle z-depth-0" alt="avatar image" height="36">
                         <span class="currentUser-username">loading...</span>
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a class="btn btn-danger" onclick="logout()">Logout</a>
+                </li>
             </ul>
-            <div class="d-flex">
-                <a class="btn btn-danger" onclick="logout()">Logout</a>
-            </div>
         </div>
     </div>
 </nav>

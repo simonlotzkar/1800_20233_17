@@ -222,7 +222,6 @@ function trySubmitUpdate(status, restaurantID) {
   let canUpdateTime = localStorage.getItem("canUpdateTime");
   if (canUpdateTime) {
     secsRemaining = (canUpdateTime - nowTime) / 1000;
-    console.log("found secsRemaining=[" + secsRemaining + "]=canUpdateTime(" + canUpdateTime + ")-nowTime(" + nowTime + ") * 1000")
   }
 
   if (secsRemaining <= 0) {
