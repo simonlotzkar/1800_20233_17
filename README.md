@@ -1,7 +1,7 @@
 # McWorking
 
 ## 1. Project Description
-Our team is developing "McWorking" to inform everyone of which McDonalds have broken ice cream machines before visiting by checking our site.
+I am developing "McWorking" to allow McDonalds patrons to check the status of any location's icecream machine before visiting.
 
 ## 2. Project Author 
 * Simon Lotzkar
@@ -140,6 +140,7 @@ Features and tasks needed to be done (in order of priority):
         * voter                 =not_started
     * Add all McDonalds in vancouver to the db
     * About page content
+* Bugfix limitations
 * Clean-Up
     * Fill in empty/incomplete function signatures and comment on rest of code
     * Refactor code into smaller fragments where possible
