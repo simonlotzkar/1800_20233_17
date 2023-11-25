@@ -67,6 +67,8 @@ function populateRestaurantDetails(restaurantID, userLocation) {
             document.querySelector(".workingBtn").addEventListener("click", function() {
                 trySubmitUpdate(true, restaurantID);
             });
+            
+            document.getElementById("pageTitle").innerHTML = "McWorking - " + address;
         });
 }
 

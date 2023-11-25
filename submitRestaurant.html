@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <title>McWorking</title>
+    <title>McWorking - Submit Restaurant</title>
     <meta name="McWorking" content="McDonalds Ice Cream Machine Status Tracker">
     <link rel="icon" type="image/x-icon" href="./images/icecream-bw.png">
 
@@ -48,10 +48,16 @@
     <!-- NAVBAR -->
     <nav id="navPlaceholder">loading nav...</nav>
 
+    <!-- JUMBOTRON -->
+    <div class="p-3 text-center bg-body-tertiary mb-2">
+        <h1 class="mb-3">Submit Restaurant</h1>
+        <h4 class="mb-3">
+            Only admins can see this page!
+        </h4>
+    </div>
+
     <!-- CONTENT -->
     <div class="container text-center">
-        <h2>Submit Restaurant Form</h2>
-
         <!-- Editable Details -->
         <form class="mb-2" id="form-submitRestaurant">
             <fieldset class="mb-3" id="fieldset-profile">
@@ -82,7 +88,7 @@
                 </div>
             </fieldset>
             <div class="d-flex justify-content-end">
-                <button type="button" class="btn btn-info" onclick="submitRestaurant()">Submit</button>
+                <button type="button" class="btn btn-primary" onclick="submitRestaurant()">Submit</button>
             </div>
         </form>
     </div>

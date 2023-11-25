@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <title>McWorking</title>
+    <title id="pageTitle">McWorking</title>
     <meta name="McWorking" content="McDonalds Ice Cream Machine Status Tracker">
     <link rel="icon" type="image/x-icon" href="./images/icecream-bw.png">
 
@@ -48,30 +48,27 @@
     <!-- NAVBAR -->
     <nav id="navPlaceholder">loading nav...</nav>
 
+    <!-- JUMBOTRON -->
+    <div class="p-3 text-center bg-body-tertiary mb-2">
+        <h1 id="restaurant-address" class="mb-3"></h1>
+        <h4 class="mb-3">
+            <span id="restaurant-postalCode">loading...</span>
+            <span id="restaurant-city"></span>
+        </h4>
+        <h5 id="restaurant-distance"></h5>
+    </div>
+
     <!-- CONTENT -->
     <div class="container text-center">
 
-        <!-- Title -->
-        <div class="container">
-            <h1 id="restaurant-address">loading...</h1>
-            <h6>
-                <span id="restaurant-postalCode"></span>
-                <span id="restaurant-city"></span>
-            </h6>
-            <img class="restaurant-img" src="./images/mcdonalds.png" alt="mcdonalds" style="width: 100%; height: auto;"/>
-            <h6>
-                Distance: 
-                <span id="restaurant-distance">loading...</span>
-            </h6>
-            <h6>
-                Last Updated: 
-                <span id="restaurant-dateUpdated">loading...</span>
-            </h6>
-            <h6>
-                Status: 
-                <span id="restaurant-status">loading...</span>
-            </h6>
-        </div>
+        <img class="restaurant-img" src="./images/mcdonalds.png" alt="mcdonalds" style="width: 100%; height: auto;"/>
+        
+        <h6>
+            <span id="restaurant-status">loading...</span>
+            (
+            <span id="restaurant-dateUpdated">loading...</span>
+            )
+        </h6>
 
         <!-- Update -->
         <div class="container">

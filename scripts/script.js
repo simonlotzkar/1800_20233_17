@@ -101,9 +101,9 @@ function generateTimeSinceString(timestamp) {
   let hoursSinceString = hoursSince;
   if (hoursSince != 0) {
       if (hoursSince == 1) {
-        hoursSinceString += " hour, ";
+        hoursSinceString += " hr, ";
       } else {
-        hoursSinceString +=" hours, ";
+        hoursSinceString +=" hrs, ";
       }
       timeSinceString += hoursSinceString;
   }
@@ -112,14 +112,14 @@ function generateTimeSinceString(timestamp) {
   let minutesSinceString = minutesSince;
   if (minutesSince != 0) {
       if (minutesSince == 1) {
-        minutesSinceString += " minute ";
+        minutesSinceString += " min";
       } else {
-        minutesSinceString +=" minutes ";
+        minutesSinceString += " mins";
       }
       timeSinceString += minutesSinceString;
   }
 
-  return timeSinceString + "ago";
+  return timeSinceString;
 }
 
 // EFFECTS: Returns a descriptive string of the given timestamp

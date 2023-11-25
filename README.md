@@ -19,6 +19,7 @@ The app is ready straight away for viewing, but to submit data users must sign u
 Here are some known bugs and limitations:
 * [Limitation] If the user denies or doesnt have geolocation, doesnt display restaurants
     * => display restaurants without distance information if the user's geolocation fails
+* [Limitation] Deleting refreshes instead of removes on profile update log when deleting
     
 ## 5. Future Plans
 Expansions (large multi-feature additions), features, and optimizations that can be made after launching the app:
@@ -125,19 +126,6 @@ Content of the firestore database:
 ## 8. TODO List
 Features and tasks needed to be done (in order of priority):
 * Cosmetics
-    * Upvote/Downvote Icons
-    * Working/Broken Icon implementation
-    * Rework costmetic display on profile page to be compact, icons only (grey out locked / unselected), and with popups for details
-    * Alerts and confirms custom designs
-    * Make restaurant cards horizontal cards and display in vertical lists
-	* Compact restaurant and update cards => 
-        * remove updateID, 
-        * replace status with icon and colours, 
-        * replace vote btns and score with single line: downvote icon-score-upvote icon
-        * modify last updated string to be more compact:
-            * minutes => min
-            * hours => hr
-            * remove "ago"
 * Data entry
     * Implement achievement unlock conditions:
         * changeUp              =not_started
