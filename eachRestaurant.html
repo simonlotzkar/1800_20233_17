@@ -121,28 +121,23 @@
 
                     <!-- delete -->
                     <div class="col d-flex input-group justify-content-end div-update-delete d-none">
-                        <a class="btn btn-danger btn-update-delete">DELETE</a>
+                        <a class="btn btn-danger btn-update-delete border-black border-3">DELETE</a>
                     </div>
                 </div>
 
                 <!-- score and voting -->
-                <div>
+                <div class="fs-2 input-group">
                     <span class="me-2">Accuracy Rating:</span>
-                    <div class="input-group fs-2 mb-2 d-inline">
-                        <a class="btn-update-upvote me-2 text-white">
-                            <i class="bi bi-arrow-up-circle"></i>
-                        </a>
-                        <strong class="card-update-score me-2">loading...</strong>
-                        <a class="btn-update-downvote text-white">
-                            <i class="bi bi-arrow-down-circle"></i>
-                        </a>
-                    </div>
+                    <i class="bi bi-arrow-up-circle btn-update-upvote text-white"></i>
+                    <strong class="card-update-score">loading...</strong>
+                    <i class="bi bi-arrow-down-circle btn-update-downvote text-white"></i>
                 </div>
 
                 <!-- score average upvotes -->
                 <div class="progress rounded-pill bg-light my-1">
-                    <div class="progress-bar bg-info card-progress-upvotes" role="progressbar" style="width: 30%;">30%</div>
-                    <div class="progress-bar bg-warning card-progress-downvotes" role="progressbar" style="width: 70%;">70%</div>
+                    <div class="progress-bar bg-info card-progress-upvotes" role="progressbar" style="width: 0%;">0%</div>
+                    <div class="progress-bar bg-warning card-progress-downvotes" role="progressbar" style="width: 0%;">0%</div>
+                    <div class="progress-bar bg-secondary card-progress-novotes" role="progressbar" style="width: 100%;">No Votes!</div>
                 </div>
 
                 <!-- date submitted -->

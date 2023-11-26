@@ -108,8 +108,8 @@ function dynamicallyPopulateUpdateLog() {
                     let upvotes = change.doc.data().upvotes;
                     let downvotes = change.doc.data().downvotes;
                     let score = upvotes - downvotes;
-                    let percentUpvote = (upvotes / (upvotes + downvotes)).toFixed(0) * 100;
-                    if (percentUpvote < 1 || score < 1) {
+                    let percentUpvote = ((upvotes / (upvotes + downvotes)) * 100).toFixed(0);
+                    if (upvotes < 1) {
                         percentUpvote = 0;
                     }
                     let percentDownvote = 100 - percentUpvote;
@@ -124,24 +124,21 @@ function dynamicallyPopulateUpdateLog() {
 
                     newcard.querySelector(".card-update-score").innerHTML = score;
                     if ((upvotes == 0) && (downvotes == 0)) {
-                        newcard.querySelector(".card-progress-downvotes").innerHTML = "No votes!";
-
-                        newcard.querySelector(".card-progress-downvotes").classList.add("bg-secondary");
-                        newcard.querySelector(".card-progress-downvotes").classList.remove("bg-warning");
-
+                        // if there are no votes, set the novotes progress to 100%, 
+                        // then set the downvote and upvote progress to 0%        
                         newcard.querySelector(".card-progress-upvotes").setAttribute("style", "width: 0%;");
-                        newcard.querySelector(".card-progress-downvotes").setAttribute("style", "width: 100%;");
+                        newcard.querySelector(".card-progress-downvotes").setAttribute("style", "width: 0%;");
+                        newcard.querySelector(".card-progress-novotes").setAttribute("style", "width: 100%;");
                     } else {
-                        newcard.querySelector(".card-progress-downvotes").classList.remove("bg-secondary");
-                        newcard.querySelector(".card-progress-downvotes").classList.add("bg-warning");
-                        
+                        // set the upvote progress bar and text to whatever % of upvotes there are, then
+                        // do the same for downvotes and set novotes to 0%
                         newcard.querySelector(".card-progress-upvotes").innerHTML = percentUpvote + "% (" + upvotes + " Upvotes)";
                         newcard.querySelector(".card-progress-downvotes").innerHTML = percentDownvote + "% (" + downvotes + " Downvotes)";
 
                         newcard.querySelector(".card-progress-upvotes").setAttribute("style", "width: " + percentUpvote + "%;");
                         newcard.querySelector(".card-progress-downvotes").setAttribute("style", "width: " + percentDownvote + "%;");
+                        newcard.querySelector(".card-progress-novotes").setAttribute("style", "width: 0%;");
                     }
-
 
                     if (status == null || status == undefined) {
                         newcard.querySelector(".card-update").classList.add("bg-warning");
@@ -157,6 +154,7 @@ function dynamicallyPopulateUpdateLog() {
                         newcard.querySelector(".card-update").classList.add("bg-danger");
                     }
 
+                    setIcons(newcard, change.doc);
                     initializeBtnListeners(newcard, restaurantID, change.doc);
                     addProfileDetails(newcard, updateUserID);
                     displayDeleteUpdate(newcard);
@@ -171,20 +169,33 @@ function dynamicallyPopulateUpdateLog() {
                     let upvotes = change.doc.data().upvotes;
                     let downvotes = change.doc.data().downvotes;
                     let score = upvotes - downvotes;
-                    let percentUpvote = (upvotes / (upvotes + downvotes)).toFixed(0) * 100;
-                    if (percentUpvote < 1 || score < 1) {
+                    let percentUpvote = ((upvotes / (upvotes + downvotes)) * 100).toFixed(0);
+                    if (upvotes < 1) {
                         percentUpvote = 0;
                     }
                     let percentDownvote = 100 - percentUpvote;
 
                     for (i = 0; i < nodeList.length; i++) {
                         if (nodeList[i].innerHTML == updateID) {
-                            card = nodeList[i].parentElement.parentElement.parentElement;
+                            card = nodeList[i].parentElement.parentElement;
                             card.querySelector(".card-update-score").innerHTML = score;
-                            newcard.querySelector(".card-progress-upvotes").innerHTML = percentUpvote + "%";
-                            newcard.querySelector(".card-progress-downvotes").innerHTML = percentDownvote + "%";
-                            newcard.querySelector(".card-progress-upvotes").setAttribute("style", "width: " + percentUpvote + "%;");
-                            newcard.querySelector(".card-progress-downvotes").setAttribute("style", "width: " + percentDownvote + "%;");
+                            if ((upvotes == 0) && (downvotes == 0)) {
+                                // if there are no votes, set the novotes progress to 100%, 
+                                // then set the downvote and upvote progress to 0%        
+                                card.querySelector(".card-progress-upvotes").setAttribute("style", "width: 0%;");
+                                card.querySelector(".card-progress-downvotes").setAttribute("style", "width: 0%;");
+                                card.querySelector(".card-progress-novotes").setAttribute("style", "width: 100%;");
+                            } else {
+                                // set the upvote progress bar and text to whatever % of upvotes there are, then
+                                // do the same for downvotes and set novotes to 0%
+                                card.querySelector(".card-progress-upvotes").innerHTML = percentUpvote + "% (" + upvotes + " Upvotes)";
+                                card.querySelector(".card-progress-downvotes").innerHTML = percentDownvote + "% (" + downvotes + " Downvotes)";
+        
+                                card.querySelector(".card-progress-upvotes").setAttribute("style", "width: " + percentUpvote + "%;");
+                                card.querySelector(".card-progress-downvotes").setAttribute("style", "width: " + percentDownvote + "%;");
+                                card.querySelector(".card-progress-novotes").setAttribute("style", "width: 0%;");
+                            }
+                            setIcons(card, change.doc);
                         }
                     }
                 }
@@ -195,7 +206,7 @@ function dynamicallyPopulateUpdateLog() {
 
                     for (i = 0; i < nodeList.length; i++) {
                         if (nodeList[i].innerHTML == updateID) {
-                            nodeList[i].parentElement.parentElement.parentElement.remove();
+                            nodeList[i].parentElement.parentElement.remove();
                         }
                     }
 
@@ -243,6 +254,38 @@ function initializeBtnListeners(card, restaurantID, updateDoc) {
     card.querySelector(".btn-update-downvote").addEventListener("click", function() {
         processDownvote(restaurantID, updateDoc);                                                                                                
     });
+}
+
+// EFFECTS: ...TODO
+function setIcons(card, updateDoc) {
+    let upvoterIDList = updateDoc.data().upvoterIDList;
+    let downvoterIDList = updateDoc.data().downvoterIDList;
+
+    let downvoteBtn = card.querySelector(".btn-update-downvote");
+    let upvoteBtn = card.querySelector(".btn-update-upvote");
+
+    downvoteBtn.classList.remove("bi-arrow-down-circle-fill");
+    downvoteBtn.classList.add("bi-arrow-down-circle");
+    upvoteBtn.classList.remove("bi-arrow-up-circle-fill");
+    upvoteBtn.classList.add("bi-arrow-up-circle");
+
+    if (currentUser) {
+        if (currentUser.uid == updateDoc.data().userID) {
+            downvoteBtn.classList.add("d-none");
+            upvoteBtn.classList.add("d-none");
+        } else {
+            let hasUserDownvoted = downvoterIDList.includes(currentUser.uid);
+            let hasUserUpvoted = upvoterIDList.includes(currentUser.uid);
+    
+            if (hasUserDownvoted) {
+                downvoteBtn.classList.add("bi-arrow-down-circle-fill");
+                downvoteBtn.classList.remove("bi-arrow-down-circle");
+            } else if (hasUserUpvoted) {
+                upvoteBtn.classList.add("bi-arrow-up-circle-fill");
+                upvoteBtn.classList.remove("bi-arrow-up-circle");
+            }
+        }
+    }
 }
 
 // EFFECTS: ...TODO
