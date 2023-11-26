@@ -43,9 +43,6 @@ function populateRestaurantDetails(restaurantID, userLocation) {
             let city = doc.data().city;
             let postalCode = doc.data().postalCode;
 
-            let statusString = "unknown";
-            let dateUpdatedString = "never";
-
             let distance = getDistanceFromLatLonInKm(
                 userLocation.coords.latitude, 
                 userLocation.coords.longitude, 
@@ -57,8 +54,9 @@ function populateRestaurantDetails(restaurantID, userLocation) {
             document.getElementById("restaurant-city").innerHTML = city;
             document.getElementById("restaurant-postalCode").innerHTML = postalCode;
             document.getElementById("restaurant-distance").innerHTML = distanceString;
-            document.getElementById("restaurant-dateUpdated").innerHTML = dateUpdatedString;
-            document.getElementById("restaurant-status").innerHTML = statusString;
+            document.getElementById("restaurant-dateUpdated").innerHTML = "never";
+
+            setStatusBar(null);
 
             document.querySelector(".brokenBtn").addEventListener("click", function() {
                 trySubmitUpdate(false, restaurantID);
@@ -73,6 +71,26 @@ function populateRestaurantDetails(restaurantID, userLocation) {
 }
 
 // EFFECTS: ...TODO
+function setStatusBar(status) {
+    if (status == null || status == undefined) {
+        document.getElementById("restaurant-status").innerHTML = "unknown";
+        document.getElementById("restaurant-statusBar").classList.add("text-bg-warning");
+        document.getElementById("restaurant-statusBar").classList.remove("text-bg-success");
+        document.getElementById("restaurant-statusBar").classList.remove("text-bg-danger");
+    } else if (status) {
+        document.getElementById("restaurant-status").innerHTML = generateWorkingString(true);
+        document.getElementById("restaurant-statusBar").classList.remove("text-bg-warning");
+        document.getElementById("restaurant-statusBar").classList.add("text-bg-success");
+        document.getElementById("restaurant-statusBar").classList.remove("text-bg-danger");
+    } else {
+        document.getElementById("restaurant-status").innerHTML = generateWorkingString(false);
+        document.getElementById("restaurant-statusBar").classList.remove("text-bg-warning");
+        document.getElementById("restaurant-statusBar").classList.remove("text-bg-success");
+        document.getElementById("restaurant-statusBar").classList.add("text-bg-danger");
+    }
+}
+
+// EFFECTS: ...TODO
 function dynamicallyPopulateUpdateLog() {
     db.collection("restaurants/" + restaurantID + "/updates").orderBy("dateSubmitted", "asc")
         .onSnapshot(snapshot => {
@@ -82,19 +100,62 @@ function dynamicallyPopulateUpdateLog() {
                     let updateID = change.doc.id;
                     let username = "loading...";
                     let updateUserID = change.doc.data().userID;
-                    let status = generateWorkingString(change.doc.data().status);
+                    let status = change.doc.data().status;
+                    let statusString = generateWorkingString(status);
+                    let dateSubmittedDelta = generateTimeSinceString(change.doc.data().dateSubmitted);
                     let dateSubmitted = generateDateString(change.doc.data().dateSubmitted);
 
                     let upvotes = change.doc.data().upvotes;
                     let downvotes = change.doc.data().downvotes;
-                    let score = (upvotes - downvotes) + " (Upvotes: " + upvotes + ", Downvotes: " + downvotes + ")";
+                    let score = upvotes - downvotes;
+                    let percentUpvote = (upvotes / (upvotes + downvotes)).toFixed(0) * 100;
+                    if (percentUpvote < 1 || score < 1) {
+                        percentUpvote = 0;
+                    }
+                    let percentDownvote = 100 - percentUpvote;
 
                     let newcard = cardTemplate.content.cloneNode(true);
+
                     newcard.querySelector(".card-update-id").innerHTML = updateID;
-                    newcard.querySelector(".card-update-status").innerHTML = status;
+                    newcard.querySelector(".card-update-status").innerHTML = statusString;
                     newcard.querySelector(".card-update-username").innerHTML = username;
+                    newcard.querySelector(".card-update-dateSubmittedDelta").innerHTML = dateSubmittedDelta;
                     newcard.querySelector(".card-update-dateSubmitted").innerHTML = dateSubmitted;
+
                     newcard.querySelector(".card-update-score").innerHTML = score;
+                    if ((upvotes == 0) && (downvotes == 0)) {
+                        newcard.querySelector(".card-progress-downvotes").innerHTML = "No votes!";
+
+                        newcard.querySelector(".card-progress-downvotes").classList.add("bg-secondary");
+                        newcard.querySelector(".card-progress-downvotes").classList.remove("bg-warning");
+
+                        newcard.querySelector(".card-progress-upvotes").setAttribute("style", "width: 0%;");
+                        newcard.querySelector(".card-progress-downvotes").setAttribute("style", "width: 100%;");
+                    } else {
+                        newcard.querySelector(".card-progress-downvotes").classList.remove("bg-secondary");
+                        newcard.querySelector(".card-progress-downvotes").classList.add("bg-warning");
+                        
+                        newcard.querySelector(".card-progress-upvotes").innerHTML = percentUpvote + "% (" + upvotes + " Upvotes)";
+                        newcard.querySelector(".card-progress-downvotes").innerHTML = percentDownvote + "% (" + downvotes + " Downvotes)";
+
+                        newcard.querySelector(".card-progress-upvotes").setAttribute("style", "width: " + percentUpvote + "%;");
+                        newcard.querySelector(".card-progress-downvotes").setAttribute("style", "width: " + percentDownvote + "%;");
+                    }
+
+
+                    if (status == null || status == undefined) {
+                        newcard.querySelector(".card-update").classList.add("bg-warning");
+                        newcard.querySelector(".card-update").classList.remove("bg-success");
+                        newcard.querySelector(".card-update").classList.remove("bg-danger");
+                    } else if (status == true) {
+                        newcard.querySelector(".card-update").classList.remove("bg-warning");
+                        newcard.querySelector(".card-update").classList.add("bg-success");
+                        newcard.querySelector(".card-update").classList.remove("bg-danger");
+                    } else if (status == false) {
+                        newcard.querySelector(".card-update").classList.remove("bg-warning");
+                        newcard.querySelector(".card-update").classList.remove("bg-success");
+                        newcard.querySelector(".card-update").classList.add("bg-danger");
+                    }
 
                     initializeBtnListeners(newcard, restaurantID, change.doc);
                     addProfileDetails(newcard, updateUserID);
@@ -109,12 +170,21 @@ function dynamicallyPopulateUpdateLog() {
 
                     let upvotes = change.doc.data().upvotes;
                     let downvotes = change.doc.data().downvotes;
-                    let score = (upvotes - downvotes) + " (Upvotes: " + upvotes + ", Downvotes: " + downvotes + ")";
+                    let score = upvotes - downvotes;
+                    let percentUpvote = (upvotes / (upvotes + downvotes)).toFixed(0) * 100;
+                    if (percentUpvote < 1 || score < 1) {
+                        percentUpvote = 0;
+                    }
+                    let percentDownvote = 100 - percentUpvote;
 
                     for (i = 0; i < nodeList.length; i++) {
                         if (nodeList[i].innerHTML == updateID) {
                             card = nodeList[i].parentElement.parentElement.parentElement;
                             card.querySelector(".card-update-score").innerHTML = score;
+                            newcard.querySelector(".card-progress-upvotes").innerHTML = percentUpvote + "%";
+                            newcard.querySelector(".card-progress-downvotes").innerHTML = percentDownvote + "%";
+                            newcard.querySelector(".card-progress-upvotes").setAttribute("style", "width: " + percentUpvote + "%;");
+                            newcard.querySelector(".card-progress-downvotes").setAttribute("style", "width: " + percentDownvote + "%;");
                         }
                     }
                 }
@@ -149,11 +219,9 @@ function populateLastUpdated() {
                     restaurantLastUpdated = date;
                     restaurantStatus = updateDoc.data().status;
 
-                    let statusString = generateWorkingString(restaurantStatus);
                     let dateUpdatedString = generateTimeSinceString(restaurantLastUpdated);
-
                     document.getElementById("restaurant-dateUpdated").innerHTML = dateUpdatedString;
-                    document.getElementById("restaurant-status").innerHTML = statusString;
+                    setStatusBar(restaurantStatus);
                 }
             });
         });

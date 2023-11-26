@@ -39,6 +39,7 @@ Expansions (large multi-feature additions), features, and optimizations that can
 * [Feature] Include google map links for restaurants
 * [Feature] Have an image stored for each restaurant and load as card image instead of single repeated one
 * [Feature] Add countdown timer below submit update button that displays remaining timeout time
+* [Feature] Add loading bar to places where restaurants and updates are loaded
 * [Optimization] Each update has an upvote/downvote number field and an upvoterID/downvoterID array field, this is redundant as the score can be simply found by counting the number of voterIDs.
 	
 ## 6. Contents of Folder

@@ -53,7 +53,7 @@ function generateTimeSinceString(timestamp) {
 
   // Seconds check
   if ((millisDifference / 1000) < 60) {
-    return "just now";
+    return "now";
   }
 
   let daysSince = Math.floor(millisDifference / 1000 / 60 / 60 / 24);
@@ -97,7 +97,7 @@ function generateTimeSinceString(timestamp) {
     timeSinceString += daysSinceString;
   }
 
-  // Hours check (returns "1 hour", "# hours", or does nothing)
+  // Hours check (returns "1 hr", "# hrs", or does nothing)
   let hoursSinceString = hoursSince;
   if (hoursSince != 0) {
       if (hoursSince == 1) {
@@ -108,15 +108,10 @@ function generateTimeSinceString(timestamp) {
       timeSinceString += hoursSinceString;
   }
 
-  // Minute check (returns "1 minute", "# minutes", or does nothing)
+  // Minute check (returns "# min" or does nothing)
   let minutesSinceString = minutesSince;
   if (minutesSince != 0) {
-      if (minutesSince == 1) {
-        minutesSinceString += " min";
-      } else {
-        minutesSinceString += " mins";
-      }
-      timeSinceString += minutesSinceString;
+      timeSinceString += minutesSinceString + " min";
   }
 
   return timeSinceString;
