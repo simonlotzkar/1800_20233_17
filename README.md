@@ -10,7 +10,6 @@ I am developing "McWorking" to allow McDonalds patrons to check the status of an
 * HTML, CSS, JavaScript
 * Bootstrap 5.0 (Frontend library)
 * Firebase 8.0 (BAAS - Backend as a Service)
-* MDBootstrap.com (Bootstrap/HTML/CSS/JS Components and Templates)
 
 ## 4. Complete setup/installion/usage
 The app is ready straight away for viewing, but to submit data users must sign up for an account. This can be done from any page using the website's navbar.
@@ -26,18 +25,22 @@ Here are some known bugs and limitations:
 Expansions (large multi-feature additions) and features that can be made after launching the app:
 * [Expansion] Allow users to submit an update for any product instead of just icecream (eg. smoothies)
 * [Expansion] Add other restaurants to the catalog (eg. TimHortons)
-* [Feature] Add a submission form for users to request a missing restaurant to be added
-* [Feature] Add a report form to each restaurant to allow users to flag admins for incorrect locations (eg we added the wrong address)
-* [Feature] Add MapBox display at top of catalog page
-* [Feature] Add google sign-up/log-in
-* [Feature] Display every update's owner total score, average score, and number of posts
-* [Feature] Add a preview 'dummy update' of what the user's posts will look like on their profile page
-* [Feature] Customization manager page accessible to admins only (allow for editing, deleting, and creating customizations)
-* [Feature] Restaurant manager page to replace submit restaurant page (allow for editing and creating restaurants)
+* Restaurant Page
+    * [PageFeature] Add a report form to each restaurant to allow users to flag admins for incorrect locations (eg we added the wrong address)
+    * [PageFeature] Add filter to catalog for filtering by status
+    * [PageFeature] Include google map links for restaurants
+* Catalog Page
+    * [PageFeature] Add MapBox display at top of page that has user's location as a pin and all locations currently shown as pins
+* Profile Page
+    * [PageFeature] Add a preview 'dummy update' of what the user's posts will look like on their profile page
+* NEW Pages
+    * [Page] Add a submission form for users to request a missing restaurant to be added
+    * [Page] Customization manager page accessible to admins only (allow for editing, deleting, and creating customizations)
+    * [Page] Restaurant manager page to replace submit restaurant page (allow for editing and creating restaurants)
+* Authentication
+    * [AuthFeature] Add google sign-up/log-in
+    * [AuthFeature] Before creating accounts, require user email verification (requires hosting)
 * [Feature] Add % of users that have unlocked achievement
-* [Feature] Before creating accounts, require user email verification (requires hosting)
-* [Feature] Add filter for home and catalog to filter by status
-* [Feature] Include google map links for restaurants
 * [Feature] Have an image stored for each restaurant and load as card image instead of single repeated one
 * [Feature] Add countdown timer below submit update button that displays remaining timeout time
 * [Feature] Add loading bar to places where restaurants and updates are loaded
