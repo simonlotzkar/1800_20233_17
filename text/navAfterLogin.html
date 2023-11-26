@@ -1,5 +1,5 @@
 <!-- NAVBAR (Post-Login) -->
-<nav class="navbar navbar-expand-md navbar-light bg-warning">
+<nav class="navbar navbar-expand-lg navbar-light bg-warning">
     <div class="container-fluid">
         <a class="navbar-brand" href="../index.html">
             <h2>
@@ -19,7 +19,7 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav nav-flex-icons">
+            <ul class="navbar-nav me-auto">
                 <li class="nav-item">
                     <a class="nav-link" href="../index.html">Home</a>
                 </li>
@@ -29,27 +29,27 @@
                 <li class="nav-item">
                     <a class="nav-link" href="../about.html">About</a>
                 </li>
-                <li id="nav-submitRestaurant" class="nav-item" style="display: none;">
+                <li class="nav-item" id="nav-submitRestaurant" style="display: none;">
                     <a class="nav-link" href="../submitRestaurant.html">Submit Restaurant</a>
                 </li>
+            </ul>
+            <ul class="navbar-nav">
                 <!-- Avatar -->
-                <li class="nav-item">
-                    <div class="dropdown">
-                        <a class="dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                            <img class="currentUser-avatar rounded-circle" height="36">
-                            <span class="currentUser-username">loading...</span>
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="../profile.html">Profile</a></li>
-                            <li><a class="dropdown-item" onclick="logout()">Logout</a></li>
-                        </ul>
-                    </div>
+                <li class="nav-item dropdown me-auto">
+                    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                        <img class="currentUser-avatar rounded-circle" height="36">
+                        <span class="currentUser-username">loading...</span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item nav-link" href="../profile.html">Profile</a></li>
+                        <li><a class="dropdown-item nav-link" onclick="logout()">Logout</a></li>
+                    </ul>
                 </li>
             </ul>
         </div>
     </div>
 </nav>
-<h6 id="banner-admin" class="text-bg-danger text-center" style="display: none;">ADMIN ACCOUNT</h6>
+<h6 id="banner-admin" class="text-bg-danger text-center m-0" style="display: none;">ADMIN VIEW</h6>
 
 <script>
     userID = firebase.auth().currentUser.uid;
@@ -61,11 +61,13 @@
                     imageURL = doc.data().imageURL;
                     document.querySelector(".currentUser-avatar").src = "../images/avatars/" + imageURL + ".png";
                 });
+
             document.querySelector(".currentUser-username").innerHTML = doc.data().username;
 
             if (doc.data().admin) {
                 document.querySelector("#nav-submitRestaurant").style.display = "block";
                 document.querySelector("#banner-admin").style.display = "block";
+                document.querySelector(".currentUser-username").innerHTML = doc.data().username + "[ADMIN]";
             }
         });
 </script>

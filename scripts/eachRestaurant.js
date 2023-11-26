@@ -285,6 +285,9 @@ function setIcons(card, updateDoc) {
                 upvoteBtn.classList.remove("bi-arrow-up-circle");
             }
         }
+    } else {
+        upvoteBtn.classList.remove("bi-arrow-up-circle");
+        downvoteBtn.classList.remove("bi-arrow-down-circle");
     }
 }
 
@@ -372,6 +375,7 @@ function processDownvote(restaurantID, updateDoc) {
     }
 }
 
+// EFFECTS: ...TODO
 function addProfileDetails(card, updateUserID) {
 
     let cardUsernameClass = card.querySelector(".card-update-username");
@@ -387,7 +391,12 @@ function addProfileDetails(card, updateUserID) {
                     // get banner doc from user doc's banner ref
                     userDoc.data().banner.get()
                         .then(bannerDoc => {
-                            username = userDoc.data().username;
+                            if (userDoc.data().admin) {
+                                username = userDoc.data().username + "[ADMIN]";
+                            } else {
+                                username = userDoc.data().username;
+                            }
+
                             avatarImageURL = avatarDoc.data().imageURL;
                             bannerImageURL = bannerDoc.data().imageURL;
 
