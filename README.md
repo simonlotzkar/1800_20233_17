@@ -20,9 +20,10 @@ Here are some known bugs and limitations:
 * [Limitation] If the user denies or doesnt have geolocation, doesnt display restaurants
     * => display restaurants without distance information if the user's geolocation fails
 * [Limitation] Deleting refreshes instead of removes on profile update log when deleting
+* [Limitation] Each update has an upvote/downvote number field and an upvoterID/downvoterID array field, this is redundant as the score can be simply found by counting the number of voterIDs.
     
 ## 5. Future Plans
-Expansions (large multi-feature additions), features, and optimizations that can be made after launching the app:
+Expansions (large multi-feature additions) and features that can be made after launching the app:
 * [Expansion] Allow users to submit an update for any product instead of just icecream (eg. smoothies)
 * [Expansion] Add other restaurants to the catalog (eg. TimHortons)
 * [Feature] Add a submission form for users to request a missing restaurant to be added
@@ -40,7 +41,6 @@ Expansions (large multi-feature additions), features, and optimizations that can
 * [Feature] Have an image stored for each restaurant and load as card image instead of single repeated one
 * [Feature] Add countdown timer below submit update button that displays remaining timeout time
 * [Feature] Add loading bar to places where restaurants and updates are loaded
-* [Optimization] Each update has an upvote/downvote number field and an upvoterID/downvoterID array field, this is redundant as the score can be simply found by counting the number of voterIDs.
 	
 ## 6. Contents of Folder
 Content of the project folder:
@@ -143,6 +143,7 @@ Features and tasks needed to be done (in order of priority):
     * About page content
 * Bugfix limitations
 * Clean-Up
-    * Fill in empty/incomplete function signatures and comment on rest of code
     * Refactor code into smaller fragments where possible
-* Write "Current Features" and "User Tasks" sections in readme
+    * Fill in empty/incomplete function signatures
+    * Add inline comments throughout js code where clarity is needed
+* Make a "Current Features" and "User Tasks" section for readme and about page
