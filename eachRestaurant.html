@@ -49,9 +49,9 @@
     <nav id="navPlaceholder">loading nav...</nav>
 
     <!-- JUMBOTRON -->
-    <div class="p-2 text-center mb-2"  id="restaurant-statusBar">
-        <h1 id="restaurant-address" class="mb-1"></h1>
-        <h4 class="mb-1">
+    <div class="p-2 text-center"  id="restaurant-statusBar">
+        <h1 id="restaurant-address"></h1>
+        <h4>
             <span id="restaurant-postalCode">loading...</span>
             <span id="restaurant-city"></span>
         </h4>
@@ -67,7 +67,7 @@
     <!-- CONTENT -->
     <div class="container text-center">
 
-        <!-- <img class="restaurant-img" src="./images/mcdonalds.png" alt="mcdonalds" style="width: 100%; height: auto;"/> -->
+        <img class="restaurant-img" src="./images/mcdonalds.png" alt="mcdonalds" style="width: 100%; height: auto;"/>
 
         <!-- Update -->
         <div class="container">
@@ -87,7 +87,7 @@
         </div>
 
         <!-- Catalog Portal -->
-        <div class="container my-2">
+        <div class="container">
             <h3>Want to view a different location? Browse our catalog:</h3>
             <a href="catalog.html" class="btn btn-secondary" role="button">Browse</a>
         </div>
@@ -100,41 +100,70 @@
         </div>
     </div>
 
-    <!-- update card template -->
+    <!-- UPDATE CARD TEMPLATE -->
     <template id="updateCardTemplate">
-        <div class="card-update card my-2 text-start text-light">
+        <div class="card-update card text-start">
+
+            <!-- banner image -->
             <img class="card-update-banner card-img-top"/>
+
+            <!-- body -->
             <div class="card-body">
                 <!-- user profile display -->
                 <div class="card-img-overlay">
-                    <img class="card-update-avatar" height="50" style="border-radius: 50%;"/>
-                    <span class="card-update-username text-white text-bg-dark">loading...</span>
-                    <div class="achievements-go-here"></div>
+                    <div class="row">
+                        <div class="col-auto">
+                            <img class="card-update-avatar rounded-circle" height="80"/>
+                        </div>
+                        <div class="col">
+                            <div class="row">
+                                <div>
+                                    <span class="card-update-username badge rounded-pill bg-primary">loading...</span>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div>
+                                    <span class="badge rounded-pill bg-info">
+                                        <span class="">Score</span>
+                                        <i class="bi bi-megaphone-fill"></i>
+                                        <span>X</span>
+                                    </span>
+                                    <span class="badge rounded-pill bg-info">
+                                        <span>Avg</span>
+                                        <i class="bi bi-bar-chart-fill"></i>
+                                        <span>Y</span>
+                                    </span>
+                                    <span class="badge rounded-pill bg-info">
+                                        <span>Posts</span>
+                                        <i class="bi bi-box-seam-fill"></i>
+                                        <span>Z</span>
+                                    </span>   
+                                </div>
+   
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="achievements-go-here"></div>
+                    </div>
                 </div>
 
                 <!-- update ID (hidden) -->
                 <span class="card-update-id d-none">loading...</span>
 
-                <div class="row">
-                    <!-- update status -->
-                    <h2 class="col-8 card-update-status">loading...</h2>
-
-                    <!-- delete -->
-                    <div class="col d-flex input-group justify-content-end div-update-delete d-none">
-                        <a class="btn btn-danger btn-update-delete border-black border-3">DELETE</a>
-                    </div>
-                </div>
+                <!-- update status -->
+                <h1 class="card-update-status">loading...</h1>
 
                 <!-- score and voting -->
-                <div class="fs-2 input-group">
-                    <span class="me-2">Accuracy Rating:</span>
-                    <i class="bi bi-arrow-up-circle btn-update-upvote text-white"></i>
+                <div class="input-group">
+                    <span>Accuracy Score:</span>
+                    <i class="bi bi-arrow-up-circle btn-update-upvote"></i>
                     <strong class="card-update-score">loading...</strong>
-                    <i class="bi bi-arrow-down-circle btn-update-downvote text-white"></i>
+                    <i class="bi bi-arrow-down-circle btn-update-downvote"></i>
                 </div>
 
                 <!-- score average upvotes -->
-                <div class="progress rounded-pill bg-light my-1">
+                <div class="progress rounded-pill">
                     <div class="progress-bar bg-info card-progress-upvotes" role="progressbar" style="width: 0%;">0%</div>
                     <div class="progress-bar bg-warning card-progress-downvotes" role="progressbar" style="width: 0%;">0%</div>
                     <div class="progress-bar bg-secondary card-progress-novotes" role="progressbar" style="width: 100%;">No Votes!</div>
@@ -142,9 +171,15 @@
 
                 <!-- date submitted -->
                 <div>
-                    <p class="card-update-dateSubmittedDelta fst-italic mb-0">loading...</p>
+                    <p class="card-update-dateSubmittedDelta">loading...</p>
                     <p class="card-update-dateSubmitted">loading...</p>
                 </div>
+
+                <!-- delete -->
+                <div class="input-group div-update-delete d-none">
+                    <a class="btn btn-danger btn-update-delete">DELETE</a>
+                </div>
+
             </div>
         </div>
     </template>
