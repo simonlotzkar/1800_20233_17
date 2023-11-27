@@ -71,7 +71,7 @@
                 </div>
             </fieldset>
             <div class="d-flex justify-content-center">
-                <button type="button" class="btn btn-danger" onclick="promptResetPassword()">reset password</button>
+                <button type="button" class="btn btn-danger" onclick="promptResetPassword()">Reset Password</button>
                 <button type="button" class="btn btn-secondary ms-2" onclick="enableFieldsetProfile()">Edit</button>
                 <button type="button" class="btn btn-info ms-2" onclick="saveProfile()">Save</button>
             </div>
@@ -117,16 +117,30 @@
         </div>
     </div>
 
-    <!-- customization card template -->
-    <template id="customizationCardTemplate">
-        <div class="card m-1" style="width: 9rem; height: auto;">
-            <div class="card-body">
-                <h5 class="card-customization-name">loading...</h5>
-                <img class="card-customization-image" style="width: 100%; height: auto;"/>
-                <p>
-                    <span class="card-customization-description">loading...</span>
-                </p>
-                <a class="btn btn-secondary">Choose</a>
+    <!-- customization btn template -->
+    <template id="customizationModalTemplate">
+        <!-- Button trigger modal -->
+        <a class="modal-customization-trigger" data-bs-toggle="modal" data-bs-target="...">
+            <img class="modal-customization-triggerImage" height="50"/>
+        </a>
+        
+        <!-- Modal -->
+        <div class="modal-customization-modal modal fade" id="..." tabindex="-1" aria-labelledby="..." aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 id="..." class="modal-customization-name modal-title">loading...</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <img class="modal-customization-image" width="100%"/>
+                        <span class="modal-customization-description">loading...</span>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <a class="modal-customization-chooseBtn btn btn-secondary">Choose</a>
+                    </div>
+                </div>
             </div>
         </div>
     </template>

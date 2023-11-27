@@ -502,8 +502,6 @@ async function populateClosestRestaurants(insertElement, amountToPopulate, filte
             newcard.querySelector(".card-restaurant-id").innerHTML = restaurantID;
             newcard.querySelector(".card-restaurant-city").innerHTML = city;
             newcard.querySelector(".card-restaurant-postalCode").innerHTML = postalCode;
-            newcard.querySelector(".card-restaurant-dateUpdated").innerHTML = "never";
-            newcard.querySelector(".card-restaurant-status").innerHTML = "unknown";
             newcard.querySelector(".card-restaurant-distance").innerHTML = distanceString;
             newcard.querySelector("a").href = "eachRestaurant.html?docID=" + doc.id;
             
@@ -537,9 +535,20 @@ function listenAndPopulateAllRestaurantsLastUpdatedStatus(rid) {
 
           for (i = 0; i < nodeList.length; i++) {
             if (nodeList[i].innerHTML == rid) {
-              let parentNode = nodeList[i].parentElement.parentElement;
-              parentNode.querySelector(".card-restaurant-status").innerHTML = generateWorkingString(status);
-              parentNode.querySelector(".card-restaurant-dateUpdated").innerHTML = generateTimeSinceString(dateSubmitted);
+              let parentCardNode = nodeList[i].parentElement.parentElement.parentElement;
+              parentCardNode.querySelector(".card-restaurant-status").innerHTML = generateWorkingString(status);
+              parentCardNode.querySelector(".card-restaurant-dateUpdatedDelta").innerHTML = generateTimeSinceString(dateSubmitted);
+              parentCardNode.querySelector(".card-restaurant-dateUpdated").innerHTML = generateDateString(dateSubmitted);
+
+              if (status) {
+                parentCardNode.classList.remove("bg-warning");
+                parentCardNode.classList.add("bg-success");
+                parentCardNode.classList.remove("bg-danger");
+              } else if (!status) {
+                parentCardNode.classList.remove("bg-warning");
+                parentCardNode.classList.remove("bg-success");
+                parentCardNode.classList.add("bg-danger");
+              }
             }
           }
         });

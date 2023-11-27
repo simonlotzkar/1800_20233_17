@@ -1,45 +1,48 @@
 <!-- restaurant card template -->
 <template id="restaurantCardTemplate">
-    <div class="card mb-2" style="width: 18rem">
-        <img class="card-restaurant-image card-img-top" src="./images/mcdonalds.png" alt="mcdonalds" />
+    <div class="card-restaurant card text-start bg-warning">
+        <img class="card-img-top" src="./images/mcdonalds.png"/>
         <div class="card-body">
-            <div class="card-img-overlay text-white">
-                <h5 class="card-restaurant-address bg-black">loading...</h5>
-                <span class="card-restaurant-postalCode bg-black">loading...</span>
-                <span class="card-restaurant-city bg-black">loading...</span>
-                <p>
-                    <a class="mt-2 btn btn-primary">View Details</a>
-                </p>
+            <!-- geographic details -->
+            <div class="card-img-overlay">
+                <h5 class="card-restaurant-address">loading...</h5>
+                <span class="card-restaurant-postalCode">loading...</span>
+                <span class="card-restaurant-city">loading...</span>
+                <p class="card-restaurant-distance">loading...</p>
+                <div>
+                    <a class="btn btn-info">View Details</a>
+                </div>
             </div>
-            <p>
-                <strong>Last Updated: </strong>
-                <span class="card-restaurant-dateUpdated">loading...</span>
-            </p>
-            <p>
-                <strong>Status: </strong>
-                <span class="card-restaurant-status">loading...</span>
-            </p>
-            <p>
-                <strong>Distance: </strong>
-                <span class="card-restaurant-distance">loading...</span>
-            </p>
+
+            <!-- status -->
+            <h1 class="card-restaurant-status">Unkown</h1>
+
+            <!-- date submitted -->
+            <div>
+                <p class="card-restaurant-dateUpdatedDelta"></p>
+                <p class="card-restaurant-dateUpdated"></p>
+            </div>
+
+            <!-- id (hidden) -->
             <p class="d-none">
                 <strong>ID: </strong>
                 <span class="card-restaurant-id">loading...</span>
             </p>
+
+            <!-- submitting update -->
             <div class="container">
                 <div class="card-restaurant-promptLogIn d-none">
-                    <h4>
+                    <h5>
                         Log in to let others know if the machine was working!
-                    </h4>
+                    </h5>
                 </div>
                 <div class="card-restaurant-submitUpdate d-none">
-                    <h4>
-                        Was the ice cream machine working?
-                    </h4>
+                    <h5>
+                        Been here recently? Let others know if the ice cream was machine working!
+                    </h5>
                     <div class="input-group justify-content-center">
-                        <button type="button" class="btn btn-primary workingBtn">Yes</button>
-                        <button type="button" class="btn btn-danger brokenBtn">No</button>
+                        <button type="button" class="btn btn-success workingBtn">Working</button>
+                        <button type="button" class="btn btn-danger brokenBtn">Broken</button>
                     </div>
                 </div>
             </div>

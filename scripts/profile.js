@@ -3,7 +3,7 @@ CONTRIBUTORS: SimonLotzkar
 DESCRIPTION: populates the profile display
 -------------------------------------------------------- */
 let refUpdateCardTemplate = document.getElementById("refUpdateCardTemplate");
-let customizationCardTemplate = document.getElementById("customizationCardTemplate");
+let customizationModalTemplate = document.getElementById("customizationModalTemplate");
 let currentUser;
 let totalScore = 0;
 let averageScore = 0;
@@ -48,56 +48,61 @@ function populateCustomizations(userDoc) {
   db.collection("customizations").get()
   .then(customizationsCollection => {
     // for each customization
-    customizationsCollection.forEach(customizationDoc => {
-      let type = customizationDoc.data().type;
-      let name = customizationDoc.data().name;
-      let imageURL = customizationDoc.data().imageURL;
-      let description = customizationDoc.data().description;
+    customizationsCollection
+      .forEach(customizationDoc => {
+        let customizationID = customizationDoc.id;
+        let type = customizationDoc.data().type;
+        let name = customizationDoc.data().name;
+        let imageURL = customizationDoc.data().imageURL;
+        let description = customizationDoc.data().description;
 
-      if (type == "avatar") {
-        // build customization card template for avatars
-        let newcard = customizationCardTemplate.content.cloneNode(true);
+        let newModal = customizationModalTemplate.content.cloneNode(true);
 
-        newcard.querySelector(".card-customization-name").innerHTML = name;
-        newcard.querySelector(".card-customization-image").src = "/images/avatars/" + imageURL + ".png";
-        newcard.querySelector(".card-customization-description").innerHTML = description;
-        newcard.querySelector("a").onclick = function() {
-          setAvatar(customizationDoc)
-        };
+        let modalId = "modal-" + customizationID;
+        let modalTitleId = "modal-title-" + customizationID;
+
+        newModal.querySelector(".modal-customization-modal").id = modalId;
+        newModal.querySelector(".modal-customization-name").id = modalTitleId;
         
-        document.getElementById("avatars-go-here").append(newcard);
+        newModal.querySelector(".modal-customization-trigger").setAttribute("data-bs-target", "#" + modalId);
+        newModal.querySelector(".modal-customization-modal").setAttribute("aria-labelledby", "#" + modalTitleId);
         
-      } else if (type == "banner") {
-        // build customization card template for banners
-        let newcard = customizationCardTemplate.content.cloneNode(true);
+        newModal.querySelector(".modal-customization-name").innerHTML = name;
+        newModal.querySelector(".modal-customization-description").innerHTML = description;
 
-        newcard.querySelector(".card-customization-name").innerHTML = name;
-        newcard.querySelector(".card-customization-image").src = "/images/banners/" + imageURL + ".png";
-        newcard.querySelector(".card-customization-description").innerHTML = description;
-        newcard.querySelector("a").onclick = function() {
-          setBanner(customizationDoc)
-        };
+        if (type == "avatar") {
+          newModal.querySelector(".modal-customization-triggerImage").src = "/images/avatars/" + imageURL + ".png";
+          newModal.querySelector(".modal-customization-image").src = "/images/avatars/" + imageURL + ".png";
+          newModal.querySelector(".modal-customization-chooseBtn").onclick = function() {
+            setAvatar(customizationDoc);
+          };
+          
+          document.getElementById("avatars-go-here").append(newModal);
+          
+        } else if (type == "banner") {
+          newModal.querySelector(".modal-customization-triggerImage").src = "/images/banners/" + imageURL + ".png";
+          newModal.querySelector(".modal-customization-image").src = "/images/banners/" + imageURL + ".png";
+          newModal.querySelector(".modal-customization-chooseBtn").onclick = function() {
+            setBanner(customizationDoc);
+          };
 
-        document.getElementById("banners-go-here").append(newcard);
+          document.getElementById("banners-go-here").append(newModal);
 
-      } else if (type == "achievement") {
-        // build customization card template for achievements
-        let newcard = customizationCardTemplate.content.cloneNode(true);
-        newcard.querySelector(".card-customization-name").innerHTML = name;
-        newcard.querySelector(".card-customization-image").src = "/images/achievements/" + imageURL + ".png";
-        newcard.querySelector(".card-customization-description").innerHTML = description;
-        newcard.querySelector("a").innerHTML = "Locked.";
+        } else if (type == "achievement") {
+          newModal.querySelector(".modal-customization-triggerImage").src = "/images/achievements/" + imageURL + ".png";
+          newModal.querySelector(".modal-customization-image").src = "/images/achievements/" + imageURL + ".png";
+          newModal.querySelector(".modal-customization-chooseBtn").innerHTML = "Locked.";
 
-        // check user's achievements and change display to unlocked if this customization is among them
-        userDoc.data().achievements.forEach(achievementDoc => {
-          if (achievementDoc.id == customizationDoc.id) {
-            newcard.querySelector("a").innerHTML = "Unlocked!";
-          }
-        });
-        
-        document.getElementById("achievements-go-here").append(newcard);
-      }
-    });
+          // check user's achievements and change display to unlocked if this customization is among them
+          userDoc.data().achievements.forEach(achievementDoc => {
+            if (achievementDoc.id == customizationDoc.id) {
+              newModal.querySelector(".modal-customization-chooseBtn").innerHTML = "Unlocked!";
+            }
+          });
+          
+          document.getElementById("achievements-go-here").append(newModal);
+        }
+      });
   });
 }
 
