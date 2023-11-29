@@ -93,12 +93,13 @@ function populateCustomizations(userDoc) {
           newModal.querySelector(".modal-customization-image").src = "/images/achievements/" + imageURL + ".png";
           newModal.querySelector(".modal-customization-chooseBtn").innerHTML = "Locked.";
 
-          // check user's achievements and change display to unlocked if this customization is among them
-          userDoc.data().achievements.forEach(achievementDoc => {
-            if (achievementDoc.id == customizationDoc.id) {
-              newModal.querySelector(".modal-customization-chooseBtn").innerHTML = "Unlocked!";
-            }
-          });
+          newModal.querySelector(".modal-customization-chooseBtn").classList.add("d-none");
+          // // check user's achievements and change display to unlocked if this customization is among them
+          // userDoc.data().achievements.forEach(achievementDoc => {
+          //   if (achievementDoc.id == customizationDoc.id) {
+          //     newModal.querySelector(".modal-customization-chooseBtn").classList.add("d-none");
+          //   }
+          // });
           
           document.getElementById("achievements-go-here").append(newModal);
         }
@@ -109,65 +110,74 @@ function populateCustomizations(userDoc) {
 // EFFECTS: ...TODO
 function populateUpdateLog(user) {
   // watch subcollection for changes
-  db.collection("users/" + user.uid + "/refUpdates")
+  db.collection("users/" + user.uid + "/refUpdates").orderBy("date", "desc")
     .onSnapshot(snapshot => {
-      // on change, reset update log
-      document.getElementById("refUpdates-go-here").innerHTML = "";
+      snapshot.docChanges().forEach(change => {
+        if (change.type === "added") {
+          let restaurantID = change.doc.data().restaurantID;
+          let restaurantName = "ERROR";
 
-      // on change, get the subcollection and display each one
-      db.collection("users/" + user.uid + "/refUpdates").orderBy("date", "desc").get()
-        .then(refUpdatesCollection => {
-          refUpdatesCollection.forEach(refUpdateDoc => {
-            let restaurantID = refUpdateDoc.data().restaurantID;
-            let restaurantName = "ERROR";
+          let refUpdateID = change.doc.id;
+          let updateID = change.doc.data().updateID;
+          let score = "ERROR";
+          let working = "ERROR";
+          
+          // restaurants collection
+          db.collection("restaurants").doc(restaurantID).get()
+            .then(doc => {  
+              restaurantName = doc.data().address;
 
-            let updateID = refUpdateDoc.data().updateID;
-            let score = "ERROR";
-            let working = "ERROR";
-            
-            // restaurants collection
-            db.collection("restaurants").doc(restaurantID).get()
-              .then(doc => {  
-                restaurantName = doc.data().address;
+              // restaurant's updates subcollection
+              db.collection("restaurants/" + restaurantID + "/updates").doc(updateID).get()
+                .then(doc => {
+                  let upvotes = doc.data().upvotes;
+                  let downvotes = doc.data().downvotes;
+                  let dateSubmitted = generateDateString(doc.data().dateSubmitted);
+                  score = upvotes - downvotes;
+                  working = generateWorkingString(doc.data().working);
 
-                // restaurant's updates subcollection
-                db.collection("restaurants/" + restaurantID + "/updates").doc(updateID).get()
-                  .then(doc => {
-                    let upvotes = doc.data().upvotes;
-                    let downvotes = doc.data().downvotes;
-                    let dateSubmitted = generateDateString(doc.data().dateSubmitted);
-                    score = upvotes - downvotes;
-                    working = generateWorkingString(doc.data().working);
+                  // build refupdate card template
+                  let newcard = refUpdateCardTemplate.content.cloneNode(true);
 
-                    // build refupdate card template
-                    let newcard = refUpdateCardTemplate.content.cloneNode(true);
-
-                    newcard.querySelector(".card-refUpdate-ID").innerHTML = updateID;
-                    newcard.querySelector(".card-refUpdate-status").innerHTML = working;
-                    newcard.querySelector(".card-refUpdate-dateSubmitted").innerHTML = dateSubmitted;
-                    newcard.querySelector(".card-refUpdate-score").innerHTML = score;
-                    newcard.querySelector(".card-refUpdate-restaurant").innerHTML = restaurantName;
-                    newcard.querySelector("a").href = "eachRestaurant.html?docID=" + restaurantID;
-                    
-                    // adds listener to delete btn; deletes the update and its corresponding refUpdate
-                    newcard.querySelector(".btn-update-delete").addEventListener("click", function() {
-                      deleteUpdate(restaurantID, updateID);
-                    });
-
-                    document.getElementById("refUpdates-go-here").append(newcard);
-                    
-                    // update user count and score fields after adding update card
-                    updateCount += 1;
-                    totalScore += score;
-                    averageScore = (totalScore / updateCount).toFixed(3);
-                    document.getElementById("profile-totalScore").innerHTML = totalScore;
-                    document.getElementById("profile-averageScore").innerHTML = averageScore;
-                    document.getElementById("profile-updateCount").innerHTML = updateCount;
+                  newcard.querySelector(".card-refUpdate-ID").innerHTML = refUpdateID;
+                  newcard.querySelector(".card-refUpdate-status").innerHTML = working;
+                  newcard.querySelector(".card-refUpdate-dateSubmitted").innerHTML = dateSubmitted;
+                  newcard.querySelector(".card-refUpdate-score").innerHTML = score;
+                  newcard.querySelector(".card-refUpdate-restaurant").innerHTML = restaurantName;
+                  newcard.querySelector("a").href = "eachRestaurant.html?docID=" + restaurantID;
+                  
+                  // adds listener to delete btn; deletes the update and its corresponding refUpdate
+                  newcard.querySelector(".btn-update-delete").addEventListener("click", function() {
+                    deleteUpdate(restaurantID, updateID);
                   });
-              });
+
+                  document.getElementById("refUpdates-go-here").append(newcard);
+                  
+                  // update user count and score fields after adding update card
+                  updateCount += 1;
+                  totalScore += score;
+                  averageScore = (totalScore / updateCount).toFixed(3);
+                  document.getElementById("profile-totalScore").innerHTML = totalScore;
+                  document.getElementById("profile-averageScore").innerHTML = averageScore;
+                  document.getElementById("profile-updateCount").innerHTML = updateCount;
+                });
             });
-          });
-        });
+        }
+        if (change.type === "modified") {
+          // this can't be executed from this page as the owner can't vote or edit their updates
+        }
+        if (change.type === "removed") {
+          let deletedRefUpdateID = change.doc.id;
+          let nodeList = document.querySelectorAll(".card-refUpdate-ID");
+          
+          for (i = 0; i < nodeList.length; i++) {
+            if (nodeList[i].innerHTML == deletedRefUpdateID) {
+              nodeList[i].parentElement.parentElement.parentElement.remove();
+            }
+          }
+        }
+      });
+    });
 }
 
 // EFFECTS: enables edit profile input fields
@@ -233,7 +243,6 @@ function setAvatar(doc) {
   currentUser.update({
     avatar: db.doc(url),
   });
-  alert("set avatar to: " + doc.data().name);
 }
 
 // MODIFIES: currentUser
@@ -244,6 +253,4 @@ function setBanner(doc) {
   currentUser.update({
     banner: db.doc(url),
   });
-  
-  alert("set banner to: " + doc.data().name);
 }

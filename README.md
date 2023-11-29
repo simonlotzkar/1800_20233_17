@@ -20,6 +20,8 @@ Here are some known bugs and limitations:
     * => display restaurants without distance information if the user's geolocation fails
 * [Limitation] Deleting refreshes instead of removes on profile update log when deleting
 * [Limitation] Each update has an upvote/downvote number field and an upvoterID/downvoterID array field, this is redundant as the score can be simply found by counting the number of voterIDs.
+* [Limitation] After changing customization, the customizations don't show the new change because they are generating at page load.
+    * => instead they should be generating off changes to the logged-in user's document
     
 ## 5. Future Plans
 Expansions (large multi-feature additions) and features that can be made after launching the app:
@@ -129,7 +131,6 @@ Content of the firestore database:
 
 ## 8. TODO List
 Features and tasks needed to be done (in order of priority):
-* Cosmetics
 * Data entry
     * Implement achievement unlock conditions:
         * changeUp              =not_started

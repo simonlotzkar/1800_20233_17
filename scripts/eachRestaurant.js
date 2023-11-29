@@ -210,9 +210,11 @@ function dynamicallyPopulateUpdateLog() {
                         }
                     }
 
+                    // set status to null
                     restaurantLastUpdated = undefined;
                     restaurantStatus = undefined;
 
+                    // repopulate status
                     populateLastUpdated();
                 }
             });

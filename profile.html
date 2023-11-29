@@ -58,68 +58,73 @@
 
     <!-- CONTENT -->
     <div class="container text-center">
-        <!-- Editable Details -->
-        <form class="mb-2">
-            <fieldset class="mb-2" id="fieldset-profile">
-                <div class="form-group mb-1">
-                    <label class="d-flex justify-content-start ms-1">Username</label>
+
+        <!-- User Editable Details -->
+        <form>
+            <fieldset id="fieldset-profile">
+                <div class="form-group">
+                    <label class="d-flex justify-content-start">Username</label>
                     <input disabled type="text" id="input-profile-username" class="form-control" placeholder="ERROR: No username found!">
                 </div>
-                <div class="form-group mb-1">
-                    <label class="d-flex justify-content-start ms-1">email</label>
+                <div class="form-group">
+                    <label class="d-flex justify-content-start">email</label>
                     <input disabled type="text" id="input-profile-email" class="form-control" placeholder="ERROR: No email found!">
                 </div>
             </fieldset>
             <div class="d-flex justify-content-center">
                 <button type="button" class="btn btn-danger" onclick="promptResetPassword()">Reset Password</button>
-                <button type="button" class="btn btn-secondary ms-2" onclick="enableFieldsetProfile()">Edit</button>
-                <button type="button" class="btn btn-info ms-2" onclick="saveProfile()">Save</button>
+                <button type="button" class="btn btn-secondary" onclick="enableFieldsetProfile()">Edit</button>
+                <button type="button" class="btn btn-info" onclick="saveProfile()">Save</button>
             </div>
         </form>
 
-        <!-- Profile Details -->
+        <!-- User Uneditable Details -->
         <div class="container">
-            <div class="container form-control">
-                <strong class="ms-1">Sign-Up Date: </strong>
+            <div class="container">
+                <strong>Sign-Up: </strong>
                 <span id="profile-dateSignUp">loading...</span>
             </div>
 
-            <div class="container form-control">
+            <div class="container">
                 <strong>Updates: </strong>
                 <span id="profile-updateCount">loading...</span>
             </div>
-            <div class="container form-control">
+            <div class="container">
                 <strong>Total Score: </strong>
                 <span id="profile-totalScore">loading...</span>
             </div>
-            <div class="container form-control">
+            <div class="container">
                 <strong>Average Score: </strong>
                 <span id="profile-averageScore">loading...</span>
             </div>
         </div>
 
-        <!-- Customization -->
-        <div class="container mt-3">
+        <!-- Customizations -->
+        <div class="container">
             <h2>Customizations</h2>
+
             <h4>Avatars</h4>
-            <div id="avatars-go-here" class="row row-cols-auto"></div>
+            <div id="avatars-go-here"></div>
+
             <h4>Banners</h4>
-            <div id="banners-go-here" class="row row-cols-auto"></div>
+            <div id="banners-go-here"></div>
+
             <h4>Achievements</h4>
-            <div id="achievements-go-here" class="row row-cols-auto"></div>
+            <div id="achievements-go-here"></div>
         </div>
         
         <!-- Update Log -->
-        <div class="container mt-3">
+        <div class="container">
             <h2>Update Log</h2>
             <div id="refUpdates-go-here"></div>
             <h4>End of log...</h4>
         </div>
     </div>
 
-    <!-- customization btn template -->
+    <!-- CUSTOMIZATION TEMPLATE -->
     <template id="customizationModalTemplate">
-        <!-- Button trigger modal -->
+
+        <!-- Modal Trigger -->
         <a class="modal-customization-trigger" data-bs-toggle="modal" data-bs-target="...">
             <img class="modal-customization-triggerImage" height="50"/>
         </a>
@@ -137,21 +142,27 @@
                         <span class="modal-customization-description">loading...</span>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <a class="modal-customization-chooseBtn btn btn-secondary">Choose</a>
+                        <a class="btn btn-secondary" data-bs-dismiss="modal">Close</a>
+                        <a class="modal-customization-chooseBtn btn btn-primary" data-bs-dismiss="modal">Change To This</a>
                     </div>
                 </div>
             </div>
         </div>
     </template>
 
-    <!-- reference update card template -->
+    <!-- REF_UPDATE TEMPLATE -->
     <template id="refUpdateCardTemplate">
-        <div class="card mb-2">
+        <div class="card">
             <div class="card-body">
+                <p class="d-none">
+                    <strong>Ref_Update ID: </strong>
+                    <span class="card-refUpdate-ID">loading...</span>
+                </p>
                 <p>
                     <strong>Status: </strong>
                     <span class="card-refUpdate-status">loading...</span>
+                    <strong>Score: </strong>
+                    <span class="card-refUpdate-score">loading...</span>
                 </p>
                 <p>
                     <strong>Restaurant: </strong>
@@ -161,14 +172,6 @@
                 <p>
                     <strong>Submitted on: </strong>
                     <span class="card-refUpdate-dateSubmitted">loading...</span>
-                </p>
-                <p>
-                    <strong>Update ID: </strong>
-                    <span class="card-refUpdate-ID">loading...</span>
-                </p>
-                <p>
-                    <strong>Score: </strong>
-                    <span class="card-refUpdate-score">loading...</span>
                 </p>
                 <div class="input-group justify-content-center">
                     <a class="btn btn-danger btn-update-delete">DELETE</a>
