@@ -208,7 +208,9 @@ function generateDateString(timestamp) {
   return dateString;
 }
 
-// EFFECTS: ...TODO
+// EFFECTS: Attempts to submit an update, first checks to see if it has been greater
+//          than 60 seconds since the last. If it has, or the user hasn't submitted
+//          yet, the update is submitted and the time is logged for future calculations.
 function trySubmitUpdate(status, restaurantID) {
   let nowTime = firebase.firestore.Timestamp.now().toDate().getTime();
   let secsToWait = 60;
@@ -376,7 +378,8 @@ function getLocationFromUser() {
   });
 }
 
-// EFFECTS: ...TODO
+// EFFECTS: Prompts the user for confirmation, on success removes the given update from
+//          its restaurant's updates and then removes it from its owner's refUpdates.
 function deleteUpdate(restaurantID, updateID) {
   if (confirm("Are you sure you want to delete this update?")) {
       // get this update and delete it
@@ -523,7 +526,9 @@ async function populateClosestRestaurants(insertElement, amountToPopulate, filte
     });
 }
 
-// EFFECTS: ...TODO
+// EFFECTS: Listens to the given restaurant's updates subcollection for any changes,
+//          then reassesses which update was latest and repopulates the restaurant
+//          card's elements depending on the new latest status.
 function listenAndPopulateAllRestaurantsLastUpdatedStatus(rid) {
   db.collection("restaurants/" + rid + "/updates").orderBy("dateSubmitted", "asc")
     .onSnapshot(querySnapshot => {

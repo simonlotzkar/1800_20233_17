@@ -1,10 +1,12 @@
 # McWorking
 
 ## 1. Project Description
-I am developing "McWorking" to allow McDonalds patrons to check the status of any location's icecream machine before visiting.
+We are developing "McWorking" to allow McDonalds patrons to check the status of any location's icecream machine before visiting.
 
-## 2. Project Author 
-* Simon Lotzkar
+## 2. Project Team: BBY17
+* Simon Lotzkar: Designer, Developer, Planner
+* Yongseong Choi: Googled assets for and designed achievement images
+* Jacob Ardelean: Googled avatar and banner images
 	
 ## 3. Technologies and Resources Used
 * HTML, CSS, JavaScript

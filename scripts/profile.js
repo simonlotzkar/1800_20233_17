@@ -42,7 +42,7 @@ firebase.auth().onAuthStateChanged((user) => {
   }
 });
 
-// EFFECTS: ...TODO
+// EFFECTS: Populates each customization and adds them to their divs.
 function populateCustomizations(userDoc) {
   // customizations collection
   db.collection("customizations").get()
@@ -107,7 +107,7 @@ function populateCustomizations(userDoc) {
   });
 }
 
-// EFFECTS: ...TODO
+// EFFECTS: Populates the given user's reference updates in the ref_update log.
 function populateUpdateLog(user) {
   // watch subcollection for changes
   db.collection("users/" + user.uid + "/refUpdates").orderBy("date", "desc")
@@ -215,7 +215,8 @@ function saveProfile() {
   disableFieldsetProfile();
 }
 
-// EFFECTS: ...TODO
+// EFFECTS: Confirms with user that they want to proceed, then on success, sends a 
+//          password verification email to the user's saved email.
 function promptResetPassword() {
   if (confirm("Send a password reset email?")) {
     let emailInput = document.getElementById("input-profile-email").value;

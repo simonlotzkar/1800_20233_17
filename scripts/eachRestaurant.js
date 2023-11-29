@@ -20,7 +20,7 @@ firebase.auth().onAuthStateChanged((user) => {
     }
 });
 
-// EFFECTS: ...TODO
+// EFFECTS: Populates the restaurant page if no error is thrown.
 async function populateRestaurantPage() {
     try {
         const userLocation = await getLocationFromUser();
@@ -35,7 +35,7 @@ async function populateRestaurantPage() {
 
 populateRestaurantPage();
 
-// EFFECTS: ...TODO
+// EFFECTS: Populates the details about the specific restaurant.
 function populateRestaurantDetails(restaurantID, userLocation) {
     db.collection("restaurants").doc(restaurantID)
         .onSnapshot(doc => {
@@ -70,14 +70,15 @@ function populateRestaurantDetails(restaurantID, userLocation) {
         });
 }
 
-// EFFECTS: ...TODO
+// EFFECTS: Changes the background classes of the restaurant page header depending on 
+//          the status of the restaurant.
 function setStatusBar(status) {
     if (status == null || status == undefined) {
         document.getElementById("restaurant-status").innerHTML = "unknown";
         document.getElementById("restaurant-statusBar").classList.add("text-bg-warning");
         document.getElementById("restaurant-statusBar").classList.remove("text-bg-success");
         document.getElementById("restaurant-statusBar").classList.remove("text-bg-danger");
-    } else if (status) {
+    } if (status) {
         document.getElementById("restaurant-status").innerHTML = generateWorkingString(true);
         document.getElementById("restaurant-statusBar").classList.remove("text-bg-warning");
         document.getElementById("restaurant-statusBar").classList.add("text-bg-success");
@@ -90,11 +91,17 @@ function setStatusBar(status) {
     }
 }
 
-// EFFECTS: ...TODO
+// EFFECTS: Listens to the restaurant's updates subcollection and does the following:
+//             - When an update was added, adds a card of that update to the update
+//               log. This triggers on the initial state.
+//             - When an update is changed, repopulates that update's votes. 
+//             - When an update is deleted, removes that update from the update log.
 function dynamicallyPopulateUpdateLog() {
     db.collection("restaurants/" + restaurantID + "/updates").orderBy("dateSubmitted", "asc")
         .onSnapshot(snapshot => {
             snapshot.docChanges().forEach(change => {
+
+                // UPDATE ADDED...
                 if (change.type === "added") {
                     // if added, add to the DOM:
                     let updateID = change.doc.id;
@@ -130,8 +137,8 @@ function dynamicallyPopulateUpdateLog() {
                         newcard.querySelector(".card-progress-downvotes").setAttribute("style", "width: 0%;");
                         newcard.querySelector(".card-progress-novotes").setAttribute("style", "width: 100%;");
                     } else {
-                        // set the upvote progress bar and text to whatever % of upvotes there are, then
-                        // do the same for downvotes and set novotes to 0%
+                        // set the upvote progress bar and text to whatever % of upvotes
+                        // there are, then do the same for downvotes and set novotes to 0%
                         newcard.querySelector(".card-progress-upvotes").innerHTML = percentUpvote + "% (" + upvotes + " Upvotes)";
                         newcard.querySelector(".card-progress-downvotes").innerHTML = percentDownvote + "% (" + downvotes + " Downvotes)";
 
@@ -161,6 +168,8 @@ function dynamicallyPopulateUpdateLog() {
                     populateLastUpdated();
                     document.getElementById("updates-go-here").prepend(newcard);
                 }
+
+                // UPDATE MODIFIED...
                 if (change.type === "modified") {
                     // if modified, means the votes changed so update them:
                     let updateID = change.doc.id;
@@ -199,6 +208,8 @@ function dynamicallyPopulateUpdateLog() {
                         }
                     }
                 }
+
+                // UPDATE REMOVED...
                 if (change.type === "removed") {
                     // if removed, go through the DOM and remove corresponding nodes:
                     let updateID = change.doc.id;
@@ -221,7 +232,8 @@ function dynamicallyPopulateUpdateLog() {
         });
 }
 
-// EFFECTS: ...TODO
+// EFFECTS: Searches through the restaurant's updates subcollection and finds the latest
+//          entry. Then sets the restaurant's status and last updated display to match.
 function populateLastUpdated() {
     db.collection("restaurants/" + restaurantID + "/updates")
         .onSnapshot(updateCollection => {
@@ -240,7 +252,7 @@ function populateLastUpdated() {
         });
 }
 
-// EFFECTS: ...TODO
+// EFFECTS: Sets up the listeners for each button on the given update card.
 function initializeBtnListeners(card, restaurantID, updateDoc) {
     // adds listener to delete btn
     card.querySelector(".btn-update-delete").addEventListener("click", function() {
@@ -258,7 +270,11 @@ function initializeBtnListeners(card, restaurantID, updateDoc) {
     });
 }
 
-// EFFECTS: ...TODO
+// EFFECTS: Given an update card, sets the voting icons depending on the following:
+//             - If the user is logged OUT, hides the voting icons.
+//             - If the user is logged IN...
+//                - ...and they ARE the update's owner, hides the voting icons.
+//                - ...and they are NOT the update's owner, shows the voting icons.
 function setIcons(card, updateDoc) {
     let upvoterIDList = updateDoc.data().upvoterIDList;
     let downvoterIDList = updateDoc.data().downvoterIDList;
@@ -293,7 +309,15 @@ function setIcons(card, updateDoc) {
     }
 }
 
-// EFFECTS: ...TODO
+// MODIFIES: updateDoc
+// EFFECTS: Given an update, modifies its votes depending on the following: 
+//             - If a user is logged OUT, alerts and fails.
+//             - If a user is logged IN...
+//                - ...and they ARE the update's owner, alerts and fails.
+//                - ...and they are NOT the update's owner...
+//                   - ...and they already upvoted, remove their upvote.
+//                   - ...and they already downvoted, remove their downvote and add their upvote.
+//                   - ...and they haven't voted, add their upvote.
 function processUpvote(restaurantID, updateDoc) {
     let updateUserID = updateDoc.data().userID;
     let updateID = updateDoc.id;
@@ -335,7 +359,15 @@ function processUpvote(restaurantID, updateDoc) {
     }
 }
 
-// EFFECTS: ...TODO
+// MODIFIES: updateDoc
+// EFFECTS: Given an update, modifies its votes depending on the following: 
+//             - If a user is logged OUT, alerts and fails.
+//             - If a user is logged IN...
+//                - ...and they ARE the update's owner, alerts and fails.
+//                - ...and they are NOT the update's owner...
+//                   - ...and they already upvoted, remove their upvote and add their downvote.
+//                   - ...and they already downvoted, remove their downvote.
+//                   - ...and they haven't voted, add their upvote.
 function processDownvote(restaurantID, updateDoc) {
     let updateUserID = updateDoc.data().userID;
     let updateID = updateDoc.id;
@@ -377,7 +409,7 @@ function processDownvote(restaurantID, updateDoc) {
     }
 }
 
-// EFFECTS: ...TODO
+// EFFECTS: Populates the given card user owner's profile details on the card.
 function addProfileDetails(card, updateUserID) {
 
     let cardUsernameClass = card.querySelector(".card-update-username");

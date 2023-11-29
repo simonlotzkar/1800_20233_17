@@ -3,7 +3,7 @@ CONTRIBUTORS: SimonLotzkar
 DESCRIPTION: submits a restaurant to the database from form
 -------------------------------------------------------- */
 
-// EFFECTS: ...TODO
+// EFFECTS: Adds a new restaurant to the db with the given input as its fields.
 function submitRestaurant() {
     let address = document.getElementById("input-submitRestaurant-address").value;
     let city = document.getElementById("input-submitRestaurant-city").value;
