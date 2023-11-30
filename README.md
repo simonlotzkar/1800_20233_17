@@ -150,6 +150,5 @@ Features and tasks needed to be done (in order of priority):
 * Bugfix limitations
 * Clean-Up
     * Refactor code into smaller fragments where possible
-    * Fill in empty/incomplete function signatures
     * Add inline comments throughout js code where clarity is needed
 * Make a "Current Features" and "User Tasks" section for readme and about page

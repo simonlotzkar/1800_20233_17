@@ -6,6 +6,11 @@ DESCRIPTION: styles global, footer, and navbar
     font-family: Helvetica, sans-serif;
 }
 
+.disabledAnchor {
+    pointer-events: none;
+    cursor: default;
+}
+
 /* X-Small devices (portrait phones, less than 576px) */
 
 /* Small devices (landscape phones, 576px and up) */

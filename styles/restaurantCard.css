@@ -6,19 +6,25 @@ DESCRIPTION: styles the restaurant cards
 /* X-Small devices (portrait phones, less than 576px) */
 .card-restaurant {
     color: white;
+    margin-bottom: 0.5rem;
+}
+
+.card-img-top {
+    width: 100%;
+    height: auto;
+}
+
+.card-body {
+    padding-top: 0;
 }
 
 .card-img-overlay {
     padding: 0;
     margin: 0;
     padding-top: 10px;
-}
-
-.card-img-overlay > div {
     display: table;
     text-align: center;
     width: 100%;
-    height: 100%;
 }
 
 .card-restaurant-address {
@@ -61,25 +67,169 @@ DESCRIPTION: styles the restaurant cards
 }
 
 .card-restaurant-heading {
-    display: grid;
-    grid-template-columns: 3fr 1fr;
+    margin-top: 0;
+    display: flex;
+    align-items: center;
     height: 3rem;
 }
 
-.card-restaurant-heading > div {
+.card-restaurant-viewBtn {
+    margin-left: auto;
+    padding: 0;
+    z-index: 9999;
+}
+
+.card-restaurant-viewBtn a {
+    font-style: italic;
+    padding-top: 0.25rem;
+    padding-bottom: 0.25rem;
+    padding-right: 0.5rem;
+    padding-left: 0.5rem;
+    border: 2px black solid;
+    box-shadow: 5px 5px black;
 }
 
 .card-restaurant-status {
+    font-size: 1.75rem;
+    padding: 0;
+    margin: 0;
+    font-weight: bolder;
+    font-style: italic;
+    line-height: 3rem;
+}
+
+.card-restaurant-date {
+    margin-bottom: 0.5rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid black;
+}
+
+.card-restaurant-dateUpdatedDelta {
+    font-style: italic;
+    margin: 0;
+    font-size: 1rem;
+}
+
+.card-restaurant-submission h5 {
+    font-size: 1rem;
+    text-align: center;
+}
+
+.card-restaurant-submission button {
+    text-align: center;
+    padding-top: 0.25rem;
+    padding-bottom: 0.25rem;
+    padding-right: 0.5rem;
+    padding-left: 0.5rem;
+    border: 2px black solid;
+    box-shadow: 5px 5px black;
+}
+
+/* Custom */
+@media (min-width: 400px) {
+    .card-restaurant-address {
+        line-height: 2rem;
+        font-size: 2rem;
+    }
+    
+    .card-restaurant-postalCodeAndCity {
+        line-height: 1.75rem;
+        font-size: 1.75rem;
+    }
+    
+    .card-restaurant-distance {
+        line-height: 1.5rem;
+        font-size: 1.5rem;
+    }
+
+    .card-restaurant-viewBtn a {
+        padding-right: 1rem;
+        padding-left: 1rem;
+        font-size: 1.25rem;
+    }
+
+    .card-restaurant-status {
+        font-size: 2.25rem;
+        line-height: 2.25rem;
+    }
+
+    .card-restaurant-dateUpdatedDelta {
+        font-size: 1.5rem;
+    }
+
+    .card-restaurant-submission h5 {
+        font-size: 1.5rem;
+    }
+    
+    .card-restaurant-submission button {
+        padding-right: 1rem;
+        padding-left: 1rem;
+        font-size: 1.5rem;
+    }
 }
 
 /* Small devices (landscape phones, 576px and up) */
 @media (min-width: 576px) {
-
+    .card-restaurant-address {
+        margin-bottom: 0.75rem;
+    }
+    
+    .card-restaurant-postalCodeAndCity {
+        margin-bottom: 0.75rem;
+    }
 }
 
 /* Medium devices (tablets, 768px and up) */
 @media (min-width: 768px) {
+    .card-restaurant-address {
+        font-size: 3rem;
+        line-height: 3rem;
+        margin-top: 1rem;
+        margin-bottom: 1rem;
+    }
     
+    .card-restaurant-postalCodeAndCity {
+        font-size: 2.5rem;
+        line-height: 2.5rem;
+        margin-bottom: 1rem;
+    }
+
+    .card-restaurant-distance {
+        font-size: 2rem;
+        line-height: 2rem;
+        margin-bottom: 1rem;
+    }
+
+    .card-restaurant-viewBtn a {
+        padding-right: 1.5rem;
+        padding-left: 1.5rem;
+        font-size: 2rem;
+    }
+
+    .card-restaurant-heading {
+        margin-top: 1rem;
+    }
+
+    .card-restaurant-status {
+        font-size: 3rem;
+        line-height: 3rem;
+    }
+
+    .card-body {
+        padding-bottom: 2rem;
+        padding-left: 2rem;
+        padding-right: 2rem;
+    }
+
+    .card-restaurant-submission h5 {
+        font-size: 2rem;
+        margin-top: 1rem;
+        margin-bottom: 1rem;
+    }
+
+    .card-restaurant-submission button {
+        font-size: 2rem;
+    }
 }
 
 /* Large devices (desktops, 992px and up) */

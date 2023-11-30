@@ -10,14 +10,12 @@
         <div class="card-body">
             <!-- geographic details -->
             <div class="card-img-overlay">
-                <div>
-                    <h5 class="card-restaurant-address">loading...</h5>
-                    <p class="card-restaurant-postalCodeAndCity">
-                        <span class="card-restaurant-postalCode d-none">loading...</span>
-                        <span class="card-restaurant-city">loading...</span>    
-                    </p>
-                    <p class="card-restaurant-distance">loading...</p>
-                </div>
+                <h5 class="card-restaurant-address">loading...</h5>
+                <p class="card-restaurant-postalCodeAndCity">
+                    <span class="card-restaurant-postalCode d-none">loading...</span>
+                    <span class="card-restaurant-city">loading...</span>    
+                </p>
+                <p class="card-restaurant-distance">loading...</p>
             </div>
 
             <!-- card heading -->
@@ -25,19 +23,15 @@
                 <!-- status -->
                 <h1 class="card-restaurant-status">Unkown</h1>
                 
-                <div>
-                    <!-- view btn -->
-                    <div class="card-restaurant-viewBtn">
-                        <a class="btn btn-info">Details</a>
-                    </div>
+                <div class="card-restaurant-viewBtn">
+                    <a class="btn btn-info">Details</a>
                 </div>
-
             </div>
 
             <!-- date submitted -->
-            <div>
+            <div class="card-restaurant-date">
                 <p class="card-restaurant-dateUpdatedDelta"></p>
-                <p class="card-restaurant-dateUpdated"></p>
+                <p class="card-restaurant-dateUpdated d-none"></p>
             </div>
 
             <!-- id (hidden) -->
@@ -47,7 +41,7 @@
             </p>
 
             <!-- submitting update -->
-            <div class="container">
+            <div class="card-restaurant-submission container">
                 <div class="card-restaurant-promptLogIn d-none">
                     <h5>
                         Log in to let others know if the machine was working!
@@ -55,7 +49,7 @@
                 </div>
                 <div class="card-restaurant-submitUpdate d-none">
                     <h5>
-                        Been here recently? Let others know if the ice cream was machine working!
+                        Is the ice cream machine working?
                     </h5>
                     <div class="input-group justify-content-center">
                         <button type="button" class="btn btn-success workingBtn">Working</button>
