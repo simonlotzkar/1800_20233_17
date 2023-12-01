@@ -128,7 +128,7 @@ DESCRIPTION: styles the restaurant cards
 }
 
 /* Custom */
-@media (min-width: 400px) {
+@media (min-width: 476px) {
     .card-restaurant {
         margin-bottom: 0.75rem;
     }

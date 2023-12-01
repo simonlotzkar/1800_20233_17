@@ -1,0 +1,96 @@
+/* --------------------------------------------------------
+CONTRIBUTORS: SimonLotzkar
+DESCRIPTION: styles the navbar
+-------------------------------------------------------- */
+/* X-Small devices (portrait phones, less than 576px) */
+nav {
+    background-image:
+    linear-gradient(
+      to top,
+      #FFC107, #ffe082
+    );
+}
+
+.navbar-nav .dropdown-menu .nav-link {
+    text-align: center;
+    border: 1px black solid;
+}
+
+#loginModal {
+    z-index: 10000;
+    background-color: rgba(0, 0, 0, 0.7);
+}
+
+#loginModal .modal-content {
+    background-color: #d6a100;
+}
+
+#formLogIn button {
+    border: 2px solid black;
+    box-shadow: 5px 5px black;
+}
+
+#loginModal .input-group {
+    border-radius: 0.5rem;
+    border: 2px solid black;
+    box-shadow: 5px 5px black;
+}
+
+#loginModal .input-group-text {
+    background-color: #FFC107;
+    border: none;
+}
+
+.modal-body input {
+    background-color: #ffe082;
+    border: none;
+}
+
+.modal-body input:focus {
+    background-color: #ffe082;
+    border: none;
+}
+
+.modal-header {
+    border-color: black;
+}
+
+.modal-header h5 {
+    font-size: 2rem;
+    font-weight: bolder;
+    font-style: italic;
+}
+
+.modal-footer {
+    border-color: black;
+}
+
+.modal-footer a {
+    border: 2px solid black;
+    box-shadow: 5px 5px black;
+}
+
+/* Small devices (landscape phones, 576px and up) */
+@media (min-width: 576px) {
+
+}
+
+/* Medium devices (tablets, 768px and up) */
+@media (min-width: 768px) {
+    
+}
+
+/* Large devices (desktops, 992px and up) */
+@media (min-width: 992px) {
+    
+}
+
+/* X-Large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) {
+    
+}
+
+/* XX-Large devices (larger desktops, 1400px and up) */
+@media (min-width: 1400px) {
+    
+}

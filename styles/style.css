@@ -25,16 +25,16 @@ footer {
     text-transform: uppercase;
 }
 
-.dropdown-menu .nav-link {
-    text-align: center;
-    border: 1px black solid;
-}
-
 .jumbotron {
     text-align: center;
     padding-top: 1rem;
     padding-bottom: 1rem;
     background-color: #d6a100;
+    background-image:
+    linear-gradient(
+      to bottom,
+      #d6a100, #FFC107
+    );
 }
 
 .jumbotron h1 {

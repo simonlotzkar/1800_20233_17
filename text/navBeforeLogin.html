@@ -7,7 +7,7 @@
 <script src="../scripts/logIn.js"></script>
 
 <!-- NAVBAR (Pre-Login) -->
-<nav class="navbar navbar-expand-sm navbar-light bg-warning">
+<nav class="navbar navbar-expand-sm">
     <div class="container-fluid">
         <a class="navbar-brand" href="../index.html">
             <h2>
@@ -40,7 +40,7 @@
             </ul>
             <!-- login modal -->
             <div class="navbar-nav ms-auto">
-                <button type="button" class="nav-item btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#loginModal">
+                <button type="button" class="nav-item btn btn-success" data-bs-toggle="modal" data-bs-target="#loginModal">
                     Login
                 </button>
                 <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
@@ -56,16 +56,16 @@
                                         <span class="input-group-text" id="addon-wrapping">eMail</span>
                                         <input id="inputLogInEmail" type="email" class="form-control" aria-label="Username" aria-describedby="addon-wrapping">
                                     </div>
-                                    <div class="input-group">
+                                    <div class="input-group mt-3">
                                         <span class="input-group-text" id="addon-wrapping">password</span>
                                         <input id="inputLogInPassword" type="password" class="form-control" aria-label="Username" aria-describedby="addon-wrapping">
                                     </div>
-                                    <button type="submit" class="btn btn-primary d-flex float-right">Log In</button>
+                                    <button type="submit" class="btn btn-success mt-3 d-flex me-auto ms-auto">Log In</button>
                                 </form>
                             </div>
                             <div class="modal-footer">
                                 Don't have an account?
-                                <a class="btn btn-outline-success" href="../signUp.html">Sign Up!</a>
+                                <a class="btn btn-danger" href="../signUp.html">Sign Up!</a>
                             </div>
                         </div>
                     </div>
