@@ -19,6 +19,11 @@ DESCRIPTION: styles the catalog page
     width: 90%;
 }
 
+#form-filter input {
+    background-color: #ffe082;
+    border: none;
+}
+
 .dropdown {
     margin-top: 0.5rem;
     display: flex;

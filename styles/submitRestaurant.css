@@ -3,6 +3,23 @@ CONTRIBUTORS: SimonLotzkar
 DESCRIPTION: styles the restaurant submission page
 -------------------------------------------------------- */
 /* X-Small devices (portrait phones, less than 576px) */
+.input-submitRestaurant {
+    background-color: #ffe082;
+    border: 2px solid black;
+    box-shadow: 5px 5px black;
+}
+
+.input-submitRestaurant:focus {
+    background-color: #ffe082;
+    border: 2px solid black;
+    box-shadow: 5px 5px black;
+}
+
+.submit-Btn button {
+    border: 2px solid black;
+    box-shadow: 5px 5px black;
+    margin-bottom: 1rem;
+}
 
 /* Small devices (landscape phones, 576px and up) */
 @media (min-width: 576px) {

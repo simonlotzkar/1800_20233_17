@@ -42,6 +42,7 @@
     <!-------------------------------------------->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="./styles/style.css">
+    <link rel="stylesheet" href="./styles/submitRestaurant.css">
 
 </head>
 
@@ -54,9 +55,9 @@
     <nav id="navPlaceholder">loading nav...</nav>
 
     <!-- JUMBOTRON -->
-    <div class="p-3 text-center bg-body-tertiary mb-2">
-        <h1 class="mb-3">Submit Restaurant</h1>
-        <h4 class="mb-3">
+    <div class="jumbotron">
+        <h1>New Entry</h1>
+        <h4>
             Only admins can see this page!
         </h4>
     </div>
@@ -69,30 +70,30 @@
                 <!-- address -->
                 <div class="form-group mb-1">
                     <label class="d-flex justify-content-start ms-1">Address</label>
-                    <input type="text" id="input-submitRestaurant-address" class="form-control" placeholder="1234 ipsum st">
+                    <input type="text" id="input-submitRestaurant-address" class="input-submitRestaurant form-control" placeholder="1234 ipsum st">
                 </div>
                 <!-- city -->
                 <div class="form-group mb-1">
                     <label class="d-flex justify-content-start ms-1">City</label>
-                    <input type="text" id="input-submitRestaurant-city" class="form-control" placeholder="ipsum">
+                    <input type="text" id="input-submitRestaurant-city" class="input-submitRestaurant form-control" placeholder="ipsum">
                 </div>
                 <!-- latitude -->
                 <div class="form-group mb-1">
                     <label class="d-flex justify-content-start ms-1">Latitude</label>
-                    <input type="text" id="input-submitRestaurant-latitude" class="form-control" placeholder="123.456">
+                    <input type="text" id="input-submitRestaurant-latitude" class="input-submitRestaurant form-control" placeholder="123.456">
                 </div>
                 <!-- longitude -->
                 <div class="form-group mb-1">
                     <label class="d-flex justify-content-start ms-1">Longitude</label>
-                    <input type="text" id="input-submitRestaurant-longitude" class="form-control" placeholder="123.456">
+                    <input type="text" id="input-submitRestaurant-longitude" class="input-submitRestaurant form-control" placeholder="123.456">
                 </div>
                 <!-- postal code -->
                 <div class="form-group mb-1">
                     <label class="d-flex justify-content-start ms-1">Postal Code</label>
-                    <input type="text" id="input-submitRestaurant-postalCode" class="form-control" placeholder="1A2 B3C">
+                    <input type="text" id="input-submitRestaurant-postalCode" class="input-submitRestaurant form-control" placeholder="1A2 B3C">
                 </div>
             </fieldset>
-            <div class="d-flex justify-content-end">
+            <div class="submit-Btn d-flex justify-content-center">
                 <button type="button" class="btn btn-primary" onclick="submitRestaurant()">Submit</button>
             </div>
         </form>
