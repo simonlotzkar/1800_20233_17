@@ -7,6 +7,8 @@ DESCRIPTION: styles the restaurant cards
 .card-restaurant {
     color: white;
     margin-bottom: 0.5rem;
+    border: 2px solid black;
+    box-shadow: 5px 5px black;
 }
 
 .card-img-top {
@@ -127,6 +129,10 @@ DESCRIPTION: styles the restaurant cards
 
 /* Custom */
 @media (min-width: 400px) {
+    .card-restaurant {
+        margin-bottom: 0.75rem;
+    }
+
     .card-restaurant-address {
         line-height: 2rem;
         font-size: 2rem;
@@ -170,6 +176,10 @@ DESCRIPTION: styles the restaurant cards
 
 /* Small devices (landscape phones, 576px and up) */
 @media (min-width: 576px) {
+    .card-restaurant {
+        margin-bottom: 1rem;
+    }
+
     .card-restaurant-address {
         margin-bottom: 0.75rem;
     }
@@ -181,6 +191,10 @@ DESCRIPTION: styles the restaurant cards
 
 /* Medium devices (tablets, 768px and up) */
 @media (min-width: 768px) {
+    .card-restaurant {
+        margin-bottom: 1.5rem;
+    }
+
     .card-restaurant-address {
         font-size: 3rem;
         line-height: 3rem;

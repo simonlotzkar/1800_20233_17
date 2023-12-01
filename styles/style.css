@@ -2,8 +2,18 @@
 CONTRIBUTORS: SimonLotzkar
 DESCRIPTION: styles global, footer, and navbar
 -------------------------------------------------------- */
+
+/* X-Small devices (portrait phones, less than 576px) */
 * {
     font-family: Helvetica, sans-serif;
+}
+
+body {
+    background-color: #FFC107;
+}
+
+footer {
+    background-color: #d6a100;
 }
 
 .disabledAnchor {
@@ -11,11 +21,56 @@ DESCRIPTION: styles global, footer, and navbar
     cursor: default;
 }
 
-/* X-Small devices (portrait phones, less than 576px) */
+.uppercase {
+    text-transform: uppercase;
+}
+
+.dropdown-menu .nav-link {
+    text-align: center;
+    border: 1px black solid;
+}
+
+.jumbotron {
+    text-align: center;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    background-color: #d6a100;
+}
+
+.jumbotron h1 {
+    font-weight: bolder;
+    font-size: 2rem;
+    margin: 0;
+    text-transform: uppercase;
+}
+
+.jumbotron h4 {
+    display: none;
+}
+
+footer {
+    padding-bottom: 2rem;
+    padding-left: 2rem;
+    padding-right: 2rem;
+    text-align: center;
+}
+
+footer h6 {
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+}
+
+footer > div {
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 2px solid black;
+}
 
 /* Small devices (landscape phones, 576px and up) */
 @media (min-width: 576px) {
-
+    .jumbotron h1 {
+        font-size: 3rem;
+    }
 }
 
 /* Medium devices (tablets, 768px and up) */
@@ -25,7 +80,8 @@ DESCRIPTION: styles global, footer, and navbar
 
 /* Large devices (desktops, 992px and up) */
 @media (min-width: 992px) {
-    
+    .jumbotron h1 {
+    }
 }
 
 /* X-Large devices (large desktops, 1200px and up) */

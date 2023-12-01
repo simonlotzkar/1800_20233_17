@@ -42,6 +42,8 @@
     <!-------------------------------------------->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="./styles/style.css">
+    <link rel="stylesheet" href="./styles/restaurantCard.css">
+    <link rel="stylesheet" href="./styles/catalog.css">
 
 </head>
 
@@ -54,48 +56,44 @@
     <nav id="navPlaceholder">loading nav...</nav>
 
     <!--  JUMBOTRON -->
-    <div class="p-3 text-center bg-body-tertiary mb-2">
-        <h1 class="mb-3">Restaurant Catalog</h1>
-        <h4 class="mb-3">
+    <div class="jumbotron">
+        <h1>Catalog</h1>
+        <h4>
             If you see a restaurant you've recently been to, please submit whether their machine was working on not!       
         </h4>
     </div>
 
-    <!-- CONTENT -->
-    <div class="container text-center">
-        <!-- Restaurants -->
-        <div class="container">
-            <!-- Filter Form -->
-            <form id="form-filter" class="input-group mb-2 d-flex justify-content-center">
-                <input type="text" id="input-filter" class="form-control" placeholder="Filter by address, city, or postal code"/>
-                <button type="submit" class="btn btn-primary">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
-                        <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 
-                        1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
-                    </svg>
-                </button>
-            </form>
-            <!-- Dropdown -->
-            <div class="dropdown mb-2">
-                <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    Restaurants to Display
-                </button>
-                <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" id="display-10-restaurants">10</a></li>
-                    <li><a class="dropdown-item" id="display-25-restaurants">25</a></li>
-                    <li><a class="dropdown-item" id="display-50-restaurants">50</a></li>
-                </ul>
-            </div>
-            <div id="restaurants-go-here" class="row row-cols-auto"></div>
-        </div>
-        <p>
-            <span>Showing </span>
-            <span id="currentNumberOfRestaurantsInDisplay">0</span>
-            <span> out of a maximum </span>
-            <span id="maxNumberOfRestaurantsToDisplay">0</span>
-            <span> restaurants</span>
-        </p>
+    <!-- Filter Form -->
+    <form id="form-filter" class="input-group">
+        <input type="text" id="input-filter" class="form-control" placeholder="address/city/postal code"/>
+        <button type="submit" class="btn btn-secondary">
+            <i class="bi bi-search"></i>
+        </button>
+    </form>
+
+    <!-- Dropdown -->
+    <div class="dropdown">
+        <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Restaurants to Display
+        </button>
+        <ul class="dropdown-menu">
+            <li><a class="dropdown-item" id="display-10-restaurants">10</a></li>
+            <li><a class="dropdown-item" id="display-25-restaurants">25</a></li>
+            <li><a class="dropdown-item" id="display-50-restaurants">50</a></li>
+        </ul>
     </div>
+
+    <!-- restaurants -->
+    <div id="restaurants-go-here"></div>
+
+    <!-- restaurant display count -->
+    <p class="showingRestaurantCount">
+        <span>Showing </span>
+        <span id="currentNumberOfRestaurantsInDisplay">0</span>
+        <span> out of a maximum </span>
+        <span id="maxNumberOfRestaurantsToDisplay">0</span>
+        <span> restaurants</span>
+    </p>
 
 
     <!-- restaurant card template -->

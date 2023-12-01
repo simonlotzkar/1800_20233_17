@@ -3,10 +3,35 @@ CONTRIBUTORS: SimonLotzkar
 DESCRIPTION: styles the home (index) page
 -------------------------------------------------------- */
 /* X-Small devices (portrait phones, less than 576px) */
+.container-closest {
+    margin-top: 1rem;
+}
+
+.container-catalogPortal {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+.container-catalogPortal h5 {
+    font-size: 1.5rem;
+    font-style: bolder;
+}
+
+.container-catalogPortal a {
+    border: 2px solid black;
+    box-shadow: 5px 5px black;
+}
 
 /* Small devices (landscape phones, 576px and up) */
 @media (min-width: 576px) {
+    .container-catalogPortal h5 {
+        font-size: 2.5rem;
+    }
 
+    .container-catalogPortal a {
+        font-size: 2rem;
+    }
 }
 
 /* Medium devices (tablets, 768px and up) */
