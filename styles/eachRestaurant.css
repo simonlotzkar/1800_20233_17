@@ -3,15 +3,446 @@ CONTRIBUTORS: SimonLotzkar
 DESCRIPTION: styles the restaurant page
 -------------------------------------------------------- */
 /* X-Small devices (portrait phones, less than 576px) */
+.bg-jumbotronBroken {
+    background-image:
+    linear-gradient(
+      to top, 
+      #FFC107, #dc3534
+    );
+}
+
+.bg-jumbotronWorking {
+    background-image:
+    linear-gradient(
+      to top, 
+      #FFC107, #198754
+    );
+}
+
+/* [JUMBOTRON] */
+.jumbotron {
+    color: white;
+}
+
+.jumbotron h1 {
+    text-shadow: 4px 4px black;
+}
+
+.jumbotron h4 {
+    display: block;
+    font-weight: bold;
+    font-size: 1.5rem;
+    text-shadow: 3px 3px black;
+}
+
+.jumbotron h5 {
+    font-size: 1.33rem;
+    text-shadow: 2px 2px black;
+    font-style: italic;
+}
+
+/* [PICTURE CARD] */
+.card-restaurant {
+    color: white;
+    border: 2px black solid;
+    box-shadow: 5px 5px black;
+    text-align: center;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+
+.card-restaurant h2 {
+    font-size: 2rem;
+    font-weight: bolder;
+    font-style: italic;
+    text-shadow:
+        0.15rem 0 0.15rem black,
+        0 0.15rem 0.15rem black,
+        -0.15rem 0 0.15rem black,
+        0 -0.15rem 0.15rem black;
+}
+
+.card-restaurant h6 {
+    font-size: 1.2rem;
+    font-style: italic;
+    font-weight: bold;
+    text-shadow:
+        0.1rem 0 0.1rem black,
+        0 0.1rem 0.1rem black,
+        -0.1rem 0 0.1rem black,
+        0 -0.1rem 0.1rem black;
+}
+
+/* [SUBMIT UPDATE] */
+.restaurant-updateGroup {
+    margin-bottom: 2rem;
+}
+
+.restaurant-updateGroup h4 {
+    text-align: center;
+}
+
+.card-restaurant-submitUpdate button {
+    border: 2px black solid;
+    box-shadow: 5px 5px black;
+}
+
+/* [CATALOG PORTAL] */
+.container-catalogPortal {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.container-catalogPortal a {
+    border: 2px black solid;
+    box-shadow: 5px 5px black;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* [UPDATE LOG] */
+.container-updateLog {
+    text-align: center;
+    border-top: 2px solid black;
+}
+
+.container-updateLog h2 {
+    font-size: 2rem;
+    font-style: italic;
+    font-weight: bold;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+
+/* [UPDATE CARD] */
+.card-update {
+    color: white;
+    margin-bottom: 1rem;
+    border: 2px solid black;
+    box-shadow: 5px 5px black;
+}
+
+/* [UPDATE CARD] Body */
+.card-update-body {
+    padding: 0.5rem;
+}
+
+/* [UPDATE CARD] Banner */
+.card-update-banner {
+    height: 5rem;
+}
+
+/* [UPDATE CARD] UserProfile */
+.card-update-userProfile {
+    height: 5rem;
+    overflow-y: hidden;
+    padding: 0.33rem;
+}
+
+/* [UPDATE CARD] UserProfile-Avatar&Username */
+.card-update-avatarAndUsername {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    gap: 0;
+}
+
+.card-update-avatar {
+    height: 2.5rem;
+    width: auto;
+    border: 1px solid black;
+    box-shadow: 3px 3px black;
+    margin-right: 0.33rem;
+    margin-top: 0.25rem;
+}
+
+.card-update-username {
+    font-size: 1.2rem;
+    line-height: 1.2rem;
+    vertical-align: middle;
+    font-weight: bold;
+    text-shadow:
+    0.1rem 0 0.1rem black,
+    0 0.1rem 0.1rem black,
+    -0.1rem 0 0.1rem black,
+    0 -0.1rem 0.1rem black;
+}
+
+/* [UPDATE CARD] UserProfile-Achievements */
+.card-update-achievements {
+    margin-top: 0.2rem;
+    margin-left: 0.5rem;
+    display: flex;
+    align-items: center;
+}
+
+.card-update-achievementPopup {
+    margin-right: 0.2rem;
+}
+
+.card-update-achievementImage {
+    height: 1.5rem;
+    border-radius: 50%;
+    background-color: black;
+}
+
+/* [UPDATE CARD] Status */
+.card-update-status {
+    font-size: 1.75rem;
+    font-weight: bolder;
+    font-style: italic;
+    margin: 0;
+    padding: 0;
+    margin-bottom: 0.75rem;
+    text-shadow: 2px 2px black;
+}
+
+/* [UPDATE CARD] Voting */
+.card-update-voting {
+    font-size: 1.2rem;
+    display: inline;
+}
+
+.card-update-voting i {
+    margin-left: 0.5rem
+}
+
+.card-update-score {
+    margin-left: 0.5rem;
+}
+
+/* [UPDATE CARD] Progress */
+.card-update-progress {
+    margin-bottom: 1rem;
+    border: 1px solid black;
+    box-shadow: 3px 3px black;
+    height: 0.75rem;
+    line-height: 0.75rem;
+}
+
+.card-progress-upvotes {
+    display: inline;
+}
+
+.card-progress-downvotes {
+    display: inline;
+}
+
+.card-progress-upvotesCount {
+    display: none;
+}
+
+.card-progress-downvotesCount {
+    display: none;
+}
+
+/* [UPDATE CARD] Dates */
+.card-update-dateSubmittedDelta {
+    display: none;
+}
+
+.card-update-dateSubmitted {
+    margin: 0;
+    font-style: italic;
+    font-size: 0.75rem;
+}
+
+.div-update-delete {
+    display: flex;
+    margin-top: 0.5rem;
+}
+
+.div-update-delete a {
+    border: 2px solid black;
+    box-shadow: 5px 5px black;
+    float: right;
+    font-size: 0.75rem;
+}
+
+/* ----------------------- */
+/* -- Custom breakpoint -- */
+/* ----------------------- */
+@media (min-width: 400px) {
+    .card-restaurant h2 {
+        font-size: 3rem;
+        text-shadow:
+            0.33rem 0 0.33rem black,
+            0 0.33rem 0.33rem black,
+            -0.33rem 0 0.33rem black,
+            0 -0.33rem 0.33rem black;
+    }
+
+    .card-restaurant h6 {
+        font-size: 1.75rem;
+        text-shadow:
+            0.2rem 0 0.2rem black,
+            0 0.2rem 0.2rem black,
+            -0.2rem 0 0.2rem black,
+            0 -0.2rem 0.2rem black;
+    }
+    
+    .restaurant-updateGroup h4 {
+        font-size: 1.75rem;
+        font-weight: bold;
+    }
+    
+    .card-restaurant-submitUpdate button {
+        font-size: 1.33rem;
+    }
+
+    .container-catalogPortal h4 {
+        font-size: 1.75rem;
+        font-weight: bold;
+    }
+
+    .container-catalogPortal a {
+        font-size: 1.33rem;
+    }
+    
+    .container-catalogPortal a {
+        border: 2px black solid;
+        box-shadow: 5px 5px black;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .card-update-banner {
+        height: 6rem;
+    }
+    
+    .card-update-userProfile {
+        height: 6rem;
+        padding-top: 0.2rem;
+    }
+
+    .card-update-avatar {
+        height: 3rem;
+        border: 2px solid black;
+        box-shadow: 5px 5px black;
+    }
+
+    .card-update-username {
+        font-size: 1.5rem;
+        line-height: 1.5rem;
+        text-shadow:
+            0.2rem 0 0.2rem black,
+            0 0.2rem 0.2rem black,
+            -0.2rem 0 0.2rem black,
+            0 -0.2rem 0.2rem black;
+        margin-left: 0.2rem;
+    }
+
+    .card-update-achievements {
+        margin-top: 0.33rem;
+    }
+
+    .card-update-achievementImage {
+        height: 2rem;
+    }
+
+    .card-update-status {
+        font-size: 2rem;
+    }
+
+    .card-update-voting {
+        font-size: 1.5rem;
+    }
+
+    .card-update-progress {
+        border: 1.5px solid black;
+        box-shadow: 3.5px 3.5px black;
+        height: 1rem;
+        line-height: 1rem;
+    }
+
+    .card-progress-upvotesCount {
+        display: inline;
+    }
+    
+    .card-progress-downvotesCount {
+        display: inline;
+    }
+
+    .card-update-dateSubmitted {
+        font-size: 1rem;
+    }
+    
+    .div-update-delete a {
+        font-size: 1rem;
+    }    
+}
 
 /* Small devices (landscape phones, 576px and up) */
 @media (min-width: 576px) {
+    .jumbotron h4 {
+        font-size: 2rem;
+        text-shadow: 4px 4px black;
+    }
 
+    .jumbotron h5 {
+        font-size: 1.5rem;
+        text-shadow: 3px 3px black;
+        font-weight: bold;
+    }
+
+    .card-restaurant h2 {
+        margin-top: 1.5rem;
+        font-size: 3.5rem;
+    }
+
+    .card-update-status {
+        font-size: 2.5rem;
+    }
+
+    .card-update-voting {
+        font-size: 2rem;
+    }
+
+    .card-update-progress {
+        border: 2px solid black;
+        box-shadow: 4px 4px black;
+        height: 1.5rem;
+        line-height: 1.5rem;
+        font-size: 1rem;
+    }
+
+    .card-update-dateSubmitted {
+        font-size: 1.25rem;
+    }
 }
 
 /* Medium devices (tablets, 768px and up) */
 @media (min-width: 768px) {
+    .card-update-banner {
+        height: 10rem;
+    }
     
+    .card-update-userProfile {
+        height: 10rem;
+        padding: 1rem;
+    }
+
+    .card-update-avatar {
+        height: 5rem;
+    }
+
+    .card-update-username {
+        font-size: 1.75rem;
+        line-height: 1.75rem;
+        margin-left: 1rem;
+    }
+
+    .card-update-achievements {
+        margin-top: 0.8rem;
+    }
+
+    .card-update-achievementImage {
+        height: 2.5rem;
+    }
+
+    .div-update-delete a {
+        font-size: 1.33rem;
+    }    
 }
 
 /* Large devices (desktops, 992px and up) */
@@ -21,7 +452,32 @@ DESCRIPTION: styles the restaurant page
 
 /* X-Large devices (large desktops, 1200px and up) */
 @media (min-width: 1200px) {
+    .card-update-banner {
+        height: 15rem;
+    }
     
+    .card-update-userProfile {
+        height: 15rem;
+    }
+
+    .card-update-avatar {
+        height: 7.5rem;
+        border: 3px solid black;
+        box-shadow: 6px 6px black;
+    }
+
+    .card-update-username {
+        font-size: 3rem;
+        line-height: 3rem;
+    }
+
+    .card-update-achievements {
+        margin-top: 1rem;
+    }
+
+    .card-update-achievementImage {
+        height: 4rem;
+    }
 }
 
 /* XX-Large devices (larger desktops, 1400px and up) */

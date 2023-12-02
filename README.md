@@ -20,10 +20,10 @@ The app is ready straight away for viewing, but to submit data users must sign u
 Here are some known bugs and limitations:
 * [Limitation] If the user denies or doesnt have geolocation, doesnt display restaurants
     * => display restaurants without distance information if the user's geolocation fails
-* [Limitation] Deleting refreshes instead of removes on profile update log when deleting
 * [Limitation] Each update has an upvote/downvote number field and an upvoterID/downvoterID array field, this is redundant as the score can be simply found by counting the number of voterIDs.
 * [Limitation] After changing customization, the customizations don't show the new change because they are generating at page load.
     * => instead they should be generating off changes to the logged-in user's document
+* [Bug] User update count is buggy when deleting updates on profile page
     
 ## 5. Future Plans
 Expansions (large multi-feature additions) and features that can be made after launching the app:
@@ -68,9 +68,7 @@ Content of the project folder:
 It has the following subfolders and files:
 ├── .git                     # Folder for git repo
 ├── images                   # Folder for image files
-    /icecream-bw.png             # icecream logo (black and white)
-    /icecream-green.png          # icecream logo (green)
-    /icecream-red.png            # icecream logo (red)
+    ...TODO
 ├── scripts                  # Folder for java script files
     /catalog.js                  # runs catalog page
     /eachRestauarant.js          # runs restaurant page
@@ -83,7 +81,17 @@ It has the following subfolders and files:
     /skeleton.js                 # loads content on all pages (footer, header, etc)
     /submitRestaurant.js         # runs submit restaurant page
 ├── styles                   # Folder for cascading style sheet files
+    /about.css                   # styles about page
+    /catalog.css                 # styles catalog page
+    /eachRestaurant.css          # styles restaurant page
+    /index.css                   # styles home page
+    /nav.css                     # styles navbar
+    /profile.css                 # styles profile page
+    /restaurantCard.css          # styles restaurant cards
+    /signUp.css                  # styles sign up page
     /style.css                   # styles all pages
+    /submitRestaurant.css        # styles submission page
+    /template.css                # used for making css files
 ├── text                     # Folder for insertable html files
     /footer.html                 # footer information
     /navAfterLogin.html          # navigation bar (after login)

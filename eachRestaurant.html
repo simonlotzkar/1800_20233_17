@@ -42,8 +42,8 @@
     <!-------------------------------------------->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="./styles/style.css">
-    <link rel="stylesheet" href="./styles/eachRestaurant.css">
     <link rel="stylesheet" href="./styles/nav.css">
+    <link rel="stylesheet" href="./styles/eachRestaurant.css">
 
 </head>
 
@@ -56,36 +56,34 @@
     <nav id="navPlaceholder">loading nav...</nav>
 
     <!-- JUMBOTRON -->
-    <div class="p-2 text-center"  id="restaurant-statusBar">
+    <div class="jumbotron" id="restaurant-statusBar">
         <h1 id="restaurant-address"></h1>
         <h4>
             <span id="restaurant-postalCode">loading...</span>
             <span id="restaurant-city"></span>
         </h4>
         <h5 id="restaurant-distance"></h5>
-        <h6>
-            <span id="restaurant-status">loading...</span>
-            (
-            <span id="restaurant-dateUpdated">loading...</span>
-            )
-        </h6>
     </div>
 
     <!-- CONTENT -->
-    <div class="container text-center">
+    <div class="container-content container">
 
-        <img class="restaurant-img" src="./images/mcdonalds.png" alt="mcdonalds" style="width: 100%; height: auto;"/>
-
+        <!-- restaurant image and status -->
+        <div class="card-restaurant card">
+            <img class="card-img" src="./images/mcdonalds.png"/>
+            <div class="card-img-overlay">
+                <h2 id="restaurant-status">Unkown</h2>
+                <h6 id="restaurant-dateUpdated">loading...</h6>
+            </div>
+        </div>
+        
         <!-- Update -->
-        <div class="container">
+        <div class="restaurant-updateGroup container">
             <div class="card-restaurant-promptLogIn d-none">
-                <h4>
-                    Log in to let others know if the machine was working!
-                </h4>
+                <h4>Log in to update the icecream machine status.</h4>
             </div>
             <div class="card-restaurant-submitUpdate d-none">
-                <h3>Been here recently? </h3>
-                <h4>Let others know if the ice cream machine was working!</h4>
+                <h4>Update the icecream machine status:</h4>
                 <div class="input-group justify-content-center">
                     <button type="button" class="btn btn-success workingBtn">Working</button>
                     <button type="button" class="btn btn-danger brokenBtn">Broken</button>
@@ -94,16 +92,16 @@
         </div>
 
         <!-- Catalog Portal -->
-        <div class="container">
-            <h3>Want to view a different location? Browse our catalog:</h3>
+        <div class="container-catalogPortal container">
+            <h4>Browse the restaurant catalog:</h4>
             <a href="catalog.html" class="btn btn-secondary" role="button">Browse</a>
         </div>
 
         <!-- Update Log -->
-        <div class="container">
+        <div class="container-updateLog container">
             <h2>Update Log:</h2>
             <div id="updates-go-here"></div>
-            <h3>End of log...</h3>
+            <h2>End of log.</h2>
         </div>
     </div>
 
@@ -115,41 +113,15 @@
             <img class="card-update-banner card-img-top"/>
 
             <!-- body -->
-            <div class="card-body">
+            <div class="card-update-body card-body">
                 <!-- user profile display -->
-                <div class="card-img-overlay">
-                    <div class="row">
-                        <div class="col-auto">
-                            <img class="card-update-avatar rounded-circle" height="80"/>
-                        </div>
-                        <div class="col">
-                            <div class="row">
-                                <h4 class="card-update-username">loading...</h4>
-                            </div>
-                            <div class="row">
-                                <div>
-                                    <span class="badge rounded-pill bg-info">
-                                        <span class="">Score</span>
-                                        <i class="bi bi-megaphone-fill"></i>
-                                        <span>X</span>
-                                    </span>
-                                    <span class="badge rounded-pill bg-info">
-                                        <span>Avg</span>
-                                        <i class="bi bi-bar-chart-fill"></i>
-                                        <span>Y</span>
-                                    </span>
-                                    <span class="badge rounded-pill bg-info">
-                                        <span>Posts</span>
-                                        <i class="bi bi-box-seam-fill"></i>
-                                        <span>Z</span>
-                                    </span>   
-                                </div>
-   
-                            </div>
-                        </div>
+                <div class="card-update-userProfile card-img-overlay">
+                    <div class="card-update-avatarAndUsername">
+                        <img class="card-update-avatar rounded-circle"/>                
+                        <div class="card-update-username">loading...</div>
                     </div>
-                    <div class="row">
-                        <div class="achievements-go-here"></div>
+                    <div class="card-update-achievements">
+                        <span class="achievements-go-here"></span>
                     </div>
                 </div>
 
@@ -160,22 +132,30 @@
                 <h1 class="card-update-status">loading...</h1>
 
                 <!-- score and voting -->
-                <div class="input-group">
-                    <span>Accuracy Score:</span>
+                <div class="card-update-voting input-group">
+                    <span>Accuracy:</span>
                     <i class="bi bi-arrow-up-circle btn-update-upvote"></i>
                     <strong class="card-update-score">loading...</strong>
                     <i class="bi bi-arrow-down-circle btn-update-downvote"></i>
                 </div>
 
                 <!-- score average upvotes -->
-                <div class="progress rounded-pill">
-                    <div class="progress-bar bg-info card-progress-upvotes" role="progressbar" style="width: 0%;">0%</div>
-                    <div class="progress-bar bg-warning card-progress-downvotes" role="progressbar" style="width: 0%;">0%</div>
-                    <div class="progress-bar bg-secondary card-progress-novotes" role="progressbar" style="width: 100%;">No Votes!</div>
+                <div class="card-update-progress progress rounded-pill">
+                    <div class="progress-bar bg-info card-progress-upvotes" role="progressbar" style="width: 0%;">
+                        <span class="card-progress-upvotesPercent">0%</span>
+                        <span class="card-progress-upvotesCount">(0 Downvotes)</span>
+                    </div>
+                    <div class="progress-bar bg-warning card-progress-downvotes" role="progressbar" style="width: 0%;">
+                        <span class="card-progress-downvotesPercent">0%</span>
+                        <span class="card-progress-downvotesCount">(0 Downvotes)</span>
+                    </div>
+                    <div class="progress-bar bg-secondary card-progress-novotes" role="progressbar" style="width: 100%;">
+                        No Votes!
+                    </div>
                 </div>
 
                 <!-- date submitted -->
-                <div>
+                <div class="card-update-dates">
                     <p class="card-update-dateSubmittedDelta">loading...</p>
                     <p class="card-update-dateSubmitted">loading...</p>
                 </div>

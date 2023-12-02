@@ -74,20 +74,20 @@ function populateRestaurantDetails(restaurantID, userLocation) {
 //          the status of the restaurant.
 function setStatusBar(status) {
     if (status == null || status == undefined) {
+        //UNKNOWN
         document.getElementById("restaurant-status").innerHTML = "unknown";
-        document.getElementById("restaurant-statusBar").classList.add("text-bg-warning");
-        document.getElementById("restaurant-statusBar").classList.remove("text-bg-success");
-        document.getElementById("restaurant-statusBar").classList.remove("text-bg-danger");
+        document.getElementById("restaurant-statusBar").classList.remove("bg-jumbotronWorking");
+        document.getElementById("restaurant-statusBar").classList.remove("bg-jumbotronBroken");
     } if (status) {
+        //WORKING
         document.getElementById("restaurant-status").innerHTML = generateWorkingString(true);
-        document.getElementById("restaurant-statusBar").classList.remove("text-bg-warning");
-        document.getElementById("restaurant-statusBar").classList.add("text-bg-success");
-        document.getElementById("restaurant-statusBar").classList.remove("text-bg-danger");
+        document.getElementById("restaurant-statusBar").classList.add("bg-jumbotronWorking");
+        document.getElementById("restaurant-statusBar").classList.remove("bg-jumbotronBroken");
     } else {
+        //BROKEN
         document.getElementById("restaurant-status").innerHTML = generateWorkingString(false);
-        document.getElementById("restaurant-statusBar").classList.remove("text-bg-warning");
-        document.getElementById("restaurant-statusBar").classList.remove("text-bg-success");
-        document.getElementById("restaurant-statusBar").classList.add("text-bg-danger");
+        document.getElementById("restaurant-statusBar").classList.remove("bg-jumbotronWorking");
+        document.getElementById("restaurant-statusBar").classList.add("bg-jumbotronBroken");
     }
 }
 
@@ -139,8 +139,10 @@ function dynamicallyPopulateUpdateLog() {
                     } else {
                         // set the upvote progress bar and text to whatever % of upvotes
                         // there are, then do the same for downvotes and set novotes to 0%
-                        newcard.querySelector(".card-progress-upvotes").innerHTML = percentUpvote + "% (" + upvotes + " Upvotes)";
-                        newcard.querySelector(".card-progress-downvotes").innerHTML = percentDownvote + "% (" + downvotes + " Downvotes)";
+                        newcard.querySelector(".card-progress-upvotesPercent").innerHTML = percentUpvote + "%";
+                        newcard.querySelector(".card-progress-downvotesPercent").innerHTML = percentDownvote + "%";
+                        newcard.querySelector(".card-progress-upvotesCount").innerHTML = " (" + upvotes + ")";
+                        newcard.querySelector(".card-progress-downvotesCount").innerHTML = " (" + downvotes + ")";
 
                         newcard.querySelector(".card-progress-upvotes").setAttribute("style", "width: " + percentUpvote + "%;");
                         newcard.querySelector(".card-progress-downvotes").setAttribute("style", "width: " + percentDownvote + "%;");
@@ -197,9 +199,11 @@ function dynamicallyPopulateUpdateLog() {
                             } else {
                                 // set the upvote progress bar and text to whatever % of upvotes there are, then
                                 // do the same for downvotes and set novotes to 0%
-                                card.querySelector(".card-progress-upvotes").innerHTML = percentUpvote + "% (" + upvotes + " Upvotes)";
-                                card.querySelector(".card-progress-downvotes").innerHTML = percentDownvote + "% (" + downvotes + " Downvotes)";
-        
+                                card.querySelector(".card-progress-upvotesPercent").innerHTML = percentUpvote + "%";
+                                card.querySelector(".card-progress-downvotesPercent").innerHTML = percentDownvote + "%";
+                                card.querySelector(".card-progress-upvotesCount").innerHTML = " (" + upvotes + ")";
+                                card.querySelector(".card-progress-downvotesCount").innerHTML = " (" + downvotes + ")";
+
                                 card.querySelector(".card-progress-upvotes").setAttribute("style", "width: " + percentUpvote + "%;");
                                 card.querySelector(".card-progress-downvotes").setAttribute("style", "width: " + percentDownvote + "%;");
                                 card.querySelector(".card-progress-novotes").setAttribute("style", "width: 0%;");
@@ -426,7 +430,7 @@ function addProfileDetails(card, updateUserID) {
                     userDoc.data().banner.get()
                         .then(bannerDoc => {
                             if (userDoc.data().admin) {
-                                username = userDoc.data().username + "[ADMIN]";
+                                username = userDoc.data().username + " [ADMIN]";
                             } else {
                                 username = userDoc.data().username;
                             }
@@ -466,7 +470,8 @@ function addAchievements(card) {
 
                                 let achievementImage = document.createElement("img");
                                 achievementImage.setAttribute("src", "../images/achievements/" + achievementDoc.data().imageURL + ".png");
-                                achievementImage.setAttribute("height", "42");
+                                achievementImage.setAttribute("height", "32");
+                                achievementImage.classList.add("card-update-achievementImage");
 
                                 let achievementPopup = document.createElement("a");
                                 achievementPopup.appendChild(achievementImage);
@@ -475,6 +480,7 @@ function addAchievements(card) {
                                 achievementPopup.setAttribute("data-bs-title", achievementName);
                                 achievementPopup.setAttribute("data-bs-content", achievementDescription);
                                 achievementPopup.setAttribute("tabindex", "0");
+                                achievementImage.classList.add("card-update-achievementPopup");
                                 
                                 cardAchievementsDiv.appendChild(achievementPopup);
 

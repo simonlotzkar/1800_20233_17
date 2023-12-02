@@ -520,6 +520,9 @@ async function populateClosestRestaurants(insertElement, amountToPopulate, filte
                 insertElement.appendChild(newcard);
                 displayOrHideAllSubmitUpdates();
                 listenAndPopulateAllRestaurantsLastUpdatedStatus(restaurantID);
+                let numRestaurantsDisplayed = document.getElementById("restaurants-go-here").childElementCount;
+                document.getElementById("currentNumberOfRestaurantsInDisplay").innerHTML = numRestaurantsDisplayed;
+                document.getElementById("maxNumberOfRestaurantsToDisplay").innerHTML = amountToPopulate;
             }
           }
         });
