@@ -3,6 +3,127 @@ CONTRIBUTORS: SimonLotzkar
 DESCRIPTION: styles the profile page
 -------------------------------------------------------- */
 /* X-Small devices (portrait phones, less than 576px) */
+.btn {
+    border: 2px solid black;
+    box-shadow: 5px 5px black;
+}
+
+#fieldset-profile .input-group {
+    border-radius: 0.5rem;
+    border: 2px solid black;
+    box-shadow: 5px 5px black;
+    margin-bottom: 1rem;
+}
+
+.input-group-text {
+    background-color: #FFC107;
+    border: none;
+}
+
+.input-group input {
+    background-color: #ffe082;
+    border: none;
+}
+
+.input-group input:focus {
+    background-color: #ffe082;
+    border: none;
+}
+
+.input-group input:disabled {
+    background-color: #eace78;
+    border: none;
+}
+
+.btn-reset {
+    margin-top: 1.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.container-content h2 {
+    font-weight: bolder;
+    font-size: 1.5rem;
+    margin-top: 1.5rem;
+}
+
+.uneditableDetail {
+    background-color: #eace78;
+    border: 2px solid black;
+    margin-top: 0.5rem;
+    border: 2px solid black;
+    box-shadow: 5px 5px black;
+}
+
+.box-customizations {
+    margin-bottom: 2rem;
+    border-radius: 1rem;
+    border: 2px solid black;
+    box-shadow: 5px 5px black;
+    padding: 1rem;
+    text-decoration: none;
+    background-color: #FFC107;
+
+}
+
+.box-customizations h4 {
+    font-size: 1.33rem;
+}
+
+.circleCustomizations-go-here {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 0.5rem;
+}
+
+.rectangleCustomizations-go-here {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+}
+
+.circleCustomizations-go-here .modal-customization-triggerImage {
+    height: 3rem;
+    border-radius: 50%;
+    border: 2px solid black;
+    box-shadow: 5px 5px black;
+}
+
+.rectangleCustomizations-go-here .modal-customization-triggerImage {
+    height: 3rem;
+    border-radius: 0.5rem;
+    border: 2px solid black;
+    box-shadow: 5px 5px black;
+}
+
+.card {
+    background-color: #FFC107;
+    border: 2px solid black;
+    box-shadow: 5px 5px black;
+    margin-bottom: 1rem;
+}
+
+.card p > a {
+    color: #198754;
+}
+
+.modal {
+    background-color: rgba(0, 0, 0, 0.7);
+}
+
+.modal-content {
+    background-color: #d6a100;
+}
+
+/* Custom Breakpoint */
+@media (min-width: 400px) {
+    .circleCustomizations-go-here .modal-customization-triggerImage {
+        height: 4rem;
+    }
+    
+    .rectangleCustomizations-go-here .modal-customization-triggerImage {
+        height: 4rem;
+    }
+}
 
 /* Small devices (landscape phones, 576px and up) */
 @media (min-width: 576px) {

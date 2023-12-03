@@ -56,52 +56,51 @@
     <nav id="navPlaceholder">loading nav...</nav>
 
     <!-- JUMBOTRON -->
-    <div class="p-3 text-center bg-body-tertiary mb-2">
-        <h1 class="mb-3">Profile</h1>
-        <h4 class="mb-3">
-            Review and customize your account!
-        </h4>
+    <div class="jumbotron">
+        <h1>Profile</h1>
+        <h4>Review and customize your account!</h4>
     </div>
 
     <!-- CONTENT -->
-    <div class="container text-center">
+    <div class="container-content container text-center">
 
         <!-- User Editable Details -->
         <form>
             <fieldset id="fieldset-profile">
-                <div class="form-group">
-                    <label class="d-flex justify-content-start">Username</label>
-                    <input disabled type="text" id="input-profile-username" class="form-control" placeholder="ERROR: No username found!">
+                <div class="input-group">
+                    <span class="input-group-text" id="addon-wrapping">Username</span>
+                    <input disabled id="input-profile-username" type="text" class="form-control" aria-label="Username" aria-describedby="addon-wrapping" placeholder="loading...">
                 </div>
-                <div class="form-group">
-                    <label class="d-flex justify-content-start">email</label>
-                    <input disabled type="text" id="input-profile-email" class="form-control" placeholder="ERROR: No email found!">
+                <div class="input-group">
+                    <span class="input-group-text" id="addon-wrapping">eMail</span>
+                    <input disabled id="input-profile-email" type="email" class="form-control" aria-label="Email" aria-describedby="addon-wrapping" placeholder="loading...">
                 </div>
             </fieldset>
-            <div class="d-flex justify-content-center">
-                <button type="button" class="btn btn-danger" onclick="promptResetPassword()">Reset Password</button>
-                <button type="button" class="btn btn-secondary" onclick="enableFieldsetProfile()">Edit</button>
-                <button type="button" class="btn btn-info" onclick="saveProfile()">Save</button>
+            <div class="btnGroup-EditSave input-group">
+                <button type="button" class="btn-edit btn btn-secondary" onclick="enableFieldsetProfile()">Edit</button>
+                <button type="button" class="btn-save btn btn-success" onclick="saveProfile()">Save</button>
             </div>
+            <button type="button" class="btn-reset btn btn-danger" onclick="promptResetPassword()">Reset Password</button>
         </form>
 
         <!-- User Uneditable Details -->
         <div class="container">
-            <div class="container">
+            <h2>User Stats</h2>
+            <div class="container form-control uneditableDetail">
                 <strong>Sign-Up: </strong>
                 <span id="profile-dateSignUp">loading...</span>
             </div>
 
-            <div class="container">
+            <div class="container form-control uneditableDetail">
                 <strong>Updates: </strong>
                 <span id="profile-updateCount">loading...</span>
             </div>
-            <div class="container">
+            <div class="container form-control uneditableDetail">
                 <strong>Total Score: </strong>
                 <span id="profile-totalScore">loading...</span>
             </div>
-            <div class="container">
-                <strong>Average Score: </strong>
+            <div class="container form-control uneditableDetail">
+                <strong>Avg Score: </strong>
                 <span id="profile-averageScore">loading...</span>
             </div>
         </div>
@@ -110,14 +109,20 @@
         <div class="container">
             <h2>Customizations</h2>
 
-            <h4>Avatars</h4>
-            <div id="avatars-go-here"></div>
+            <div class="box-customizations" id="box-avatars">
+                <h4>Avatars</h4>
+                <div id="avatars-go-here" class="circleCustomizations-go-here"></div>
+            </div>
 
-            <h4>Banners</h4>
-            <div id="banners-go-here"></div>
+            <div class="box-customizations" id="box-banners">
+                <h4>Banners</h4>
+                <div id="banners-go-here" class="rectangleCustomizations-go-here"></div>
+            </div>
 
-            <h4>Achievements</h4>
-            <div id="achievements-go-here"></div>
+            <div class="box-customizations" id="box-achievements">
+                <h4>Achievements</h4>
+                <div id="achievements-go-here" class="circleCustomizations-go-here"></div>
+            </div>
         </div>
         
         <!-- Update Log -->
@@ -133,7 +138,7 @@
 
         <!-- Modal Trigger -->
         <a class="modal-customization-trigger" data-bs-toggle="modal" data-bs-target="...">
-            <img class="modal-customization-triggerImage" height="50"/>
+            <img class="modal-customization-triggerImage"/>
         </a>
         
         <!-- Modal -->
@@ -150,7 +155,7 @@
                     </div>
                     <div class="modal-footer">
                         <a class="btn btn-secondary" data-bs-dismiss="modal">Close</a>
-                        <a class="modal-customization-chooseBtn btn btn-primary" data-bs-dismiss="modal">Change To This</a>
+                        <a class="modal-customization-chooseBtn btn btn-success" data-bs-dismiss="modal">Change To This</a>
                     </div>
                 </div>
             </div>
