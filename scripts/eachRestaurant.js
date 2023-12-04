@@ -25,18 +25,22 @@ async function populateRestaurantPage() {
     try {
         const userLocation = await getLocationFromUser();
 
-        populateRestaurantDetails(restaurantID, userLocation);
+        populateRestaurantDetailsWithLocation(restaurantID, userLocation);
         dynamicallyPopulateUpdateLog();
         displayOrHideAllSubmitUpdates();
     } catch (error) {
-        alert(error);
+        alert("Geolocation denied by browser!" + error);
+
+        populateRestaurantDetailsWithoutLocation(restaurantID);
+        dynamicallyPopulateUpdateLog();
+        displayOrHideAllSubmitUpdates();
     }
 }
 
 populateRestaurantPage();
 
-// EFFECTS: Populates the details about the specific restaurant.
-function populateRestaurantDetails(restaurantID, userLocation) {
+// EFFECTS: Populates the details about the specific restaurant using location.
+function populateRestaurantDetailsWithLocation(restaurantID, userLocation) {
     db.collection("restaurants").doc(restaurantID)
         .onSnapshot(doc => {
             let address = doc.data().address;
@@ -49,6 +53,36 @@ function populateRestaurantDetails(restaurantID, userLocation) {
                 doc.data().location.latitude, 
                 doc.data().location.longitude);
             let distanceString = distance.toFixed(2) + "km away";
+
+            document.getElementById("restaurant-address").innerHTML = address;
+            document.getElementById("restaurant-city").innerHTML = city;
+            document.getElementById("restaurant-postalCode").innerHTML = postalCode;
+            document.getElementById("restaurant-distance").innerHTML = distanceString;
+            document.getElementById("restaurant-dateUpdated").innerHTML = "never";
+
+            setStatusBar(null);
+
+            document.querySelector(".brokenBtn").addEventListener("click", function() {
+                trySubmitUpdate(false, restaurantID);
+            });
+
+            document.querySelector(".workingBtn").addEventListener("click", function() {
+                trySubmitUpdate(true, restaurantID);
+            });
+            
+            document.getElementById("pageTitle").innerHTML = "McWorking - " + address;
+        });
+}
+
+// EFFECTS: Populates the details about the specific restaurant.
+function populateRestaurantDetailsWithoutLocation(restaurantID) {
+    db.collection("restaurants").doc(restaurantID)
+        .onSnapshot(doc => {
+            let address = doc.data().address;
+            let city = doc.data().city;
+            let postalCode = doc.data().postalCode;
+
+            let distanceString = "unknown km away";
 
             document.getElementById("restaurant-address").innerHTML = address;
             document.getElementById("restaurant-city").innerHTML = city;

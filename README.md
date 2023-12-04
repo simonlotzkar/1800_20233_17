@@ -18,8 +18,6 @@ The app is ready straight away for viewing, but to submit data users must sign u
 
 ## 5. Bugs and Limitations
 Here are some known bugs and limitations:
-* [Limitation] If the user denies or doesnt have geolocation, doesnt display restaurants
-    * => display restaurants without distance information if the user's geolocation fails
 * [Limitation] Each update has an upvote/downvote number field and an upvoterID/downvoterID array field, this is redundant as the score can be simply found by counting the number of voterIDs.
 * [Limitation] After changing customization, the page reloads instead of dynamically updating
 * [Limitation] Read quantity is very high, causes site to crash.

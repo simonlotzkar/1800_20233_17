@@ -453,16 +453,25 @@ function displayOrHideAllSubmitUpdates() {
 // MODIFIES: insertElement
 // EFFECTS: tries to populate the closest N (amountToPopulate) restaurant cards
 //          as children in the given element (insertElement). also filters only
-//          restaurants address/postalcode/city matching given param
+//          restaurants address/postalcode/city matching given param.
+//          if it fails, displays without sorting by distance.
 async function populateClosestRestaurants(insertElement, amountToPopulate, filterParam) {
   let userLocation;
   
   try {
       userLocation = await getLocationFromUser();
+      populateClosestRestaurantsWithLocation(insertElement, amountToPopulate, filterParam, userLocation);
   } catch (error) {
       alert("Geolocation denied by browser!" + error);
+      populateClosestRestaurantsWithoutLocation(insertElement, amountToPopulate, filterParam);
   }
+}
 
+// MODIFIES: insertElement
+// EFFECTS: populates N (amountToPopulate) restaurant cards sorted by distance
+//          as children in the given element (insertElement). also filters only
+//          restaurants address/postalcode/city matching given param
+function populateClosestRestaurantsWithLocation(insertElement, amountToPopulate, filterParam, userLocation) {
   insertElement.innerHTML = "";
 
   // get restaurant collection
@@ -490,6 +499,59 @@ async function populateClosestRestaurants(insertElement, amountToPopulate, filte
 
           let restaurantID = doc.id;
           let distanceString = distance.toFixed(2) + "km away";
+          let address = doc.data().address;
+          let city = doc.data().city;
+          let postalCode = doc.data().postalCode;
+          let containsFilterParam = (address.toLowerCase().includes(filterParam) 
+            || city.toLowerCase().includes(filterParam) 
+            || postalCode.toLowerCase().includes(filterParam));
+
+          if (containsFilterParam) {       
+            let cardTemplate = document.getElementById("restaurantCardTemplate");
+            let newcard = cardTemplate.content.cloneNode(true);
+
+            newcard.querySelector(".card-restaurant-address").innerHTML = address;
+            newcard.querySelector(".card-restaurant-id").innerHTML = restaurantID;
+            newcard.querySelector(".card-restaurant-city").innerHTML = city;
+            newcard.querySelector(".card-restaurant-postalCode").innerHTML = postalCode;
+            newcard.querySelector(".card-restaurant-distance").innerHTML = distanceString;
+            newcard.querySelector("a").href = "eachRestaurant.html?docID=" + doc.id;
+            
+            newcard.querySelector(".brokenBtn").addEventListener("click", function() {
+              trySubmitUpdate(false, doc.id);
+            });
+
+            newcard.querySelector(".workingBtn").addEventListener("click", function() {
+              trySubmitUpdate(true, doc.id);
+            });
+
+            if (insertElement.children.length < amountToPopulate) {
+                insertElement.appendChild(newcard);
+                displayOrHideAllSubmitUpdates();
+                listenAndPopulateAllRestaurantsLastUpdatedStatus(restaurantID);
+                let numRestaurantsDisplayed = document.getElementById("restaurants-go-here").childElementCount;
+                document.getElementById("currentNumberOfRestaurantsInDisplay").innerHTML = numRestaurantsDisplayed;
+                document.getElementById("maxNumberOfRestaurantsToDisplay").innerHTML = amountToPopulate;
+            }
+          }
+        });
+    });
+}
+
+// MODIFIES: insertElement
+// EFFECTS: populates N (amountToPopulate) randomly sorted restaurant cards
+//          as children in the given element (insertElement). also filters only
+//          restaurants address/postalcode/city matching given param
+function populateClosestRestaurantsWithoutLocation(insertElement, amountToPopulate, filterParam, userLocation) {
+  insertElement.innerHTML = "";
+
+  // get restaurant collection
+  db.collection("restaurants").get()
+    .then(restaurantCollection => {
+        restaurantCollection.forEach(doc => { 
+          
+          let restaurantID = doc.id;
+          let distanceString = "unknown km away";
           let address = doc.data().address;
           let city = doc.data().city;
           let postalCode = doc.data().postalCode;
