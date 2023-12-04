@@ -28,54 +28,23 @@ DESCRIPTION: styles the restaurant page
     text-shadow: 4px 4px black;
 }
 
-.jumbotron h4 {
+.jumbotron h2 {
     display: block;
     font-weight: bold;
     font-size: 1.5rem;
     text-shadow: 3px 3px black;
 }
 
-.jumbotron h5 {
+.jumbotron h3 {
     font-size: 1.33rem;
     text-shadow: 2px 2px black;
     font-style: italic;
 }
 
-/* [PICTURE CARD] */
-.card-restaurant {
-    color: white;
-    border: 2px black solid;
-    box-shadow: 5px 5px black;
-    text-align: center;
-    margin-top: 1rem;
-    margin-bottom: 1rem;
-}
-
-.card-restaurant h2 {
-    font-size: 2rem;
-    font-weight: bolder;
-    font-style: italic;
-    text-shadow:
-        0.15rem 0 0.15rem black,
-        0 0.15rem 0.15rem black,
-        -0.15rem 0 0.15rem black,
-        0 -0.15rem 0.15rem black;
-}
-
-.card-restaurant h6 {
-    font-size: 1.2rem;
-    font-style: italic;
-    font-weight: bold;
-    text-shadow:
-        0.1rem 0 0.1rem black,
-        0 0.1rem 0.1rem black,
-        -0.1rem 0 0.1rem black,
-        0 -0.1rem 0.1rem black;
-}
-
 /* [SUBMIT UPDATE] */
 .restaurant-updateGroup {
     margin-bottom: 2rem;
+    margin-top: 1rem;
 }
 
 .restaurant-updateGroup h4 {
@@ -262,25 +231,7 @@ DESCRIPTION: styles the restaurant page
 /* ----------------------- */
 /* -- Custom breakpoint -- */
 /* ----------------------- */
-@media (min-width: 400px) {
-    .card-restaurant h2 {
-        font-size: 3rem;
-        text-shadow:
-            0.33rem 0 0.33rem black,
-            0 0.33rem 0.33rem black,
-            -0.33rem 0 0.33rem black,
-            0 -0.33rem 0.33rem black;
-    }
-
-    .card-restaurant h6 {
-        font-size: 1.75rem;
-        text-shadow:
-            0.2rem 0 0.2rem black,
-            0 0.2rem 0.2rem black,
-            -0.2rem 0 0.2rem black,
-            0 -0.2rem 0.2rem black;
-    }
-    
+@media (min-width: 400px) {    
     .restaurant-updateGroup h4 {
         font-size: 1.75rem;
         font-weight: bold;
@@ -374,20 +325,15 @@ DESCRIPTION: styles the restaurant page
 
 /* Small devices (landscape phones, 576px and up) */
 @media (min-width: 576px) {
-    .jumbotron h4 {
+    .jumbotron h2 {
         font-size: 2rem;
         text-shadow: 4px 4px black;
     }
 
-    .jumbotron h5 {
+    .jumbotron h3 {
         font-size: 1.5rem;
         text-shadow: 3px 3px black;
         font-weight: bold;
-    }
-
-    .card-restaurant h2 {
-        margin-top: 1.5rem;
-        font-size: 3.5rem;
     }
 
     .card-update-status {
@@ -447,11 +393,6 @@ DESCRIPTION: styles the restaurant page
 
 /* Large devices (desktops, 992px and up) */
 @media (min-width: 992px) {
-    
-}
-
-/* X-Large devices (large desktops, 1200px and up) */
-@media (min-width: 1200px) {
     .card-update-banner {
         height: 15rem;
     }
@@ -478,6 +419,11 @@ DESCRIPTION: styles the restaurant page
     .card-update-achievementImage {
         height: 4rem;
     }
+}
+
+/* X-Large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) {
+
 }
 
 /* XX-Large devices (larger desktops, 1400px and up) */

@@ -58,23 +58,22 @@
     <!-- JUMBOTRON -->
     <div class="jumbotron" id="restaurant-statusBar">
         <h1 id="restaurant-address"></h1>
-        <h4>
+        <h2>
             <span id="restaurant-postalCode">loading...</span>
             <span id="restaurant-city"></span>
-        </h4>
-        <h5 id="restaurant-distance"></h5>
+        </h2>
+        <h3 id="restaurant-distance"></h3>
+        <h2 id="restaurant-status">Unkown</h2>
+        <h3 id="restaurant-dateUpdated">loading...</h3>
     </div>
 
     <!-- CONTENT -->
     <div class="container-content container">
 
         <!-- restaurant image and status -->
-        <div class="card-restaurant card">
+        <div class="card-restaurant card d-none">
             <img class="card-img" src="./images/mcdonalds.png"/>
-            <div class="card-img-overlay">
-                <h2 id="restaurant-status">Unkown</h2>
-                <h6 id="restaurant-dateUpdated">loading...</h6>
-            </div>
+            <div class="card-img-overlay"></div>
         </div>
         
         <!-- Update -->

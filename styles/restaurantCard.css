@@ -191,58 +191,28 @@ DESCRIPTION: styles the restaurant cards
 
 /* Medium devices (tablets, 768px and up) */
 @media (min-width: 768px) {
+    .restaurants-go-here {
+        display: flex;
+        flex-direction: column;
+    }
+
     .card-restaurant {
-        margin-bottom: 1.5rem;
+        margin-left: auto;
+        margin-right: auto;
+        width: 25rem;
+    }
+
+    .card-img-top {
+        width: auto;
+        height: 10rem;
     }
 
     .card-restaurant-address {
-        font-size: 3rem;
-        line-height: 3rem;
-        margin-top: 1rem;
-        margin-bottom: 1rem;
+        margin-bottom: 0.33rem;
     }
     
     .card-restaurant-postalCodeAndCity {
-        font-size: 2.5rem;
-        line-height: 2.5rem;
-        margin-bottom: 1rem;
-    }
-
-    .card-restaurant-distance {
-        font-size: 2rem;
-        line-height: 2rem;
-        margin-bottom: 1rem;
-    }
-
-    .card-restaurant-viewBtn a {
-        padding-right: 1.5rem;
-        padding-left: 1.5rem;
-        font-size: 2rem;
-    }
-
-    .card-restaurant-heading {
-        margin-top: 1rem;
-    }
-
-    .card-restaurant-status {
-        font-size: 3rem;
-        line-height: 3rem;
-    }
-
-    .card-body {
-        padding-bottom: 2rem;
-        padding-left: 2rem;
-        padding-right: 2rem;
-    }
-
-    .card-restaurant-submission h5 {
-        font-size: 2rem;
-        margin-top: 1rem;
-        margin-bottom: 1rem;
-    }
-
-    .card-restaurant-submission button {
-        font-size: 2rem;
+        margin-bottom: 0.33rem;
     }
 }
 
