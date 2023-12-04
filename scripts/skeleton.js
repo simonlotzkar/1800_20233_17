@@ -4,7 +4,6 @@ DESCRIPTION: populates the placeholders on every page
 -------------------------------------------------------- */
 // loads placeholders irrespective of auth
 $("#footerPlaceholder").load("./text/footer.html");
-$("#restaurantCardTemplatePlaceholder").load("./text/restaurantCardTemplate.html");
 
 // loads navbar placeholders depending on whether someone is logged-in
 firebase.auth().onAuthStateChanged(function (user) {

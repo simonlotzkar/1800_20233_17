@@ -97,7 +97,62 @@
     <div id="restaurants-go-here"></div>
 
     <!-- restaurant card template -->
-    <template id="restaurantCardTemplatePlaceholder">loading...</template>
+    <template id="restaurantCardTemplate">
+        <div class="card-restaurant card text-start bg-warning">
+            <img class="card-img-top" src="./images/mcdonalds.png"/>
+            <div class="card-body">
+                <!-- geographic details -->
+                <div class="card-img-overlay">
+                    <h5 class="card-restaurant-address">loading...</h5>
+                    <p class="card-restaurant-postalCodeAndCity">
+                        <span class="card-restaurant-postalCode d-none">loading...</span>
+                        <span class="card-restaurant-city">loading...</span>    
+                    </p>
+                    <p class="card-restaurant-distance">loading...</p>
+                </div>
+
+                <!-- card heading -->
+                <div class="card-restaurant-heading">
+                    <!-- status -->
+                    <h1 class="card-restaurant-status">Unkown</h1>
+                    
+                    <div class="card-restaurant-viewBtn">
+                        <a class="btn btn-info">Details</a>
+                    </div>
+                </div>
+
+                <!-- date submitted -->
+                <div class="card-restaurant-date">
+                    <p class="card-restaurant-dateUpdatedDelta"></p>
+                    <p class="card-restaurant-dateUpdated d-none"></p>
+                </div>
+
+                <!-- id (hidden) -->
+                <p class="d-none">
+                    <strong>ID: </strong>
+                    <span class="card-restaurant-id">loading...</span>
+                </p>
+
+                <!-- submitting update -->
+                <div class="card-restaurant-submission container">
+                    <div class="card-restaurant-promptLogIn d-none">
+                        <h5>
+                            Log in to update the icecream machine status (Top Right).
+                        </h5>
+                    </div>
+                    <div class="card-restaurant-submitUpdate d-none">
+                        <h5>
+                            Update the icecream machine status:
+                        </h5>
+                        <div class="input-group justify-content-center">
+                            <button type="button" class="btn btn-success workingBtn">Working</button>
+                            <button type="button" class="btn btn-danger brokenBtn">Broken</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </template>
 
     <!-- FOOTER -->
     <nav id="footerPlaceholder">loading footer...</nav>
