@@ -8,6 +8,10 @@ DESCRIPTION: styles the profile page
     box-shadow: 5px 5px black;
 }
 
+#fieldset-profile {
+    margin-top: 1rem;
+}
+
 #fieldset-profile .input-group {
     border-radius: 0.5rem;
     border: 2px solid black;
@@ -81,6 +85,16 @@ DESCRIPTION: styles the profile page
     gap: 0.5rem;
 }
 
+.locked {
+    filter: grayscale(1);
+    opacity: 75%;
+}
+
+.unlocked {
+    filter: grayscale(0);
+    opacity: 100%;
+}
+
 .circleCustomizations-go-here .modal-customization-triggerImage {
     height: 3rem;
     border-radius: 50%;
@@ -115,34 +129,78 @@ DESCRIPTION: styles the profile page
 }
 
 /* Custom Breakpoint */
-@media (min-width: 400px) {
+@media (min-width: 458px) {
     .circleCustomizations-go-here .modal-customization-triggerImage {
         height: 4rem;
     }
     
+    .rectangleCustomizations-go-here {
+        grid-template-columns: 1fr 1fr;
+    }
+
     .rectangleCustomizations-go-here .modal-customization-triggerImage {
-        height: 4rem;
+        height: 3rem;
     }
 }
 
 /* Small devices (landscape phones, 576px and up) */
 @media (min-width: 576px) {
-
+    .circleCustomizations-go-here {
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+    }
 }
 
 /* Medium devices (tablets, 768px and up) */
 @media (min-width: 768px) {
+    .circleCustomizations-go-here {
+        grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+    }
     
+    .rectangleCustomizations-go-here {
+        grid-template-columns: 1fr 1fr 1fr;
+    }
 }
 
 /* Large devices (desktops, 992px and up) */
 @media (min-width: 992px) {
+    .circleCustomizations-go-here {
+        grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+        gap: 0.75rem;
+    }
     
+    .circleCustomizations-go-here .modal-customization-triggerImage {
+        height: 4.5rem;
+    }
+    
+    .rectangleCustomizations-go-here {
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+        gap: 0.75rem;
+    }
+
+    .rectangleCustomizations-go-here .modal-customization-triggerImage {
+        height: 3.5rem;
+    }
 }
 
 /* X-Large devices (large desktops, 1200px and up) */
 @media (min-width: 1200px) {
+    .circleCustomizations-go-here {
+        grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+        gap: 1rem;
+    }
     
+    .circleCustomizations-go-here .modal-customization-triggerImage {
+        height: 5rem;
+    }
+    
+    .rectangleCustomizations-go-here {
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+        gap: 1rem;
+    }
+
+    .rectangleCustomizations-go-here .modal-customization-triggerImage {
+        height: 4rem;
+    }
 }
 
 /* XX-Large devices (larger desktops, 1400px and up) */

@@ -45,8 +45,8 @@ firebase.auth().onAuthStateChanged((user) => {
 // EFFECTS: Populates each customization and adds them to their divs.
 function populateCustomizations(userDoc) {
   // customizations collection
-  db.collection("customizations").get()
-  .then(customizationsCollection => {
+  db.collection("customizations")
+  .onSnapshot(customizationsCollection => {
     // for each customization
     customizationsCollection
       .forEach(customizationDoc => {
@@ -71,37 +71,58 @@ function populateCustomizations(userDoc) {
         newModal.querySelector(".modal-customization-description").innerHTML = description;
 
         if (type == "avatar") {
+          // check user's avatar id and change display to locked if this customization is the same
+          if (userDoc.data().avatar.id == customizationDoc.id) {
+            newModal.querySelector(".modal-customization-triggerImage").classList.add("locked");
+          }
+
           newModal.querySelector(".modal-customization-triggerImage").src = "/images/avatars/" + imageURL + ".png";
           newModal.querySelector(".modal-customization-image").src = "/images/avatars/" + imageURL + ".png";
           newModal.querySelector(".modal-customization-chooseBtn").onclick = function() {
             setAvatar(customizationDoc);
+            setTimeout(function() {
+              window.location.reload();
+            }, 1000);
           };
           
           document.getElementById("avatars-go-here").append(newModal);
           
         } else if (type == "banner") {
+          // check user's banner id and change display to locked if this customization is the same
+          if (userDoc.data().banner.id == customizationDoc.id) {
+            newModal.querySelector(".modal-customization-triggerImage").classList.add("locked");
+          }
+
           newModal.querySelector(".modal-customization-triggerImage").src = "/images/banners/" + imageURL + ".png";
           newModal.querySelector(".modal-customization-image").src = "/images/banners/" + imageURL + ".png";
           newModal.querySelector(".modal-customization-chooseBtn").onclick = function() {
             setBanner(customizationDoc);
+            setTimeout(function() {
+              window.location.reload();
+            }, 1000);
           };
 
           document.getElementById("banners-go-here").append(newModal);
 
         } else if (type == "achievement") {
+          // set achievement to locked
+          newModal.querySelector(".modal-customization-triggerImage").classList.add("locked");
+
+          // check user's achievements and change display to unlocked if this customization is among them
+          userDoc.data().achievements.forEach(achievementDoc => {
+            if (achievementDoc.id == customizationDoc.id) {
+              newModal.querySelector(".modal-customization-triggerImage").classList.add("unlocked");
+            }
+          });
+
           newModal.querySelector(".modal-customization-triggerImage").src = "/images/achievements/" + imageURL + ".png";
           newModal.querySelector(".modal-customization-image").src = "/images/achievements/" + imageURL + ".png";
           newModal.querySelector(".modal-customization-chooseBtn").innerHTML = "Locked.";
 
           newModal.querySelector(".modal-customization-chooseBtn").classList.add("d-none");
-          // // check user's achievements and change display to unlocked if this customization is among them
-          // userDoc.data().achievements.forEach(achievementDoc => {
-          //   if (achievementDoc.id == customizationDoc.id) {
-          //     newModal.querySelector(".modal-customization-chooseBtn").classList.add("d-none");
-          //   }
-          // });
-          
+
           document.getElementById("achievements-go-here").append(newModal);
+
         }
       });
   });
