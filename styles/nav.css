@@ -11,9 +11,21 @@ nav {
     );
 }
 
+.navbar-nav .dropdown-menu {
+    background-color: #ffe082;
+}
+
 .navbar-nav .dropdown-menu .nav-link {
+    background-color: none;
     text-align: center;
-    border: 1px black solid;
+}
+
+.navbar-nav .dropdown-menu .nav-link:hover {
+    background-color: #FFC107;
+}
+
+.navbar-nav .dropdown-menu .nav-link:active {
+    background-color: #d6a100;
 }
 
 #loginModal {

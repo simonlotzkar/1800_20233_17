@@ -21,8 +21,9 @@ Here are some known bugs and limitations:
 * [Limitation] If the user denies or doesnt have geolocation, doesnt display restaurants
     * => display restaurants without distance information if the user's geolocation fails
 * [Limitation] Each update has an upvote/downvote number field and an upvoterID/downvoterID array field, this is redundant as the score can be simply found by counting the number of voterIDs.
-* [Limitation] After changing customization, the customizations don't show the new change because they are generating at page load.
-    * => instead they should be generating off changes to the logged-in user's document
+* [Limitation] After changing customization, the page reloads instead of dynamically updating
+* [Limitation] Read quantity is very high, causes site to crash.
+    * => refactor collection listeners and make as few as possible
 * [Bug] User update count is buggy when deleting updates on profile page
     
 ## 5. Future Plans
@@ -154,9 +155,7 @@ Features and tasks needed to be done (in order of priority):
         * updater               =done
         * voter                 =not_started
     * Add all McDonalds in vancouver to the db
-    * About page content
 * Bugfix limitations
 * Clean-Up
     * Refactor code into smaller fragments where possible
     * Add inline comments throughout js code where clarity is needed
-* Make a "Current Features" and "User Tasks" section for readme and about page
