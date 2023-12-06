@@ -393,31 +393,14 @@ DESCRIPTION: styles the restaurant page
 
 /* Large devices (desktops, 992px and up) */
 @media (min-width: 992px) {
+    .card-update {
+        width: 30rem;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
     .card-update-banner {
-        height: 15rem;
-    }
-    
-    .card-update-userProfile {
-        height: 15rem;
-    }
-
-    .card-update-avatar {
-        height: 7.5rem;
-        border: 3px solid black;
-        box-shadow: 6px 6px black;
-    }
-
-    .card-update-username {
-        font-size: 3rem;
-        line-height: 3rem;
-    }
-
-    .card-update-achievements {
-        margin-top: 1rem;
-    }
-
-    .card-update-achievementImage {
-        height: 4rem;
+        height: 10rem;
     }
 }
 

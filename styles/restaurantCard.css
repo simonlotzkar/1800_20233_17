@@ -31,8 +31,8 @@ DESCRIPTION: styles the restaurant cards
 
 .card-restaurant-address {
     margin: 0;
-    line-height: 1.5rem;
-    font-size: 1.5rem;
+    line-height: 1.33rem;
+    font-size: 1.33rem;
     font-weight: bolder;
     text-shadow:
         0.15rem 0 0.15rem black,
@@ -42,16 +42,7 @@ DESCRIPTION: styles the restaurant cards
 }
 
 .card-restaurant-postalCodeAndCity {
-    margin: 0;
-    margin-top: 0.25rem;
-    line-height: 1.25rem;
-    font-size: 1.25rem;
-    font-weight: bold;
-    text-shadow:
-        0.125rem 0 0.125rem black,
-        0 0.125rem 0.125rem black,
-        -0.125rem 0 0.125rem black,
-        0 -0.125rem 0.125rem black;
+    display: none;
 }
 
 .card-restaurant-distance {
@@ -128,6 +119,40 @@ DESCRIPTION: styles the restaurant cards
 }
 
 /* Custom */
+@media (min-width: 350px) {
+    .card-restaurant-postalCodeAndCity {
+        display: block;
+        margin: 0;
+        margin-top: 0.25rem;
+        line-height: 1.25rem;
+        font-size: 1.25rem;
+        font-weight: bold;
+        text-shadow:
+            0.125rem 0 0.125rem black,
+            0 0.125rem 0.125rem black,
+            -0.125rem 0 0.125rem black,
+            0 -0.125rem 0.125rem black;
+    }
+}
+
+@media (min-width: 400px) {
+    .card-restaurant-address {
+        line-height: 1.5rem;
+        font-size: 1.75rem;
+    }
+
+    .card-restaurant-postalCodeAndCity {
+        line-height: 1.5rem;
+        font-size: 1.5rem;
+    }
+    
+    .card-restaurant-distance {
+        line-height: 1.25rem;
+        font-size: 1.25rem;
+    }
+}
+
+/* Custom */
 @media (min-width: 476px) {
     .card-restaurant {
         margin-bottom: 0.75rem;
@@ -176,27 +201,13 @@ DESCRIPTION: styles the restaurant cards
 
 /* Small devices (landscape phones, 576px and up) */
 @media (min-width: 576px) {
-    .card-restaurant {
-        margin-bottom: 1rem;
-    }
-
-    .card-restaurant-address {
-        margin-bottom: 0.75rem;
-    }
-    
-    .card-restaurant-postalCodeAndCity {
-        margin-bottom: 0.75rem;
-    }
-}
-
-/* Medium devices (tablets, 768px and up) */
-@media (min-width: 768px) {
     .restaurants-go-here {
         display: flex;
         flex-direction: column;
     }
 
     .card-restaurant {
+        margin-bottom: 1rem;
         margin-left: auto;
         margin-right: auto;
         width: 25rem;
@@ -214,6 +225,11 @@ DESCRIPTION: styles the restaurant cards
     .card-restaurant-postalCodeAndCity {
         margin-bottom: 0.33rem;
     }
+}
+
+/* Medium devices (tablets, 768px and up) */
+@media (min-width: 768px) {
+
 }
 
 /* Large devices (desktops, 992px and up) */
