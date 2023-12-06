@@ -87,6 +87,7 @@ DESCRIPTION: styles the profile page
 
 .locked {
     filter: grayscale(0.8);
+    opacity: 0.8;
 }
 
 .locked-achievement {
@@ -95,6 +96,7 @@ DESCRIPTION: styles the profile page
 
 .unlocked {
     filter: grayscale(0);
+    opacity: 1;
 }
 
 .unlocked-achievement {

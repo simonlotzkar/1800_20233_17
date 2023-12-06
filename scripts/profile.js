@@ -267,6 +267,7 @@ function setAvatar(doc) {
   currentUser.update({
     avatar: db.doc(url),
   });
+  checkAndRewardTouchUp();
 }
 
 // MODIFIES: currentUser
@@ -277,4 +278,45 @@ function setBanner(doc) {
   currentUser.update({
     banner: db.doc(url),
   });
+  checkAndRewardChangeUp();
+}
+
+// EFFECTS: Adds the touch up achievement to the user if they don't already have it
+function checkAndRewardTouchUp() {
+  let achievementID = "vTGnD556oZ9uAy0ez1xX";
+  let isUnlocked = false;
+  db.collection("users").doc(currentUser.id).get()
+    .then(doc => {
+      doc.data().achievements.forEach(achievementRef => {
+        if (achievementRef.id == achievementID) {
+          isUnlocked = true;
+        }
+      });
+      if (!isUnlocked) {
+        db.collection("users").doc(currentUser.id).update({
+          achievements: fv.arrayUnion(db.doc("customizations/" + achievementID)),
+        });
+        alert("Achievement Awarded! View \"Touch Up\" in your profile for details.")
+      }
+    });
+}
+
+// EFFECTS: Adds the change up achievement to the user if they don't already have it
+function checkAndRewardChangeUp() {
+  let achievementID = "xQmWnm5WzRyvbMuneOTR";
+  let isUnlocked = false;
+  db.collection("users").doc(currentUser.id).get()
+    .then(doc => {
+      doc.data().achievements.forEach(achievementRef => {
+        if (achievementRef.id == achievementID) {
+          isUnlocked = true;
+        }
+      });
+      if (!isUnlocked) {
+        db.collection("users").doc(currentUser.id).update({
+          achievements: fv.arrayUnion(db.doc("customizations/" + achievementID)),
+        });
+        alert("Achievement Awarded! View \"Change Up\" in your profile for details.")
+      }
+    });
 }

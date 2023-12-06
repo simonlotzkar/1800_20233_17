@@ -223,7 +223,15 @@ function trySubmitUpdate(status, restaurantID) {
 
   if (secsRemaining <= 0) {
     let newCanUpdateTime = nowTime + (secsToWait * 1000);
-    submitUpdate(status, restaurantID);
+
+    db.collection("restaurants/" + restaurantID + "/updates").orderBy("dateSubmitted", "desc").limit(1).get()
+      .then(updateCol => {
+        updateCol.forEach(upDoc => {
+          prevStatus = upDoc.data().status;
+          submitUpdate(prevStatus, status, restaurantID);
+        });
+      });
+      
     localStorage.setItem("canUpdateTime", newCanUpdateTime);
   } else {
     alert("You must wait: " + (secsRemaining) + "s before submitting again!");
@@ -236,13 +244,13 @@ function trySubmitUpdate(status, restaurantID) {
 //          date to the current time.
 //          Also changes the restaurant's date and status fields to
 //          reflect the new update.
-function submitUpdate(status, restaurantID) {
+function submitUpdate(prevStatus, status, restaurantID) {
   let currentUser = firebase.auth().currentUser;
   let now = firebase.firestore.Timestamp.now();
 
   // Get currently logged in user from users collection
   db.collection("users").doc(currentUser.uid).get()
-    .then((doc => {    
+    .then(doc => {    
       // get restaurant's updates subcollection
       db.collection("restaurants/" + restaurantID + "/updates")
         // ...add new update
@@ -257,10 +265,6 @@ function submitUpdate(status, restaurantID) {
         })
         // ...add new update to user's reference updates subcollection
         .then(docRef => {
-          let updaterBronzeID = "yOMHZvh3PGUYwF4q9nEl";
-          let updaterSilverID = "W3xreGfL5O5sfOiy7wtI";
-          let updaterGoldID = "y1oo3TupIdFsoE439cso";
-          let refUpdatesCount = 0;
           let refUpdates = db.collection("users/" + doc.id + "/refUpdates");
           
           // update user's reference updates
@@ -270,75 +274,212 @@ function submitUpdate(status, restaurantID) {
             date: now,
           });
 
-          // count user's ref update collection size
-          refUpdates.get().then(col => {
-            col.forEach(doc => {
-              refUpdatesCount += 1;
-            });
-
-            // check if they unlock updater bronze and award if they don't already have it
-            if (refUpdatesCount >= 10) {
-              let isUnlocked = false;
-              db.collection("users").doc(currentUser.uid).get()
-                .then(doc => {
-                  doc.data().achievements.forEach(achievementRef => {
-                    if (achievementRef.id == updaterBronzeID) {
-                      isUnlocked = true;
-                    }
-                  });
-                  if (!isUnlocked) {
-                    db.collection("users").doc(currentUser.uid).update({
-                      achievements: fv.arrayUnion(db.doc("customizations/" + updaterBronzeID)),
-                    });
-                    alert("Achievement Awarded! View \"Updater (Bronze)\" in your profile for details.")
-                  }
-                });
-            } 
-
-            // check if they unlock updater silver and award if they don't already have it
-            if (refUpdatesCount >= 25) {
-              let isUnlocked = false;
-              db.collection("users").doc(currentUser.uid).get()
-                .then(doc => {
-                  doc.data().achievements.forEach(achievementRef => {
-                    if (achievementRef.id == updaterSilverID) {
-                      isUnlocked = true;
-                    }
-                  });
-                  if (!isUnlocked) {
-                    db.collection("users").doc(currentUser.uid).update({
-                      achievements: fv.arrayUnion(db.doc("customizations/" + updaterSilverID)),
-                    });
-                    alert("Achievement Awarded! View \"Updater (Silver)\" in your profile for details.")
-                  }
-                });
-            } 
-            
-            // check if they unlock updater gold and award if they don't already have it
-            if (refUpdatesCount >= 50) {
-              let isUnlocked = false;
-              db.collection("users").doc(currentUser.uid).get()
-                .then(doc => {
-                  doc.data().achievements.forEach(achievementRef => {
-                    if (achievementRef.id == updaterGoldID) {
-                      isUnlocked = true;
-                    }
-                  });
-                  if (!isUnlocked) {
-                    db.collection("users").doc(currentUser.uid).update({
-                      achievements: fv.arrayUnion(db.doc("customizations/" + updaterGoldID)),
-                    });
-                    alert("Achievement Awarded! View \"Updater (Gold)\" in your profile for details.")
-                  }
-                });
-            }
-          });          
+          checkAndRewardUpdateAchievements(currentUser, refUpdates, prevStatus, status);
         })
         // Catch and alert errors
         .catch((error) => {
-            alert("Error adding document: ", error);
+            alert("Error adding update: ", error);
         });
-    }));
+    });
+}
+
+// EFFECTS: checks to see if user earned an achievement after updating and awards if so
+function checkAndRewardUpdateAchievements(currentUser, refUpdates, prevStatus, status) {
+  let updatesCount = 0;
+  let locationIDArray = [];
+  
+  // count user's ref update collection size
+  refUpdates.get().then(refUpdatesCollection => {
+    refUpdatesCollection.forEach(refUpdateDoc => {
+      let rid = refUpdateDoc.data().restaurantID;
+      if (!locationIDArray.includes(rid)) {
+        locationIDArray[locationIDArray.length + 1] = rid;
+      }
+      updatesCount += 1;
+    });
+
+    checkAndRewardFirstSubmission(currentUser);
+
+    if (prevStatus != status) {
+      checkAndRewardDetective(currentUser);
+    }
+    
+    if (updatesCount >= 10) {
+      checkAndRewardUpdaterBronze(currentUser);
+    } else if (updatesCount >= 25) {
+      checkAndRewardUpdaterSilver(currentUser);
+    } else if (updatesCount >= 50) {
+      checkAndRewardUpdaterGold(currentUser);
+    }
+
+    if (locationIDArray.length >= 10) {
+      checkAndRewardExplorerBronze(currentUser);
+    } else if (locationIDArray.length >= 25) {
+      checkAndRewardExplorerSilver(currentUser);
+    } else if (locationIDArray.length >= 50) {
+      checkAndRewardExplorerGold(currentUser);
+    }
+  });      
+}
+
+// EFFECTS: Adds the detective achievement to the user if they don't already have it
+function checkAndRewardDetective(currentUser) {
+  let achievementID = "jATdpe84S44xsU8MJhCt";
+  let isUnlocked = false;
+  db.collection("users").doc(currentUser.uid).get()
+    .then(doc => {
+      doc.data().achievements.forEach(achievementRef => {
+        if (achievementRef.id == achievementID) {
+          isUnlocked = true;
+        }
+      });
+      if (!isUnlocked) {
+        db.collection("users").doc(currentUser.uid).update({
+          achievements: fv.arrayUnion(db.doc("customizations/" + achievementID)),
+        });
+        alert("Achievement Awarded! View \"Detective\" in your profile for details.")
+      }
+    });
+}
+
+// EFFECTS: Adds the first submission achievement to the user if they don't already have it
+function checkAndRewardFirstSubmission(currentUser) {
+  let achievementID = "nfqjZlO2Sg59PHrlDuUO";
+  let isUnlocked = false;
+  db.collection("users").doc(currentUser.uid).get()
+    .then(doc => {
+      doc.data().achievements.forEach(achievementRef => {
+        if (achievementRef.id == achievementID) {
+          isUnlocked = true;
+        }
+      });
+      if (!isUnlocked) {
+        db.collection("users").doc(currentUser.uid).update({
+          achievements: fv.arrayUnion(db.doc("customizations/" + achievementID)),
+        });
+        alert("Achievement Awarded! View \"First Submission\" in your profile for details.")
+      }
+    });
+}
+
+// EFFECTS: Adds the updater-bronze achievement to the user if they don't already have it
+function checkAndRewardUpdaterBronze(currentUser) {
+  let achievementID = "yOMHZvh3PGUYwF4q9nEl";
+  let isUnlocked = false;
+  db.collection("users").doc(currentUser.uid).get()
+    .then(doc => {
+      doc.data().achievements.forEach(achievementRef => {
+        if (achievementRef.id == achievementID) {
+          isUnlocked = true;
+        }
+      });
+      if (!isUnlocked) {
+        db.collection("users").doc(currentUser.uid).update({
+          achievements: fv.arrayUnion(db.doc("customizations/" + achievementID)),
+        });
+        alert("Achievement Awarded! View \"Updater (Bronze)\" in your profile for details.")
+      }
+    });
+}
+
+// EFFECTS: Adds the updater-silver achievement to the user if they don't already have it
+function checkAndRewardUpdaterSilver(currentUser) {
+  let achievementID = "W3xreGfL5O5sfOiy7wtI";
+  let isUnlocked = false;
+  db.collection("users").doc(currentUser.uid).get()
+    .then(doc => {
+      doc.data().achievements.forEach(achievementRef => {
+        if (achievementRef.id == achievementID) {
+          isUnlocked = true;
+        }
+      });
+      if (!isUnlocked) {
+        db.collection("users").doc(currentUser.uid).update({
+          achievements: fv.arrayUnion(db.doc("customizations/" + achievementID)),
+        });
+        alert("Achievement Awarded! View \"Updater (Silver)\" in your profile for details.")
+      }
+    });
+}
+
+// EFFECTS: Adds the updater-gold achievement to the user if they don't already have it
+function checkAndRewardUpdaterGold(currentUser) {
+  let achievementID = "y1oo3TupIdFsoE439cso";
+  let isUnlocked = false;
+  db.collection("users").doc(currentUser.uid).get()
+    .then(doc => {
+      doc.data().achievements.forEach(achievementRef => {
+        if (achievementRef.id == achievementID) {
+          isUnlocked = true;
+        }
+      });
+      if (!isUnlocked) {
+        db.collection("users").doc(currentUser.uid).update({
+          achievements: fv.arrayUnion(db.doc("customizations/" + achievementID)),
+        });
+        alert("Achievement Awarded! View \"Updater (Gold)\" in your profile for details.")
+      }
+    });
+}
+
+// EFFECTS: Adds the explorer-bronze achievement to the user if they don't already have it
+function checkAndRewardExplorerBronze(currentUser) {
+  let achievementID = "2W9kMxhD5dzMfo0aOvH0";
+  let isUnlocked = false;
+  db.collection("users").doc(currentUser.uid).get()
+    .then(doc => {
+      doc.data().achievements.forEach(achievementRef => {
+        if (achievementRef.id == achievementID) {
+          isUnlocked = true;
+        }
+      });
+      if (!isUnlocked) {
+        db.collection("users").doc(currentUser.uid).update({
+          achievements: fv.arrayUnion(db.doc("customizations/" + achievementID)),
+        });
+        alert("Achievement Awarded! View \"Explorer (Bronze)\" in your profile for details.")
+      }
+    });
+}
+
+// EFFECTS: Adds the explorer-silver achievement to the user if they don't already have it
+function checkAndRewardUpdaterSilver(currentUser) {
+  let achievementID = "ihNpUFdLb83f7bNiICU9";
+  let isUnlocked = false;
+  db.collection("users").doc(currentUser.uid).get()
+    .then(doc => {
+      doc.data().achievements.forEach(achievementRef => {
+        if (achievementRef.id == achievementID) {
+          isUnlocked = true;
+        }
+      });
+      if (!isUnlocked) {
+        db.collection("users").doc(currentUser.uid).update({
+          achievements: fv.arrayUnion(db.doc("customizations/" + achievementID)),
+        });
+        alert("Achievement Awarded! View \"Updater (Silver)\" in your profile for details.")
+      }
+    });
+}
+
+// EFFECTS: Adds the explorer-gold achievement to the user if they don't already have it
+function checkAndRewardUpdaterGold(currentUser) {
+  let achievementID = "u9BvfwQzHqvU5E235gst";
+  let isUnlocked = false;
+  db.collection("users").doc(currentUser.uid).get()
+    .then(doc => {
+      doc.data().achievements.forEach(achievementRef => {
+        if (achievementRef.id == achievementID) {
+          isUnlocked = true;
+        }
+      });
+      if (!isUnlocked) {
+        db.collection("users").doc(currentUser.uid).update({
+          achievements: fv.arrayUnion(db.doc("customizations/" + achievementID)),
+        });
+        alert("Achievement Awarded! View \"Explorer (Gold)\" in your profile for details.")
+      }
+    });
 }
 
 // SRC: 1800-TechTips/B04 (By CarlyOrr)
