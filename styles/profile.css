@@ -86,13 +86,19 @@ DESCRIPTION: styles the profile page
 }
 
 .locked {
-    filter: grayscale(1);
-    opacity: 75%;
+    filter: grayscale(0.8);
+}
+
+.locked-achievement {
+    background-color: #bb2d3b;
 }
 
 .unlocked {
     filter: grayscale(0);
-    opacity: 100%;
+}
+
+.unlocked-achievement {
+    background-color: #198754;
 }
 
 .circleCustomizations-go-here .modal-customization-triggerImage {
@@ -159,6 +165,12 @@ DESCRIPTION: styles the profile page
     .rectangleCustomizations-go-here {
         grid-template-columns: 1fr 1fr 1fr;
     }
+
+    .container-uneditable, #form-editable {
+        width: 30rem;
+        margin-left: auto;
+        margin-right: auto;
+    }
 }
 
 /* Large devices (desktops, 992px and up) */
@@ -179,6 +191,12 @@ DESCRIPTION: styles the profile page
 
     .rectangleCustomizations-go-here .modal-customization-triggerImage {
         height: 3.5rem;
+    }
+
+    .card {
+        width: 25rem;
+        margin-left: auto;
+        margin-right: auto;
     }
 }
 

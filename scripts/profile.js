@@ -107,11 +107,13 @@ function populateCustomizations(userDoc) {
         } else if (type == "achievement") {
           // set achievement to locked
           newModal.querySelector(".modal-customization-triggerImage").classList.add("locked");
+          newModal.querySelector(".modal-customization-triggerImage").classList.add("locked-achievement");
 
           // check user's achievements and change display to unlocked if this customization is among them
           userDoc.data().achievements.forEach(achievementDoc => {
             if (achievementDoc.id == customizationDoc.id) {
               newModal.querySelector(".modal-customization-triggerImage").classList.add("unlocked");
+              newModal.querySelector(".modal-customization-triggerImage").classList.add("unlocked-achievement");
             }
           });
 
