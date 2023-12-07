@@ -11,8 +11,8 @@ let updateCount = 0;
 
 firebase.auth().onAuthStateChanged((user) => {
   if (user) {
-    if (user.emailVerified) {
-      document.querySelector("#btn-verifyEmail").classList.add("d-none");
+    if (!user.emailVerified) {
+      document.querySelector("#btn-verifyEmail").classList.remove("d-none");
     }
 
     // User is signed in
