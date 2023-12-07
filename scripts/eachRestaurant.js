@@ -363,6 +363,8 @@ function processUpvote(restaurantID, updateDoc) {
     // check if the user is logged in or if they are the author of the update
     if (!currentUser) {
         return alert("You must be logged-in to vote!");
+    } else if (!currentUser.emailVerified) {
+        alert("Verify your email before voting.")
     } else if (updateUserID == currentUser.uid) {
         return alert("You cannot vote on your own update!");
     } else {
@@ -413,6 +415,8 @@ function processDownvote(restaurantID, updateDoc) {
     // check if the user is logged in or if they are the author of the update
     if (!currentUser) {
         return alert("You must be logged-in to vote!");
+    } else if (!currentUser.emailVerified) {
+        alert("Verify your email before voting.")
     } else if (updateUserID == currentUser.uid) {
         return alert("You cannot vote on your own update!");
     } else {

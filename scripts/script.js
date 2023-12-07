@@ -221,7 +221,9 @@ function trySubmitUpdate(status, restaurantID) {
     secsRemaining = (canUpdateTime - nowTime) / 1000;
   }
 
-  if (secsRemaining <= 0) {
+  if (!firebase.auth().currentUser.emailVerified) {
+    alert("Verify your email before submitting an update.")
+  } else if (secsRemaining <= 0) {
     let newCanUpdateTime = nowTime + (secsToWait * 1000);
 
     db.collection("restaurants/" + restaurantID + "/updates").orderBy("dateSubmitted", "desc").limit(1).get()

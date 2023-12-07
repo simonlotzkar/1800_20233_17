@@ -5,8 +5,8 @@ We are developing "McWorking" to allow McDonalds patrons to check the status of 
 
 ## 2. Project Team: BBY17
 * Simon Lotzkar: Designer, Developer, Planner
-* Yongseong Choi: Googled assets for and designed achievement images
-* Jacob Ardelean: Googled avatar and banner images
+* Yongseong Choi: Designer
+* Jacob Ardelean: Designer
 	
 ## 3. Technologies and Resources Used
 * HTML, CSS, JavaScript
@@ -18,11 +18,10 @@ The app is ready straight away for viewing, but to submit data users must sign u
 
 ## 5. Bugs and Limitations
 Here are some known bugs and limitations:
-* [Limitation] Each update has an upvote/downvote number field and an upvoterID/downvoterID array field, this is redundant as the score can be simply found by counting the number of voterIDs.
-* [Limitation] After changing customization, the page reloads instead of dynamically updating
-* [Limitation] Read quantity is very high, causes site to crash.
+* [Limitation] After changing customization, the page reloads instead of dynamically updating.
+* [Limitation] Read quantity is very high, causes site to crash while testing. Will be issue when useage is medium-high.
     * => refactor collection listeners and make as few as possible
-* [Bug] User update count is buggy when deleting updates on profile page
+* [Bug] User update count is glitchy when deleting updates on profile page.
     
 ## 5. Future Plans
 Expansions (large multi-feature additions) and features that can be made after launching the app:
@@ -42,7 +41,6 @@ Expansions (large multi-feature additions) and features that can be made after l
     * [Page] Restaurant manager page to replace submit restaurant page (allow for editing and creating restaurants)
 * Authentication
     * [AuthFeature] Add google sign-up/log-in
-    * [AuthFeature] Before creating accounts, require user email verification (requires hosting)
 * [Feature] Add % of users that have unlocked achievement
 * [Feature] Have an image stored for each restaurant and load as card image instead of single repeated one
 * [Feature] Add countdown timer below submit update button that displays remaining timeout time
@@ -137,23 +135,3 @@ Content of the firestore database:
         .imageURL                # [string] name of image in url
         .description             # [string] description of the customization
 ```
-
-## 8. TODO List
-Features and tasks needed to be done (in order of priority):
-* Data entry
-    * Implement achievement unlock conditions:
-        * changeUp              =not_started
-        * detective             =not_started
-        * explorer              =in_progress
-        * firstSubmission       =in_progress
-        * frigophilBoss         =not_started
-        * qualityControl        =not_started
-        * respectedFrigophil    =not_started
-        * touchUp               =not_started
-        * updater               =done
-        * voter                 =not_started
-    * Add all McDonalds in vancouver to the db
-* Bugfix limitations
-* Clean-Up
-    * Refactor code into smaller fragments where possible
-    * Add inline comments throughout js code where clarity is needed

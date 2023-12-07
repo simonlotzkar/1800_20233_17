@@ -11,6 +11,10 @@ let updateCount = 0;
 
 firebase.auth().onAuthStateChanged((user) => {
   if (user) {
+    if (user.emailVerified) {
+      document.querySelector("#btn-verifyEmail").classList.add("d-none");
+    }
+
     // User is signed in
     currentUser = db.collection("users").doc(user.uid);
 
@@ -319,4 +323,10 @@ function checkAndRewardChangeUp() {
         alert("Achievement Awarded! View \"Change Up\" in your profile for details.")
       }
     });
+}
+
+// EFFECTS: sends the user a verification email
+function verifyEmail() {
+  firebase.auth().currentUser.sendEmailVerification();
+  alert("Sent a verification email.")
 }
