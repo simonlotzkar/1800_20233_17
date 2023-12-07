@@ -86,7 +86,7 @@ function populateCustomizations(userDoc) {
             setAvatar(customizationDoc);
             setTimeout(function() {
               window.location.reload();
-            }, 1000);
+            }, 2000);
           };
           
           document.getElementById("avatars-go-here").append(newModal);
@@ -103,7 +103,7 @@ function populateCustomizations(userDoc) {
             setBanner(customizationDoc);
             setTimeout(function() {
               window.location.reload();
-            }, 1000);
+            }, 2000);
           };
 
           document.getElementById("banners-go-here").append(newModal);
