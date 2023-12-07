@@ -213,7 +213,7 @@ function generateDateString(timestamp) {
 //          yet, the update is submitted and the time is logged for future calculations.
 function trySubmitUpdate(status, restaurantID) {
   let nowTime = firebase.firestore.Timestamp.now().toDate().getTime();
-  let secsToWait = 60;
+  let secsToWait = 0;
   let secsRemaining = 0;
 
   let canUpdateTime = localStorage.getItem("canUpdateTime");
@@ -225,15 +225,7 @@ function trySubmitUpdate(status, restaurantID) {
     alert("Verify your email before submitting an update.")
   } else if (secsRemaining <= 0) {
     let newCanUpdateTime = nowTime + (secsToWait * 1000);
-
-    db.collection("restaurants/" + restaurantID + "/updates").orderBy("dateSubmitted", "desc").limit(1).get()
-      .then(updateCol => {
-        updateCol.forEach(upDoc => {
-          prevStatus = upDoc.data().status;
-          submitUpdate(prevStatus, status, restaurantID);
-        });
-      });
-      
+    submitUpdate(status, restaurantID);
     localStorage.setItem("canUpdateTime", newCanUpdateTime);
   } else {
     alert("You must wait: " + (secsRemaining) + "s before submitting again!");
@@ -246,7 +238,7 @@ function trySubmitUpdate(status, restaurantID) {
 //          date to the current time.
 //          Also changes the restaurant's date and status fields to
 //          reflect the new update.
-function submitUpdate(prevStatus, status, restaurantID) {
+function submitUpdate(status, restaurantID) {
   let currentUser = firebase.auth().currentUser;
   let now = firebase.firestore.Timestamp.now();
 
@@ -276,7 +268,7 @@ function submitUpdate(prevStatus, status, restaurantID) {
             date: now,
           });
 
-          checkAndRewardUpdateAchievements(currentUser, refUpdates, prevStatus, status);
+          checkAndRewardUpdateAchievements(currentUser, refUpdates, status);
         })
         // Catch and alert errors
         .catch((error) => {
@@ -286,7 +278,7 @@ function submitUpdate(prevStatus, status, restaurantID) {
 }
 
 // EFFECTS: checks to see if user earned an achievement after updating and awards if so
-function checkAndRewardUpdateAchievements(currentUser, refUpdates, prevStatus, status) {
+function checkAndRewardUpdateAchievements(currentUser, refUpdates, status) {
   let updatesCount = 0;
   let locationIDArray = [];
   
@@ -302,9 +294,9 @@ function checkAndRewardUpdateAchievements(currentUser, refUpdates, prevStatus, s
 
     checkAndRewardFirstSubmission(currentUser);
 
-    if (prevStatus != status) {
-      checkAndRewardDetective(currentUser);
-    }
+    // if (prevStatus != status) {
+    //   checkAndRewardDetective(currentUser);
+    // }
     
     if (updatesCount >= 10) {
       checkAndRewardUpdaterBronze(currentUser);
@@ -324,25 +316,25 @@ function checkAndRewardUpdateAchievements(currentUser, refUpdates, prevStatus, s
   });      
 }
 
-// EFFECTS: Adds the detective achievement to the user if they don't already have it
-function checkAndRewardDetective(currentUser) {
-  let achievementID = "jATdpe84S44xsU8MJhCt";
-  let isUnlocked = false;
-  db.collection("users").doc(currentUser.uid).get()
-    .then(doc => {
-      doc.data().achievements.forEach(achievementRef => {
-        if (achievementRef.id == achievementID) {
-          isUnlocked = true;
-        }
-      });
-      if (!isUnlocked) {
-        db.collection("users").doc(currentUser.uid).update({
-          achievements: fv.arrayUnion(db.doc("customizations/" + achievementID)),
-        });
-        alert("Achievement Awarded! View \"Detective\" in your profile for details.")
-      }
-    });
-}
+// // EFFECTS: Adds the detective achievement to the user if they don't already have it
+// function checkAndRewardDetective(currentUser) {
+//   let achievementID = "jATdpe84S44xsU8MJhCt";
+//   let isUnlocked = false;
+//   db.collection("users").doc(currentUser.uid).get()
+//     .then(doc => {
+//       doc.data().achievements.forEach(achievementRef => {
+//         if (achievementRef.id == achievementID) {
+//           isUnlocked = true;
+//         }
+//       });
+//       if (!isUnlocked) {
+//         db.collection("users").doc(currentUser.uid).update({
+//           achievements: fv.arrayUnion(db.doc("customizations/" + achievementID)),
+//         });
+//         alert("Achievement Awarded! View \"Detective\" in your profile for details.")
+//       }
+//     });
+// }
 
 // EFFECTS: Adds the first submission achievement to the user if they don't already have it
 function checkAndRewardFirstSubmission(currentUser) {

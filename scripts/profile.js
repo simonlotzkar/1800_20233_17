@@ -84,9 +84,6 @@ function populateCustomizations(userDoc) {
           newModal.querySelector(".modal-customization-image").src = "/images/avatars/" + imageURL + ".png";
           newModal.querySelector(".modal-customization-chooseBtn").onclick = function() {
             setAvatar(customizationDoc);
-            setTimeout(function() {
-              window.location.reload();
-            }, 2000);
           };
           
           document.getElementById("avatars-go-here").append(newModal);
@@ -101,9 +98,6 @@ function populateCustomizations(userDoc) {
           newModal.querySelector(".modal-customization-image").src = "/images/banners/" + imageURL + ".png";
           newModal.querySelector(".modal-customization-chooseBtn").onclick = function() {
             setBanner(customizationDoc);
-            setTimeout(function() {
-              window.location.reload();
-            }, 2000);
           };
 
           document.getElementById("banners-go-here").append(newModal);
