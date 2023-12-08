@@ -12,17 +12,23 @@ We are developing "McWorking" to allow McDonalds patrons to check the status of 
 * HTML, CSS, JavaScript
 * Bootstrap 5.0 (Frontend library)
 * Firebase 8.0 (BAAS - Backend as a Service)
+* Freepik.com (Avatars and Banners)
+* Assets for achievements from:
+    * Flaticon.com
+    * UXWing.com
+    * TheNounProject.com
 
 ## 4. Complete setup/installion/usage
-The app is ready straight away for viewing, but to submit data users must sign up for an account. This can be done from any page using the website's navbar.
+The app is ready straight away for viewing, but to submit data users must sign up for an account and verify their email. Sign up can be done from any page using the website's navbar in the top right. A verification email is sent automatically, and can be resent from the profile page.
 
 ## 5. Bugs and Limitations
 Here are some known bugs and limitations:
-* [Limitation] After changing customization, the page reloads instead of dynamically updating.
-* [Limitation] Read quantity is very high, causes site to crash while testing. Will be issue when useage is medium-high.
+* [Limitation] Read quantity is very high, causes site to crash while testing. Will be issue when useage is high.
     * => refactor collection listeners and make as few as possible
-* [Bug] User update count is glitchy when deleting updates on profile page.
-    
+* [Bug] User update count is unreliably glitchy when deleting updates on profile page.
+* [Bug] User must manually refresh to see changes of new achievements in the profile  and eachRestaurant pages.
+* [Bug] User must manually refresh to see changes after picking a new avatar or profile.
+
 ## 5. Future Plans
 Expansions (large multi-feature additions) and features that can be made after launching the app:
 * [Expansion] Allow users to submit an update for any product instead of just icecream (eg. smoothies)

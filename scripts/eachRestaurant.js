@@ -136,138 +136,149 @@ function dynamicallyPopulateUpdateLog() {
             snapshot.docChanges().forEach(change => {
 
                 // UPDATE ADDED...
-                if (change.type === "added") {
-                    // if added, add to the DOM:
-                    let updateID = change.doc.id;
-                    let username = "loading...";
-                    let updateUserID = change.doc.data().userID;
-                    let status = change.doc.data().status;
-                    let statusString = generateWorkingString(status);
-                    let dateSubmittedDelta = generateTimeSinceString(change.doc.data().dateSubmitted);
-                    let dateSubmitted = generateDateString(change.doc.data().dateSubmitted);
-
-                    let upvotes = change.doc.data().upvotes;
-                    let downvotes = change.doc.data().downvotes;
-                    let score = upvotes - downvotes;
-                    let percentUpvote = ((upvotes / (upvotes + downvotes)) * 100).toFixed(0);
-                    if (upvotes < 1) {
-                        percentUpvote = 0;
-                    }
-                    let percentDownvote = 100 - percentUpvote;
-
-                    let newcard = cardTemplate.content.cloneNode(true);
-
-                    newcard.querySelector(".card-update-id").innerHTML = updateID;
-                    newcard.querySelector(".card-update-status").innerHTML = statusString;
-                    newcard.querySelector(".card-update-username").innerHTML = username;
-                    newcard.querySelector(".card-update-dateSubmittedDelta").innerHTML = dateSubmittedDelta;
-                    newcard.querySelector(".card-update-dateSubmitted").innerHTML = dateSubmitted;
-
-                    newcard.querySelector(".card-update-score").innerHTML = score;
-                    if ((upvotes == 0) && (downvotes == 0)) {
-                        // if there are no votes, set the novotes progress to 100%, 
-                        // then set the downvote and upvote progress to 0%        
-                        newcard.querySelector(".card-progress-upvotes").setAttribute("style", "width: 0%;");
-                        newcard.querySelector(".card-progress-downvotes").setAttribute("style", "width: 0%;");
-                        newcard.querySelector(".card-progress-novotes").setAttribute("style", "width: 100%;");
-                    } else {
-                        // set the upvote progress bar and text to whatever % of upvotes
-                        // there are, then do the same for downvotes and set novotes to 0%
-                        newcard.querySelector(".card-progress-upvotesPercent").innerHTML = percentUpvote + "%";
-                        newcard.querySelector(".card-progress-downvotesPercent").innerHTML = percentDownvote + "%";
-                        newcard.querySelector(".card-progress-upvotesCount").innerHTML = " (" + upvotes + ")";
-                        newcard.querySelector(".card-progress-downvotesCount").innerHTML = " (" + downvotes + ")";
-
-                        newcard.querySelector(".card-progress-upvotes").setAttribute("style", "width: " + percentUpvote + "%;");
-                        newcard.querySelector(".card-progress-downvotes").setAttribute("style", "width: " + percentDownvote + "%;");
-                        newcard.querySelector(".card-progress-novotes").setAttribute("style", "width: 0%;");
-                    }
-
-                    if (status == null || status == undefined) {
-                        newcard.querySelector(".card-update").classList.add("bg-warning");
-                        newcard.querySelector(".card-update").classList.remove("bg-success");
-                        newcard.querySelector(".card-update").classList.remove("bg-danger");
-                    } else if (status == true) {
-                        newcard.querySelector(".card-update").classList.remove("bg-warning");
-                        newcard.querySelector(".card-update").classList.add("bg-success");
-                        newcard.querySelector(".card-update").classList.remove("bg-danger");
-                    } else if (status == false) {
-                        newcard.querySelector(".card-update").classList.remove("bg-warning");
-                        newcard.querySelector(".card-update").classList.remove("bg-success");
-                        newcard.querySelector(".card-update").classList.add("bg-danger");
-                    }
-
-                    setIcons(newcard, change.doc);
-                    initializeBtnListeners(newcard, restaurantID, change.doc);
-                    addProfileDetails(newcard, updateUserID);
-                    displayDeleteUpdate(newcard);
-                    populateLastUpdated();
-                    document.getElementById("updates-go-here").prepend(newcard);
+                if (change.type == "added") {
+                    processUpdateAdded(change);
                 }
 
                 // UPDATE MODIFIED...
                 if (change.type === "modified") {
-                    // if modified, means the votes changed so update them:
-                    let updateID = change.doc.id;
-                    let nodeList = document.querySelectorAll(".card-update-id");
-
-                    let upvotes = change.doc.data().upvotes;
-                    let downvotes = change.doc.data().downvotes;
-                    let score = upvotes - downvotes;
-                    let percentUpvote = ((upvotes / (upvotes + downvotes)) * 100).toFixed(0);
-                    if (upvotes < 1) {
-                        percentUpvote = 0;
-                    }
-                    let percentDownvote = 100 - percentUpvote;
-
-                    for (i = 0; i < nodeList.length; i++) {
-                        if (nodeList[i].innerHTML == updateID) {
-                            card = nodeList[i].parentElement.parentElement;
-                            card.querySelector(".card-update-score").innerHTML = score;
-                            if ((upvotes == 0) && (downvotes == 0)) {
-                                // if there are no votes, set the novotes progress to 100%, 
-                                // then set the downvote and upvote progress to 0%        
-                                card.querySelector(".card-progress-upvotes").setAttribute("style", "width: 0%;");
-                                card.querySelector(".card-progress-downvotes").setAttribute("style", "width: 0%;");
-                                card.querySelector(".card-progress-novotes").setAttribute("style", "width: 100%;");
-                            } else {
-                                // set the upvote progress bar and text to whatever % of upvotes there are, then
-                                // do the same for downvotes and set novotes to 0%
-                                card.querySelector(".card-progress-upvotesPercent").innerHTML = percentUpvote + "%";
-                                card.querySelector(".card-progress-downvotesPercent").innerHTML = percentDownvote + "%";
-                                card.querySelector(".card-progress-upvotesCount").innerHTML = " (" + upvotes + ")";
-                                card.querySelector(".card-progress-downvotesCount").innerHTML = " (" + downvotes + ")";
-
-                                card.querySelector(".card-progress-upvotes").setAttribute("style", "width: " + percentUpvote + "%;");
-                                card.querySelector(".card-progress-downvotes").setAttribute("style", "width: " + percentDownvote + "%;");
-                                card.querySelector(".card-progress-novotes").setAttribute("style", "width: 0%;");
-                            }
-                            setIcons(card, change.doc);
-                        }
-                    }
+                    processUpdateModified(change);
                 }
 
                 // UPDATE REMOVED...
                 if (change.type === "removed") {
-                    // if removed, go through the DOM and remove corresponding nodes:
-                    let updateID = change.doc.id;
-                    let nodeList = document.querySelectorAll(".card-update-id");
-
-                    for (i = 0; i < nodeList.length; i++) {
-                        if (nodeList[i].innerHTML == updateID) {
-                            nodeList[i].parentElement.parentElement.remove();
-                        }
-                    }
-
-                    // set status to null
-                    restaurantLastUpdated = undefined;
-                    restaurantStatus = undefined;
-
-                    // repopulate status
-                    populateLastUpdated();
+                    processUpdateRemoved(change);
                 }
             });
         });
+}
+
+// EFFECTS: Adds the update in the given change doc as a card to the DOM
+function processUpdateAdded(change) {
+    let updateID = change.doc.id;
+    let username = "loading...";
+    let updateUserID = change.doc.data().userID;
+    let status = change.doc.data().status;
+    let statusString = generateWorkingString(status);
+    let dateSubmittedDelta = generateTimeSinceString(change.doc.data().dateSubmitted);
+    let dateSubmitted = generateDateString(change.doc.data().dateSubmitted);
+
+    let upvotes = change.doc.data().upvotes;
+    let downvotes = change.doc.data().downvotes;
+    let score = upvotes - downvotes;
+    let percentUpvote = ((upvotes / (upvotes + downvotes)) * 100).toFixed(0);
+    if (upvotes < 1) {
+        percentUpvote = 0;
+    }
+    let percentDownvote = 100 - percentUpvote;
+
+    let newcard = cardTemplate.content.cloneNode(true);
+
+    setCardDetails(newcard, updateID, statusString, username, dateSubmittedDelta, dateSubmitted, score);
+
+    styleProgressBars(newcard, upvotes, downvotes, percentUpvote, percentDownvote);
+    styleCardBackground(newcard, status);
+    setIcons(newcard, change.doc);
+    initializeBtnListeners(newcard, restaurantID, change.doc);
+    addProfileDetails(newcard, updateUserID);
+    if (currentUser) {
+        displayDeleteUpdate(newcard);
+    }
+    populateLastUpdated();
+
+    document.getElementById("updates-go-here").prepend(newcard);
+}
+
+// EFFECTS: Resets the fields of the corresponding update card to the given change document
+function processUpdateModified(change) {
+    let updateID = change.doc.id;
+    let nodeList = document.querySelectorAll(".card-update-id");
+
+    let upvotes = change.doc.data().upvotes;
+    let downvotes = change.doc.data().downvotes;
+    let score = upvotes - downvotes;
+    let percentUpvote = ((upvotes / (upvotes + downvotes)) * 100).toFixed(0);
+    if (upvotes < 1) {
+        percentUpvote = 0;
+    }
+    let percentDownvote = 100 - percentUpvote;
+
+    for (i = 0; i < nodeList.length; i++) {
+        if (nodeList[i].innerHTML == updateID) {
+            card = nodeList[i].parentElement.parentElement;
+            card.querySelector(".card-update-score").innerHTML = score;
+            styleProgressBars(card, upvotes, downvotes, percentUpvote, percentDownvote);
+            setIcons(card, change.doc);
+        }
+    }
+}
+
+// EFFECTS: Goes through the DOM and removes corresponding nodes to the given change document
+function processUpdateRemoved(change) {
+    let updateID = change.doc.id;
+    let nodeList = document.querySelectorAll(".card-update-id");
+
+    for (i = 0; i < nodeList.length; i++) {
+        if (nodeList[i].innerHTML == updateID) {
+            nodeList[i].parentElement.parentElement.remove();
+        }
+    }
+
+    // set status to null
+    restaurantLastUpdated = undefined;
+    restaurantStatus = undefined;
+
+    // repopulate status
+    populateLastUpdated();
+}
+
+// EFFECTS: Sets the given update card's interal text strings based ont the given params
+function setCardDetails(newcard, updateID, statusString, username, dateSubmittedDelta, dateSubmitted, score) {
+    newcard.querySelector(".card-update-id").innerHTML = updateID;
+    newcard.querySelector(".card-update-status").innerHTML = statusString;
+    newcard.querySelector(".card-update-username").innerHTML = username;
+    newcard.querySelector(".card-update-dateSubmittedDelta").innerHTML = dateSubmittedDelta;
+    newcard.querySelector(".card-update-dateSubmitted").innerHTML = dateSubmitted;
+    newcard.querySelector(".card-update-score").innerHTML = score;
+}
+
+// EFFECTS: Sets the voting bars and inner text of the given update card to relfect the given vote stats
+function styleProgressBars(card, upvotes, downvotes, percentUpvote, percentDownvote) {
+    if ((upvotes == 0) && (downvotes == 0)) {
+        // if there are no votes, set the novotes progress to 100%, 
+        // then set the downvote and upvote progress to 0%        
+        card.querySelector(".card-progress-upvotes").setAttribute("style", "width: 0%;");
+        card.querySelector(".card-progress-downvotes").setAttribute("style", "width: 0%;");
+        card.querySelector(".card-progress-novotes").setAttribute("style", "width: 100%;");
+    } else {
+        // set the upvote progress bar and text to whatever % of upvotes there are, then
+        // do the same for downvotes and set novotes to 0%
+        card.querySelector(".card-progress-upvotesPercent").innerHTML = percentUpvote + "%";
+        card.querySelector(".card-progress-downvotesPercent").innerHTML = percentDownvote + "%";
+        card.querySelector(".card-progress-upvotesCount").innerHTML = " (" + upvotes + ")";
+        card.querySelector(".card-progress-downvotesCount").innerHTML = " (" + downvotes + ")";
+
+        card.querySelector(".card-progress-upvotes").setAttribute("style", "width: " + percentUpvote + "%;");
+        card.querySelector(".card-progress-downvotes").setAttribute("style", "width: " + percentDownvote + "%;");
+        card.querySelector(".card-progress-novotes").setAttribute("style", "width: 0%;");
+    }
+}
+
+// EFFECTS: Sets the background colour of the given update card to the given status
+function styleCardBackground(newcard, status) {
+    if (status == null || status == undefined) {
+        newcard.querySelector(".card-update").classList.add("bg-warning");
+        newcard.querySelector(".card-update").classList.remove("bg-success");
+        newcard.querySelector(".card-update").classList.remove("bg-danger");
+    } else if (status == true) {
+        newcard.querySelector(".card-update").classList.remove("bg-warning");
+        newcard.querySelector(".card-update").classList.add("bg-success");
+        newcard.querySelector(".card-update").classList.remove("bg-danger");
+    } else if (status == false) {
+        newcard.querySelector(".card-update").classList.remove("bg-warning");
+        newcard.querySelector(".card-update").classList.remove("bg-success");
+        newcard.querySelector(".card-update").classList.add("bg-danger");
+    }
 }
 
 // EFFECTS: Searches through the restaurant's updates subcollection and finds the latest
@@ -299,12 +310,12 @@ function initializeBtnListeners(card, restaurantID, updateDoc) {
 
     // adds listener to upvote btn
     card.querySelector(".btn-update-upvote").addEventListener("click", function() {
-        processUpvote(restaurantID, updateDoc);
+        processVote(true, restaurantID, updateDoc);
     });
 
     // adds listener to downvote btn
     card.querySelector(".btn-update-downvote").addEventListener("click", function() {
-        processDownvote(restaurantID, updateDoc);                                                                                                
+        processVote(false, restaurantID, updateDoc);                                                                                                
     });
 }
 
@@ -356,7 +367,7 @@ function setIcons(card, updateDoc) {
 //                   - ...and they already upvoted, remove their upvote.
 //                   - ...and they already downvoted, remove their downvote and add their upvote.
 //                   - ...and they haven't voted, add their upvote.
-function processUpvote(restaurantID, updateDoc) {
+function processVote(isUpvote, restaurantID, updateDoc) {
     let updateUserID = updateDoc.data().userID;
     let updateID = updateDoc.id;
 
@@ -368,6 +379,17 @@ function processUpvote(restaurantID, updateDoc) {
     } else if (updateUserID == currentUser.uid) {
         return alert("You cannot vote on your own update!");
     } else {
+        if (isUpvote) {
+            upvote(restaurantID, updateID);
+        } else {
+            downvote(restaurantID, updateID);
+        }
+    }
+}
+
+// EFFECTS: Adds the users upvote using an algorithm that converts the upvote depending
+//          on whether the user previously voted.
+function upvote(restaurantID, updateID) {
     db.collection("restaurants/" + restaurantID + "/updates").doc(updateID).get()
         .then(doc => {
             // if the user has upvoted, remove their upvote
@@ -396,59 +418,39 @@ function processUpvote(restaurantID, updateDoc) {
                     });
             }
         });
-    }
 }
 
-// MODIFIES: updateDoc
-// EFFECTS: Given an update, modifies its votes depending on the following: 
-//             - If a user is logged OUT, alerts and fails.
-//             - If a user is logged IN...
-//                - ...and they ARE the update's owner, alerts and fails.
-//                - ...and they are NOT the update's owner...
-//                   - ...and they already upvoted, remove their upvote and add their downvote.
-//                   - ...and they already downvoted, remove their downvote.
-//                   - ...and they haven't voted, add their upvote.
-function processDownvote(restaurantID, updateDoc) {
-    let updateUserID = updateDoc.data().userID;
-    let updateID = updateDoc.id;
-
-    // check if the user is logged in or if they are the author of the update
-    if (!currentUser) {
-        return alert("You must be logged-in to vote!");
-    } else if (!currentUser.emailVerified) {
-        alert("Verify your email before voting.")
-    } else if (updateUserID == currentUser.uid) {
-        return alert("You cannot vote on your own update!");
-    } else {
+// EFFECTS: Adds the users downvote using an algorithm that converts the upvote depending
+//          on whether the user previously voted.
+function downvote(restaurantID, updateID) {
     db.collection("restaurants/" + restaurantID + "/updates").doc(updateID).get()
-        .then(doc => {
-            // if the user has downvoted, remove their downvote
-            if (doc.data().downvoterIDList.includes(currentUser.uid)) {
-                db.collection("restaurants/" + restaurantID + "/updates").doc(updateID)
+    .then(doc => {
+        // if the user has downvoted, remove their downvote
+        if (doc.data().downvoterIDList.includes(currentUser.uid)) {
+            db.collection("restaurants/" + restaurantID + "/updates").doc(updateID)
+            .update({
+                downvotes: fv.increment(-1),
+                downvoterIDList: fv.arrayRemove(currentUser.uid),
+            });
+        // if the user has upvoted, remove their upvote then add their downvote
+        } else if (doc.data().upvoterIDList.includes(currentUser.uid)) {
+            db.collection("restaurants/" + restaurantID + "/updates").doc(updateID)
                 .update({
-                    downvotes: fv.increment(-1),
-                    downvoterIDList: fv.arrayRemove(currentUser.uid),
+                    upvotes: fv.increment(-1),
+                    upvoterIDList: fv.arrayRemove(currentUser.uid),
+                    
+                    downvotes: fv.increment(1),
+                    downvoterIDList: fv.arrayUnion(currentUser.uid),
                 });
-            // if the user has upvoted, remove their upvote then add their downvote
-            } else if (doc.data().upvoterIDList.includes(currentUser.uid)) {
-                db.collection("restaurants/" + restaurantID + "/updates").doc(updateID)
-                    .update({
-                        upvotes: fv.increment(-1),
-                        upvoterIDList: fv.arrayRemove(currentUser.uid),
-                        
-                        downvotes: fv.increment(1),
-                        downvoterIDList: fv.arrayUnion(currentUser.uid),
-                    });
-            // if the user has not voted, add their downvote
-            } else {
-                db.collection("restaurants/" + restaurantID + "/updates").doc(updateID)
-                    .update({
-                        downvotes: fv.increment(1),
-                        downvoterIDList: fv.arrayUnion(currentUser.uid),
-                    });
-            }
-        });
-    }
+        // if the user has not voted, add their downvote
+        } else {
+            db.collection("restaurants/" + restaurantID + "/updates").doc(updateID)
+                .update({
+                    downvotes: fv.increment(1),
+                    downvoterIDList: fv.arrayUnion(currentUser.uid),
+                });
+        }
+    });
 }
 
 // EFFECTS: Populates the given card user owner's profile details on the card.
