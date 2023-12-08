@@ -213,7 +213,7 @@ function generateDateString(timestamp) {
 //          yet, the update is submitted and the time is logged for future calculations.
 function trySubmitUpdate(status, restaurantID) {
   let nowTime = firebase.firestore.Timestamp.now().toDate().getTime();
-  let secsToWait = 0;
+  let secsToWait = 60;
   let secsRemaining = 0;
 
   let canUpdateTime = localStorage.getItem("canUpdateTime");
