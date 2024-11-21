@@ -19,7 +19,14 @@ We are developing "McWorking" to allow McDonalds patrons to check the status of 
     * TheNounProject.com
 
 ## 4. Complete setup/installion/usage
-The app is ready straight away for viewing, but to submit data users must sign up for an account and verify their email. Sign up can be done from any page using the website's navbar in the top right. A verification email is sent automatically, and can be resent from the profile page.
+The app is accessible at [comp1800-teambby17.web.app](https://comp1800-teambby17.web.app).  
+
+### Usage  
+- You can explore the app without signing up.  
+- To submit data, users need to create an account and verify their email.  
+  - Sign up by clicking the "Sign Up" button in the navbar located at the top-right corner of any page.  
+  - After signing up, a verification email will be sent automatically to your provided email address. 
+  - If needed, you can resend the verification email from the profile page. 
 
 ## 5. Bugs and Limitations
 Here are some known bugs and limitations:
